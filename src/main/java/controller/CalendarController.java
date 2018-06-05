@@ -1,11 +1,14 @@
 package controller;
 
+import com.calendarfx.view.CalendarView;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 
 public class CalendarController {
-    @FXML private SplitPane calendarPane;
+    @FXML private CalendarView calendarView;
+
+    public void init(){
+
+    }
 
     public void handleBar() {
 
