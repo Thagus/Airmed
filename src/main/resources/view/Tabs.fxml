@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+
+<TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/8.0.172" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="controller.TabController">
+    <Tab fx:id="calendarTab" text="Calendario">
+        <fx:include fx:id="calendarTabPage" source="Calendar.fxml"/>
+    </Tab>
+    <Tab fx:id="patientsTab" text="Pacientes">
+        <fx:include fx:id="patientsTabPage" source="Patients.fxml"/>
+    </Tab>
+    <Tab fx:id="treatmentsTab" text="Tratamientos">
+        <fx:include fx:id="treatmentsTabPage" source="Treatments.fxml"/>
+    </Tab>
+    <Tab fx:id="studiesTab" text="Estudios">
+        <fx:include fx:id="studiesTabPage" source="Studies.fxml"/>
+    </Tab>
+    <Tab fx:id="configTab" text="Configuración">
+        <fx:include fx:id="configTabPage" source="Config.fxml"/>
+    </Tab>
+</TabPane>
