@@ -1,4 +1,4 @@
-import controller.TabController;
+import controller.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,10 +18,10 @@ public class Main extends Application {
 
         Scene scene = new Scene(new StackPane());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Tabs.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Menu.fxml"));
 
         scene.setRoot(loader.load());
-        TabController controller = loader.getController();
+        MenuController controller = loader.getController();
         controller.init();
 
         this.primaryStage.setScene(scene);
