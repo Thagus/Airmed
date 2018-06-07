@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
 
-
-<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientsController">
-
-</StackPane>
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientsController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+         <children>
+            <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+                <left>
+                    <Label style="-fx-padding: 0 2 0 7;">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
+                        </graphic>
+                    </Label>
+                </left>
+            </CustomTextField>
+         </children>
+      </HBox>
+      <TableView fx:id="patientsTable">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>
