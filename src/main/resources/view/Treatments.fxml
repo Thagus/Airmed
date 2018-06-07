@@ -13,7 +13,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TreatmentsController">
    <children>
-       <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+       <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
            <children>
                <Button mnemonicParsing="false" onAction="#newTreatment" text="Agregar">
                <HBox.margin>
@@ -30,13 +30,16 @@
                    </left>
                </CustomTextField>
            </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
        </HBox>
        <TableView fx:id="treatmentsTable">
            <columns>
                <TableColumn fx:id="nameColumn" text="Nombre" />
                <TableColumn fx:id="descriptionColumn" text="Descripción" />
-               <TableColumn fx:id="editColumn"/>
-               <TableColumn fx:id="deleteColumn"/>
+               <TableColumn fx:id="editColumn" />
+               <TableColumn fx:id="deleteColumn" />
            </columns>
        </TableView>
    </children>
