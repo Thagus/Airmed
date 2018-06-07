@@ -12,37 +12,34 @@
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientsController">
-   <children>
-       <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
-           <children>
-               <Button mnemonicParsing="false" onAction="#newPatient" text="Agregar">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin></Button>
-               <Region HBox.hgrow="ALWAYS" />
-               <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
-                   <left>
-                       <Label style="-fx-padding: 0 2 0 7;">
-                           <graphic>
-                               <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
-                           </graphic>
-                       </Label>
-                   </left>
-               </CustomTextField>
-           </children>
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-      </HBox>
-      <TableView fx:id="patientsTable">
-          <columns>
-              <TableColumn fx:id="nameColumn" text="Nombre" />
-              <TableColumn fx:id="lastnameColumn" text="Apellido" />
-              <TableColumn fx:id="gender" text="Sexo" />
-              <TableColumn fx:id="recordColumn" />
-              <TableColumn fx:id="consultationColumn" />
-              <TableColumn fx:id="deleteColumn" />
-          </columns>
-      </TableView>
-   </children>
+    <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
+        <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </VBox.margin>
+        <Button mnemonicParsing="false" onAction="#newPatient" text="Agregar">
+            <HBox.margin>
+                <Insets left="5.0"/>
+            </HBox.margin>
+        </Button>
+        <Region HBox.hgrow="ALWAYS"/>
+        <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+            <left>
+                <Label style="-fx-padding: 0 2 0 7;">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
+                    </graphic>
+                </Label>
+            </left>
+        </CustomTextField>
+    </HBox>
+    <TableView fx:id="patientsTable">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Nombre"/>
+            <TableColumn fx:id="lastnameColumn" text="Apellido"/>
+            <TableColumn fx:id="gender" text="Sexo"/>
+            <TableColumn fx:id="recordColumn"/>
+            <TableColumn fx:id="consultationColumn"/>
+            <TableColumn fx:id="deleteColumn"/>
+        </columns>
+    </TableView>
 </VBox>
