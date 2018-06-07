@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.TreatmentsController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TreatmentsController">
+   <children>
+       <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+           <children>
+               <Button mnemonicParsing="false" onAction="#newTreatment" text="Agregar">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin></Button>
+               <Region HBox.hgrow="ALWAYS" />
+               <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+                   <left>
+                       <Label style="-fx-padding: 0 2 0 7;">
+                           <graphic>
+                               <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
+                           </graphic>
+                       </Label>
+                   </left>
+               </CustomTextField>
+           </children>
+       </HBox>
+       <TableView fx:id="treatmentsTable">
+           <columns>
+               <TableColumn fx:id="nameColumn" text="Nombre" />
+               <TableColumn fx:id="descriptionColumn" text="Descripción" />
+               <TableColumn fx:id="editColumn"/>
+               <TableColumn fx:id="deleteColumn"/>
+           </columns>
+       </TableView>
+   </children>
+</VBox>
