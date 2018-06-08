@@ -17,6 +17,6 @@ public class CalendarController {
     @FXML private CalendarPicker calendarPicker;
 
     public void init(){
-        agendaView.setLocale(new Locale("es", "mx"));
+
     }
 }

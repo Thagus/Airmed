@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class Main extends Application {
 
@@ -15,6 +16,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Airmed");
+
+        Locale.setDefault(new Locale("es", "mx"));
 
         Scene scene = new Scene(new StackPane());
 
