@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -10,49 +11,49 @@ import org.controlsfx.control.textfield.CustomTextField;
 public class PatientController {
 
     //General data
-    public TextField nameField;
-    public TextField lastnameField;
-    public TextField genderField;
-    public TextField birthdateField;
-    public TextField ageField;
-    public TextField bloodTypeField;
-    public TextField emailField;
-    public TextField addressField;
-    public TextField phoneField;
-    public TextField cellphoneField;
+    @FXML private TextField nameField;
+    @FXML private TextField lastnameField;
+    @FXML private TextField genderField;
+    @FXML private TextField birthdateField;
+    @FXML private TextField ageField;
+    @FXML private TextField bloodTypeField;
+    @FXML private TextField emailField;
+    @FXML private TextField addressField;
+    @FXML private TextField phoneField;
+    @FXML private TextField cellphoneField;
 
     //Background
-    public TextArea familyHistoryArea;
-    public TextArea personalHistoryArea;
-    public TextArea allergiesArea;
-    public TextArea systemsArea;
+    @FXML private TextArea familyHistoryArea;
+    @FXML private TextArea personalHistoryArea;
+    @FXML private TextArea allergiesArea;
+    @FXML private TextArea systemsArea;
 
     //Studies
-    public CustomTextField studySearchField;
-    public TableView studiesTable;
-    public TableColumn studyNameColumn;
-    public TableColumn studyDateColumn;
-    public TableColumn studyDescColumn;
-    public TableColumn studyResultColumn;
+    @FXML private CustomTextField studySearchField;
+    @FXML private TableView studiesTable;
+    @FXML private TableColumn studyNameColumn;
+    @FXML private TableColumn studyDateColumn;
+    @FXML private TableColumn studyDescColumn;
+    @FXML private TableColumn studyResultColumn;
 
     //Surgeries
-    public CustomTextField surgerySearchField;
-    public TableView surgeriesTable;
-    public TableColumn surgeryNameColumn;
-    public TableColumn surgeryDateColumn;
-    public TableColumn surgeryDescColumn;
+    @FXML private CustomTextField surgerySearchField;
+    @FXML private TableView surgeriesTable;
+    @FXML private TableColumn surgeryNameColumn;
+    @FXML private TableColumn surgeryDateColumn;
+    @FXML private TableColumn surgeryDescColumn;
 
     //Vital signs
-    public CustomTextField vitalSignsSearchField;
-    public TableView vitalSignsTable;
-    public TableColumn vitalSignDateColumn;
-    public TableColumn pressureColumn;
-    public TableColumn respirationColumn;
-    public TableColumn temperatureColumn;
-    public TableColumn glucoseColumn;
+    @FXML private CustomTextField vitalSignsSearchField;
+    @FXML private TableView vitalSignsTable;
+    @FXML private TableColumn vitalSignDateColumn;
+    @FXML private TableColumn pressureColumn;
+    @FXML private TableColumn respirationColumn;
+    @FXML private TableColumn temperatureColumn;
+    @FXML private TableColumn glucoseColumn;
 
     //Notes
-    public TextArea notesArea;
+    @FXML private TextArea notesArea;
 
     public void newStudy(ActionEvent actionEvent) {
     }
