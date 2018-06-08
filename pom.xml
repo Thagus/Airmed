@@ -25,12 +25,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.calendarfx</groupId>
-            <artifactId>view</artifactId>
-            <version>8.4.2</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.197</version>
@@ -52,6 +46,12 @@
             <groupId>org.jfxtras</groupId>
             <artifactId>jfxtras-all</artifactId>
             <version>8.0-r6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.9</version>
         </dependency>
 
     </dependencies>
