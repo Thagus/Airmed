@@ -3,61 +3,42 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.SegmentedButton?>
-<?import org.controlsfx.control.textfield.CustomTextField?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import com.calendarfx.view.MonthView?>
-<?import com.calendarfx.view.YearView?>
-<?import com.calendarfx.view.DetailedWeekView?>
 <?import jfxtras.scene.control.CalendarPicker?>
+<?import jfxtras.scene.control.agenda.Agenda?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
 
 <HBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CalendarController">
     <VBox prefWidth="250.0">
-        <CalendarPicker fx:id="calendarPicker"/>
+        <CalendarPicker fx:id="calendarPicker" />
+      <HBox.margin>
+         <Insets right="5.0" />
+      </HBox.margin>
     </VBox>
     <VBox HBox.hgrow="ALWAYS">
         <HBox minHeight="25.0">
             <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" />
             </VBox.margin>
-            <Region HBox.hgrow="ALWAYS"/>
-            <SegmentedButton>
-                <buttons>
-                    <ToggleButton mnemonicParsing="false" onAction="#viewWeek" prefWidth="75.0" selected="true" text="Semana">
-                        <toggleGroup>
-                            <ToggleGroup fx:id="calendarType"/>
-                        </toggleGroup>
-                    </ToggleButton>
-                    <ToggleButton mnemonicParsing="false" onAction="#viewMonth" prefWidth="75.0" text="Mes" toggleGroup="$calendarType"/>
-                    <ToggleButton mnemonicParsing="false" onAction="#viewYear" prefWidth="75.0" text="Año" toggleGroup="$calendarType"/>
-                </buttons>
-                <HBox.margin>
-                    <Insets/>
-                </HBox.margin>
-            </SegmentedButton>
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS" />
             <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
                 <left>
                     <Label style="-fx-padding: 0 2 0 7;">
                         <graphic>
-                            <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
+                            <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
                         </graphic>
                     </Label>
                 </left>
             </CustomTextField>
         </HBox>
-        <StackPane VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-            <DetailedWeekView fx:id="weekView"/>
-            <MonthView fx:id="monthView" visible="false"/>
-            <ScrollPane fx:id="yearScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" visible="false">
-                <YearView fx:id="yearView"/>
-            </ScrollPane>
-        </StackPane>
+      <Agenda fx:id="agendaView" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+      <HBox.margin>
+         <Insets left="5.0" />
+      </HBox.margin>
     </VBox>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </HBox>
