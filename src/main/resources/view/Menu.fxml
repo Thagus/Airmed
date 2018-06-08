@@ -8,15 +8,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
   <items>
-      <AnchorPane maxHeight="100.0" minHeight="0.0" minWidth="0.0" prefHeight="184.0" prefWidth="598.0">
-          <HBox prefHeight="100.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane maxHeight="110.0" minHeight="110.0" prefHeight="110.0">
+          <HBox minHeight="50.0" prefHeight="100.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-               <Button mnemonicParsing="false" onAction="#newPatient" text="Button" />
-               <Button mnemonicParsing="false" onAction="#newAppointment" text="Button" />
-               <Button mnemonicParsing="false" onAction="#newConsultation" text="Button" />
-               <Button mnemonicParsing="false" onAction="#newPrescription" text="Button" />
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#newPatient" text="Nuevo Paciente">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#newAppointment" text="Nueva Cita">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#newConsultation" text="Nueva Consulta">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#newPrescription" text="Nueva Receta">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
                <Separator orientation="VERTICAL">
                   <padding>
                      <Insets bottom="5.0" left="5.0" right="3.0" top="5.0" />
@@ -24,19 +36,34 @@
                   <HBox.margin>
                      <Insets />
                   </HBox.margin></Separator>
-               <Button mnemonicParsing="false" onAction="#showCalendar" text="Button" />
-               <Button mnemonicParsing="false" onAction="#showPatients" text="Button" />
-               <Button mnemonicParsing="false" onAction="#showTreatments" text="Button" />
-               <Button mnemonicParsing="false" onAction="#showStudies" text="Button" />
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showCalendar" text="Agenda">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showPatients" text="Pacientes">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showTreatments" text="Tratamientos">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showStudies" text="Estudios">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
                <Separator orientation="VERTICAL">
                   <padding>
                      <Insets bottom="5.0" left="5.0" right="3.0" top="5.0" />
                   </padding></Separator>
-               <Button mnemonicParsing="false" onAction="#showConfig" text="Button" />
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showConfig" text="Configuración">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                  </HBox.margin></Button>
             </children></HBox>
       </AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-          <StackPane fx:id="stackPane" prefHeight="196.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+          <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       </AnchorPane>
   </items>
 </SplitPane>
