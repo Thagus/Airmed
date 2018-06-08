@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.StudiesController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<?import javafx.scene.control.Label?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudiesController">
+    <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
+        <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </VBox.margin>
+        <Button mnemonicParsing="false" onAction="#newStudy" text="Agregar">
+            <HBox.margin>
+                <Insets left="5.0"/>
+            </HBox.margin>
+        </Button>
+        <Region HBox.hgrow="ALWAYS"/>
+        <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+            <left>
+                <Label style="-fx-padding: 0 2 0 7;">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
+                    </graphic>
+                </Label>
+            </left>
+        </CustomTextField>
+    </HBox>
+    <TableView fx:id="studiesTable">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Nombre"/>
+            <TableColumn fx:id="descriptionColumn" text="Descripción"/>
+            <TableColumn fx:id="editColumn"/>
+            <TableColumn fx:id="deleteColumn"/>
+        </columns>
+    </TableView>
+</VBox>
