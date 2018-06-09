@@ -2,13 +2,10 @@ package controller;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import jfxtras.scene.control.LocalTimePicker;
@@ -19,10 +16,10 @@ import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MenuController {
 
@@ -33,12 +30,14 @@ public class MenuController {
     private VBox treatmentsPane;
     private VBox studiesPane;
     private VBox configPane;
+    private VBox patientRecordPane;
 
     private CalendarController calendarController;
     private PatientsController patientsController;
     private TreatmentsController treatmentsController;
     private StudiesController studiesController;
     private ConfigController configController;
+    private PatientController patientController;
 
     public void init() throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -58,7 +57,6 @@ public class MenuController {
         treatmentsController = loader.getController();
         treatmentsController.init();
 
-
         loader = new FXMLLoader(getClass().getResource("/view/Studies.fxml"));
         studiesPane = loader.load();
         studiesController = loader.getController();
@@ -69,12 +67,18 @@ public class MenuController {
         configController = loader.getController();
         configController.init();
 
+        loader = new FXMLLoader(getClass().getResource("/view/ShowPatient.fxml"));
+        patientRecordPane = loader.load();
+        patientController = loader.getController();
+
+
         stackPane.getChildren().addAll(
                 calendarView,
                 patientsPane,
                 treatmentsPane,
                 studiesPane,
-                configPane
+                configPane,
+                patientRecordPane
         );
 
         hideAll();
@@ -110,6 +114,7 @@ public class MenuController {
         ToggleButton female = new ToggleButton("F");
         female.setToggleGroup(genderGroup);
         female.setUserData('F');
+        female.setSelected(true);
         ToggleButton male = new ToggleButton("M");
         male.setToggleGroup(genderGroup);
         male.setUserData('M');
@@ -179,10 +184,13 @@ public class MenuController {
                     showRecordAfterwards.set(true);
                 }
 
+                ///Check that all fields are correct
+
+
                 return new Patient(
                         nameField.getText(),
                         lastnameField.getText(),
-                        (char) gender.getToggleGroup().getUserData(),
+                        (char) gender.getToggleGroup().getSelectedToggle().getUserData(),
                         birthdateField.getValue(),
                         emailField.getText(),
                         phoneField.getText(),
@@ -196,14 +204,27 @@ public class MenuController {
         Optional<Patient> result = dialog.showAndWait();
 
         result.ifPresent(patient -> {
+            //Save patient to database
 
+            if(showRecordAfterwards.get()) {
+                showPatientRecord(patient);
+            }
         });
+    }
+
+    private void showPatientRecord(Patient patient){
+        hideAll();
+        patientRecordPane.setVisible(true);
+
+        patientController.setPatient(patient);
     }
 
     public void newAppointment(ActionEvent actionEvent) {
         Dialog<Appointment> dialog = new Dialog<>();
         dialog.setTitle("Nueva cita");
         dialog.setHeaderText(null);
+
+        AtomicReference<Patient> patient = null;
 
         // Add buttons
         ButtonType addAppointmentButton = new ButtonType("Agendar", ButtonBar.ButtonData.OK_DONE);
@@ -259,7 +280,16 @@ public class MenuController {
 
             patientDialog.getDialogPane().setContent(vBox);
 
-            patientDialog.showAndWait();
+            patientDialog.setResultConverter(patientDialogButton -> {
+                if(patientDialogButton == selectPatient){
+                    //Return the selected patient or an alert if null
+                }
+                return null;
+            });
+
+            Optional<Patient> patientResult = patientDialog.showAndWait();
+
+            patientResult.ifPresent(patient::set);
         });
 
 
@@ -279,10 +309,11 @@ public class MenuController {
 
         Platform.runLater(patientNameField::requestFocus);
 
+
         dialog.setResultConverter(dialogButton -> {
             if(dialogButton == addAppointmentButton){
                 return new Appointment(
-                        patientNameField.getText(),
+                        patient.get(),
                         dateField.getValue(),
                         timeField.getLocalTime()
                 );
@@ -299,7 +330,7 @@ public class MenuController {
     }
 
     public void newConsultation(ActionEvent actionEvent) {
-        Dialog<Patient> patientDialog = new Dialog<>();
+        Dialog patientDialog = new Dialog();
         patientDialog.setTitle("Nueva consulta");
         patientDialog.setHeaderText(null);
 
@@ -341,7 +372,7 @@ public class MenuController {
     }
 
     public void newPrescription(ActionEvent actionEvent) {
-        Dialog<Patient> patientDialog = new Dialog<>();
+        Dialog patientDialog = new Dialog();
         patientDialog.setTitle("Nueva receta");
         patientDialog.setHeaderText(null);
 
@@ -413,5 +444,6 @@ public class MenuController {
         treatmentsPane.setVisible(false);
         studiesPane.setVisible(false);
         configPane.setVisible(false);
+        patientRecordPane.setVisible(false);
     }
 }

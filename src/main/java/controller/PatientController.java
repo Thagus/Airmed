@@ -2,19 +2,18 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import model.Patient;
 import org.controlsfx.control.textfield.CustomTextField;
 
 public class PatientController {
-
+    @FXML private ToggleButton maleToggle;
+    @FXML private ToggleButton femaleToggle;
     //General data
     @FXML private TextField nameField;
     @FXML private TextField lastnameField;
-    @FXML private TextField genderField;
-    @FXML private TextField birthdateField;
+    @FXML private ToggleGroup genderToggleGroup;
+    @FXML private DatePicker birthdateField;
     @FXML private TextField ageField;
     @FXML private TextField bloodTypeField;
     @FXML private TextField emailField;
@@ -55,12 +54,56 @@ public class PatientController {
     //Notes
     @FXML private TextArea notesArea;
 
+    private Patient patient;
+    @FXML
+    private void initialize(){
+        System.out.println(genderToggleGroup);
+        System.out.println(genderToggleGroup.getToggles());
+        System.out.println(genderToggleGroup.getToggles().size());
+    }
+
+    public void setPatient(Patient patient){
+        //Fix some weird bug that loses the toggle buttons in a group
+        genderToggleGroup.getToggles().setAll(maleToggle, femaleToggle);
+
+        this.patient = patient;
+
+        ///Check if values aren't null before assigning
+
+        nameField.setText(patient.getName());
+        lastnameField.setText(patient.getLastname());
+        if(patient.getGender() == 'F'){
+            genderToggleGroup.selectToggle(femaleToggle);
+        }
+        else if (patient.getGender() == 'M'){
+            genderToggleGroup.selectToggle(maleToggle);
+        }
+        birthdateField.setValue(patient.getBirthdate());
+        ///Compute age based on birthdate
+        //ageField.setText();
+        emailField.setText(patient.getEmail());
+        phoneField.setText(patient.getPhone());
+        cellphoneField.setText(patient.getCellphone());
+    }
+
     public void newStudy(ActionEvent actionEvent) {
+
     }
 
     public void newSurgery(ActionEvent actionEvent) {
+
     }
 
     public void newVitalSign(ActionEvent actionEvent) {
+
+    }
+
+    public void savePatient(ActionEvent actionEvent) {
+
+    }
+
+    private boolean isInputValid(){
+
+        return false;
     }
 }
