@@ -105,4 +105,6 @@ public class PatientController {
     }
 
 
+    public void newConsultation(ActionEvent actionEvent) {
+    }
 }
