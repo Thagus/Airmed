@@ -78,7 +78,7 @@
                <Insets bottom="5.0" left="5.0" right="5.0"/>
            </HBox.margin>
         </Button>
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#printPrescription" text="Imprimir">
+        <Button defaultButton="true" mnemonicParsing="false" onAction="#printPrescription" text="Imprimir receta">
            <HBox.margin>
                <Insets bottom="5.0" left="5.0" right="5.0"/>
            </HBox.margin>

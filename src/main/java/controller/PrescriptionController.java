@@ -6,6 +6,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import model.Consultation;
+import model.Prescription;
 
 public class PrescriptionController {
 
@@ -30,10 +32,33 @@ public class PrescriptionController {
     @FXML private TableColumn doseColumn;
     @FXML private TableColumn deleteMedicineColumn;
 
+    private Consultation consultation;
+    private Prescription prescription;
+
+    private MenuController menuController;
+
+    public void init(MenuController menuController){
+        this.menuController = menuController;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+    }
+
     public void savePrescription(ActionEvent actionEvent) {
+        ///Save to database
+
+        //Return to the agenda
+        menuController.showAgenda(null);
     }
 
     public void printPrescription(ActionEvent actionEvent) {
+        //Save to database
+
+        //Show printing dialog
+
+        //Return to the agenda
+        menuController.showAgenda(null);
     }
 
     public void addMedicine(ActionEvent actionEvent) {
