@@ -5,10 +5,7 @@ import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.agenda.Agenda;
 import org.controlsfx.control.textfield.CustomTextField;
 
-import java.util.Locale;
-
-public class CalendarController {
-
+public class AgendaController {
 
     @FXML private Agenda agendaView;
 
