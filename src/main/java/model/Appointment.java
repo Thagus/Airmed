@@ -4,21 +4,22 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
-    private String patient;
+    private Patient patient;
     private LocalDate date;
     private LocalTime time;
 
-    public Appointment(String patient, LocalDate date, LocalTime time) {
+    public Appointment(Patient patient, LocalDate date, LocalTime time) {
         this.patient = patient;
         this.date = date;
         this.time = time;
     }
 
-    public String getPatient() {
+
+    public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(String patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 

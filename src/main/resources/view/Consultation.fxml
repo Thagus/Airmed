@@ -1,14 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ConsultationController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultationController">
+    <GridPane hgap="5.0" vgap="5.0">
+       <columnConstraints>
+          <ColumnConstraints />
+          <ColumnConstraints />
+          <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints />
+          <ColumnConstraints />
+       </columnConstraints>
+       <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="10.0" />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+          <RowConstraints />
+       </rowConstraints>
+       <children>
+          <Label text="Consulta de Juan Pérez González" GridPane.columnSpan="2147483647">
+             <font>
+                <Font name="System Bold" size="18.0" />
+             </font></Label>
+          <Label text="Signos vitales" GridPane.columnSpan="2" GridPane.rowIndex="2">
+             <font>
+                <Font name="System Bold" size="14.0" />
+             </font></Label>
+          <Label text="Presión" GridPane.rowIndex="3" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+          <Label text="Respiración" GridPane.rowIndex="4" />
+          <Label text="Pulso" GridPane.rowIndex="5" />
+          <Label text="Temperatura" GridPane.rowIndex="6" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+          <Label text="Medidas" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2">
+             <font>
+                <Font name="System Bold" size="14.0" />
+             </font></Label>
+          <Label text="Estatura" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+          <TextField GridPane.columnIndex="4" GridPane.rowIndex="3" />
+          <TextField GridPane.columnIndex="4" GridPane.rowIndex="4" />
+          <Label text="Peso" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+          <Label text="Exploración física" GridPane.columnSpan="2" GridPane.rowIndex="8">
+             <font>
+                <Font name="System Bold" size="14.0" />
+             </font></Label>
+          <Label text="Conciencia" GridPane.rowIndex="9" />
+          <Label text="Colaboración" GridPane.rowIndex="10" />
+          <Label text="Mobilidad" GridPane.rowIndex="11" />
+          <Label text="Actitud" GridPane.rowIndex="12" />
+          <Label text="Nutrición" GridPane.rowIndex="13" />
+          <Label text="Hidratación" GridPane.rowIndex="14" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="10" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="12" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="13" />
+          <TextField GridPane.columnIndex="1" GridPane.rowIndex="14" />
+       </children>
+       <padding>
+          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+       </padding>
+    </GridPane>
+   <HBox alignment="CENTER_RIGHT">
+      <children>
+         <Button mnemonicParsing="false" onAction="#goToPrescription" text="Siguiente" />
+      </children>
+      <VBox.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </VBox.margin>
+   </HBox>
+</VBox>

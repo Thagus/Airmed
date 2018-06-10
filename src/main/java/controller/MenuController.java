@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import jfxtras.scene.control.LocalTimePicker;
 import model.Appointment;
+import model.Consultation;
 import model.Patient;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
@@ -25,27 +26,31 @@ public class MenuController {
 
     @FXML private StackPane stackPane;
 
-    private HBox calendarView;
+    private HBox agendaView;
     private VBox patientsPane;
     private VBox treatmentsPane;
     private VBox studiesPane;
     private VBox configPane;
     private VBox patientRecordPane;
+    private VBox prescriptionPane;
+    private VBox consultationPane;
 
-    private CalendarController calendarController;
+    private AgendaController agendaController;
     private PatientsController patientsController;
     private TreatmentsController treatmentsController;
     private StudiesController studiesController;
     private ConfigController configController;
     private PatientController patientController;
+    private ConsultationController consultationController;
+    private PrescriptionController prescriptionController;
 
     public void init() throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(getClass().getResource("/view/Calendar.fxml"));
-        calendarView = loader.load();
-        calendarController = loader.getController();
-        calendarController.init();
+        loader.setLocation(getClass().getResource("/view/Agenda.fxml"));
+        agendaView = loader.load();
+        agendaController = loader.getController();
+        agendaController.init();
 
         loader = new FXMLLoader(getClass().getResource("/view/Patients.fxml"));
         patientsPane = loader.load();
@@ -70,15 +75,27 @@ public class MenuController {
         loader = new FXMLLoader(getClass().getResource("/view/ShowPatient.fxml"));
         patientRecordPane = loader.load();
         patientController = loader.getController();
+        patientController.init();
 
+        loader = new FXMLLoader(getClass().getResource("/view/Consultation.fxml"));
+        consultationPane = loader.load();
+        consultationController = loader.getController();
+        consultationController.init(this);
+
+        loader = new FXMLLoader(getClass().getResource("/view/Prescription.fxml"));
+        prescriptionPane = loader.load();
+        prescriptionController = loader.getController();
+        prescriptionController.init(this);
 
         stackPane.getChildren().addAll(
-                calendarView,
+                agendaView,
                 patientsPane,
                 treatmentsPane,
                 studiesPane,
                 configPane,
-                patientRecordPane
+                patientRecordPane,
+                consultationPane,
+                prescriptionPane
         );
 
         hideAll();
@@ -212,11 +229,11 @@ public class MenuController {
         });
     }
 
-    private void showPatientRecord(Patient patient){
+    public void showPatientRecord(Patient patient){
+        patientController.setPatient(patient);
+
         hideAll();
         patientRecordPane.setVisible(true);
-
-        patientController.setPatient(patient);
     }
 
     public void newAppointment(ActionEvent actionEvent) {
@@ -224,7 +241,7 @@ public class MenuController {
         dialog.setTitle("Nueva cita");
         dialog.setHeaderText(null);
 
-        AtomicReference<Patient> patient = null;
+        AtomicReference<Patient> patient = new AtomicReference<>();
 
         // Add buttons
         ButtonType addAppointmentButton = new ButtonType("Agendar", ButtonBar.ButtonData.OK_DONE);
@@ -283,6 +300,15 @@ public class MenuController {
             patientDialog.setResultConverter(patientDialogButton -> {
                 if(patientDialogButton == selectPatient){
                     //Return the selected patient or an alert if null
+                    return new Patient(
+                            "Jane",
+                            "Doe",
+                            'F',
+                            LocalDate.now(),
+                            "",
+                            "",
+                            ""
+                    );
                 }
                 return null;
             });
@@ -325,12 +351,12 @@ public class MenuController {
         Optional<Appointment> result = dialog.showAndWait();
 
         result.ifPresent(appointment -> {
-
+            //Save appointment and update agenda
         });
     }
 
     public void newConsultation(ActionEvent actionEvent) {
-        Dialog patientDialog = new Dialog();
+        Dialog<Patient> patientDialog = new Dialog<>();
         patientDialog.setTitle("Nueva consulta");
         patientDialog.setHeaderText(null);
 
@@ -368,7 +394,39 @@ public class MenuController {
 
         patientDialog.getDialogPane().setContent(vBox);
 
-        patientDialog.showAndWait();
+        patientDialog.setResultConverter(patientDialogButton -> {
+            if(patientDialogButton == selectPatient){
+                //Return the selected patient or an alert if null
+                return new Patient(
+                        "Jane",
+                        "Doe",
+                        'F',
+                        LocalDate.now(),
+                        "",
+                        "",
+                        ""
+                );
+            }
+            return null;
+        });
+
+        Optional<Patient> patientResult = patientDialog.showAndWait();
+
+        patientResult.ifPresent(this::beginConsultation);
+    }
+
+    public void beginConsultation(Patient patient){
+        consultationController.setPatient(patient);
+
+        hideAll();
+        consultationPane.setVisible(true);
+    }
+
+    public void beginPrescription(Consultation consultation){
+        prescriptionController.setConsultation(consultation);
+
+        hideAll();
+        prescriptionPane.setVisible(true);
     }
 
     public void newPrescription(ActionEvent actionEvent) {
@@ -413,9 +471,9 @@ public class MenuController {
         patientDialog.showAndWait();
     }
 
-    public void showCalendar(ActionEvent actionEvent) {
+    public void showAgenda(ActionEvent actionEvent) {
         hideAll();
-        calendarView.setVisible(true);
+        agendaView.setVisible(true);
     }
 
     public void showPatients(ActionEvent actionEvent) {
@@ -439,11 +497,13 @@ public class MenuController {
     }
 
     private void hideAll(){
-        calendarView.setVisible(false);
+        agendaView.setVisible(false);
         patientsPane.setVisible(false);
         treatmentsPane.setVisible(false);
         studiesPane.setVisible(false);
         configPane.setVisible(false);
         patientRecordPane.setVisible(false);
+        consultationPane.setVisible(false);
+        prescriptionPane.setVisible(false);
     }
 }

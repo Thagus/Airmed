@@ -36,7 +36,7 @@
                   <HBox.margin>
                      <Insets />
                   </HBox.margin></Separator>
-               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showCalendar" text="Agenda">
+               <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#showAgenda" text="Agenda">
                   <HBox.margin>
                      <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
                   </HBox.margin></Button>
