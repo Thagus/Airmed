@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.Consultation;
+import model.Patient;
 import model.Prescription;
 
 public class PrescriptionController {
@@ -41,6 +42,12 @@ public class PrescriptionController {
         this.menuController = menuController;
     }
 
+    public void setPatient(Patient patient) {
+        setConsultation(new Consultation(
+                //Give patient
+        ));
+    }
+
     public void setConsultation(Consultation consultation) {
         this.consultation = consultation;
     }
@@ -69,4 +76,5 @@ public class PrescriptionController {
 
     public void addTreatment(ActionEvent actionEvent) {
     }
+
 }

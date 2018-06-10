@@ -429,6 +429,13 @@ public class MenuController {
         prescriptionPane.setVisible(true);
     }
 
+    public void beginPrescription(Patient patient){
+        prescriptionController.setPatient(patient);
+
+        hideAll();
+        prescriptionPane.setVisible(true);
+    }
+
     public void newPrescription(ActionEvent actionEvent) {
         Dialog patientDialog = new Dialog();
         patientDialog.setTitle("Nueva receta");
@@ -468,7 +475,25 @@ public class MenuController {
 
         patientDialog.getDialogPane().setContent(vBox);
 
-        patientDialog.showAndWait();
+        patientDialog.setResultConverter(patientDialogButton -> {
+            if(patientDialogButton == selectPatient){
+                //Return the selected patient or an alert if null
+                return new Patient(
+                        "Jane",
+                        "Doe",
+                        'F',
+                        LocalDate.now(),
+                        "",
+                        "",
+                        ""
+                );
+            }
+            return null;
+        });
+
+        Optional<Patient> patientResult = patientDialog.showAndWait();
+
+        patientResult.ifPresent(this::beginPrescription);
     }
 
     public void showAgenda(ActionEvent actionEvent) {

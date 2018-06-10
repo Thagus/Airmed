@@ -16,15 +16,10 @@ public class ConsultationController {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
 
-    public void beginPrescription(ActionEvent actionEvent) {
         consultation = new Consultation(
                 //Assign consultation data
         );
-
-
-        menuController.beginPrescription(consultation);
     }
 
     public void goToPrescription(ActionEvent actionEvent) {
