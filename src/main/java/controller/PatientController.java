@@ -55,11 +55,8 @@ public class PatientController {
     @FXML private TextArea notesArea;
 
     private Patient patient;
-    @FXML
-    private void initialize(){
-        System.out.println(genderToggleGroup);
-        System.out.println(genderToggleGroup.getToggles());
-        System.out.println(genderToggleGroup.getToggles().size());
+
+    public void init() {
     }
 
     public void setPatient(Patient patient){
@@ -106,4 +103,6 @@ public class PatientController {
 
         return false;
     }
+
+
 }
