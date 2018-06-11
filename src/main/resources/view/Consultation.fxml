@@ -19,6 +19,9 @@
           <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints />
           <ColumnConstraints />
+         <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints />
+         <ColumnConstraints />
        </columnConstraints>
        <rowConstraints>
           <RowConstraints />
@@ -35,7 +38,7 @@
           <RowConstraints />
           <RowConstraints />
           <RowConstraints />
-          <RowConstraints />
+         <RowConstraints />
        </rowConstraints>
        <children>
           <Label text="Consulta de Juan Pérez González" GridPane.columnSpan="2147483647">
@@ -62,22 +65,22 @@
           <TextField GridPane.columnIndex="4" GridPane.rowIndex="3" />
           <TextField GridPane.columnIndex="4" GridPane.rowIndex="4" />
           <Label text="Peso" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-          <Label text="Exploración física" GridPane.columnSpan="2" GridPane.rowIndex="8">
+          <Label text="Exploración física" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="2">
              <font>
                 <Font name="System Bold" size="14.0" />
              </font></Label>
-          <Label text="Conciencia" GridPane.rowIndex="9" />
-          <Label text="Colaboración" GridPane.rowIndex="10" />
-          <Label text="Mobilidad" GridPane.rowIndex="11" />
-          <Label text="Actitud" GridPane.rowIndex="12" />
-          <Label text="Nutrición" GridPane.rowIndex="13" />
-          <Label text="Hidratación" GridPane.rowIndex="14" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="10" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="12" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="13" />
-          <TextField GridPane.columnIndex="1" GridPane.rowIndex="14" />
+          <Label text="Conciencia" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+          <Label text="Colaboración" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+          <Label text="Mobilidad" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+          <Label text="Actitud" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+          <Label text="Nutrición" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+          <Label text="Hidratación" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="3" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="4" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="5" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="6" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="7" />
+          <TextField GridPane.columnIndex="7" GridPane.rowIndex="8" />
        </children>
        <padding>
           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
