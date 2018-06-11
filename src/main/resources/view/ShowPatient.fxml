@@ -237,7 +237,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#newConsultation" text="Agregar">
+                        <Button mnemonicParsing="false" onAction="#newConsultation" text="Iniciar nueva">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -259,11 +259,47 @@
                   </HBox>
                   <TableView>
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn text="Fecha" />
+                      <TableColumn text="Diagnóstico" />
+                        <TableColumn text="Pronóstico" />
                     </columns>
                   </TableView>
                </children></VBox>
+        </content>
+      </Tab>
+      <Tab text="Recetas">
+        <content>
+            <VBox>
+                <children>
+                    <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
+                        <children>
+                            <Button mnemonicParsing="false" onAction="#newPrescription" text="Nueva">
+                                <HBox.margin>
+                                    <Insets left="5.0" />
+                                </HBox.margin>
+                            </Button>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <CustomTextField fx:id="prescriptionSearchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+                                <left>
+                                    <Label style="-fx-padding: 0 2 0 7;">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
+                                        </graphic>
+                                    </Label>
+                                </left>
+                            </CustomTextField>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                    </HBox>
+                    <TableView>
+                        <columns>
+                            <TableColumn text="Fecha" />
+                            <TableColumn text="Notas" />
+                        </columns>
+                    </TableView>
+                </children></VBox>
         </content>
       </Tab>
         <Tab text="Notas">
