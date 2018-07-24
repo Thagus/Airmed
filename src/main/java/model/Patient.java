@@ -1,15 +1,39 @@
 package model;
 
+import io.ebean.Model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
-public class Patient {
+@Entity
+public class Patient extends Model {
+    @Id
+    private int id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String lastname;
+
+    @Column(nullable = false)
     private char gender;
+
+    @Column(nullable = false)
     private LocalDate birthdate;
+
+    @Column(nullable = false)
     private String email;
+
     private String phone;
+
     private String cellphone;
+
+    @OneToOne(mappedBy = "patient")
+    private Record record;
 
     public Patient(String name, String lastname, char gender, LocalDate birthdate, String email, String phone, String cellphone) {
         this.name = name;
