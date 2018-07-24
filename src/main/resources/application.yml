@@ -1,6 +1,0 @@
-datasource:
-  db:
-    username: airmed
-    password: airmed
-    url: jdbc:h2:~/airmed
-driver: org.h2.Driver
