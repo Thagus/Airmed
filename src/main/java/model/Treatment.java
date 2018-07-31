@@ -18,6 +18,9 @@ public class Treatment extends Model {
 
     private String description;
 
+    @ManyToMany
+    private List<Medicine> medicines;
+
     @ManyToMany(mappedBy = "treatments")
     private List<Prescription> prescriptions;
 }

@@ -2,11 +2,9 @@ package model;
 
 import io.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Patient extends Model {
@@ -25,6 +23,9 @@ public class Patient extends Model {
     @Column(nullable = false)
     private LocalDate birthdate;
 
+    @Column(nullable = false, length = 3)
+    private String bloodType;
+
     @Column(nullable = false)
     private String email;
 
@@ -33,13 +34,18 @@ public class Patient extends Model {
     private String cellphone;
 
     @OneToOne(mappedBy = "patient")
+    @JoinColumn(nullable = false)
     private Record record;
 
-    public Patient(String name, String lastname, char gender, LocalDate birthdate, String email, String phone, String cellphone) {
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
+
+    public Patient(String name, String lastname, char gender, String bloodType, LocalDate birthdate, String email, String phone, String cellphone) {
         this.name = name;
         this.lastname = lastname;
         this.gender = gender;
         this.birthdate = birthdate;
+        this.bloodType = bloodType;
         this.email = email;
         this.phone = phone;
         this.cellphone = cellphone;
@@ -73,6 +79,18 @@ public class Patient extends Model {
         return cellphone;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public Record getRecord() {
+        return record;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -99,5 +117,9 @@ public class Patient extends Model {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 }

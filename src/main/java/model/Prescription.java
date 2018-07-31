@@ -23,12 +23,15 @@ public class Prescription extends Model {
 
     private String notes;
 
+    @OneToOne(mappedBy = "prescription")
+    private Consultation consultation;
+
     @ManyToMany
     private List<Treatment> treatments;
 
     @ManyToMany
     private List<Study> studies;
 
-    @OneToMany(mappedBy = "prescription")
-    private List<PrescribedDose> medicines;
+    @ManyToMany
+    private List<Dose> medicines;
 }

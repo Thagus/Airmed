@@ -21,6 +21,6 @@ public class StudyResult extends Model {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "clob")
     private String result;
 }

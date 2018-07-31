@@ -2,9 +2,7 @@ package model;
 
 import io.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,10 +10,26 @@ public class Consultation extends Model {
     @Id
     private int id;
 
-    @Column(nullable = false)
-    private Patient patient;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Record record;
 
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Prescription prescription;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Measurement measurement;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private VitalSign vitalSign;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Exploration exploration;
 }

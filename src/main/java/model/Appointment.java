@@ -2,9 +2,7 @@ package model;
 
 import io.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,7 +11,8 @@ public class Appointment extends Model {
     @Id
     private int id;
 
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Patient patient;
 
     @Column(nullable = false)
@@ -21,6 +20,9 @@ public class Appointment extends Model {
 
     @Column(nullable = false)
     private LocalTime time;
+
+    @Column(nullable = false)
+    private boolean answered;
 
     public Appointment(Patient patient, LocalDate date, LocalTime time) {
         this.patient = patient;

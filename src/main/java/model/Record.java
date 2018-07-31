@@ -26,9 +26,15 @@ public class Record extends Model {
     @Column(columnDefinition = "clob")
     private String allergies;
 
+    @Column(columnDefinition = "clob")
+    private String notes;
+
     @OneToMany(mappedBy = "record")
     private List<StudyResult> studyResults;
 
     @OneToMany(mappedBy = "record")
     private List<Surgery> surgeries;
+
+    @OneToMany(mappedBy = "record")
+    private List<Consultation> consultations;
 }

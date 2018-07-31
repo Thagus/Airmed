@@ -16,5 +16,8 @@ public class Medicine extends Model {
     private String description;
 
     @OneToMany(mappedBy = "medicine")
-    private List<PrescribedDose> prescribedDoses;
+    private List<Dose> doses;
+
+    @ManyToMany(mappedBy = "medicines")
+    private List<Treatment> treatments;
 }
