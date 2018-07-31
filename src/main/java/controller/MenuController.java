@@ -138,6 +138,9 @@ public class MenuController {
         SegmentedButton gender = new SegmentedButton();
         gender.getButtons().addAll(female, male);
 
+        TextField bloodTypeField = new TextField();
+        bloodTypeField.setPromptText("Grupo sanguíneo");
+
         TextField emailField = new TextField();
         emailField.setPromptText("Correo electrónico");
 
@@ -155,12 +158,14 @@ public class MenuController {
         grid.add(birthdateField, 1, 2);
         grid.add(new Label("Género"), 0, 3);
         grid.add(gender, 1, 3);
-        grid.add(new Label("Correo"), 0, 4);
-        grid.add(emailField, 1, 4);
-        grid.add(new Label("Teléfono"), 0, 5);
-        grid.add(phoneField, 1, 5);
-        grid.add(new Label("Celular"), 0, 6);
-        grid.add(cellphoneField, 1, 6);
+        grid.add(new Label("Grupo Sanguíneo"), 0, 4);
+        grid.add(bloodTypeField, 1, 4);
+        grid.add(new Label("Correo"), 0, 5);
+        grid.add(emailField, 1, 5);
+        grid.add(new Label("Teléfono"), 0, 6);
+        grid.add(phoneField, 1, 6);
+        grid.add(new Label("Celular"), 0, 7);
+        grid.add(cellphoneField, 1, 7);
 
         /*
         //Disable buttons that add the patient, to wait for field validation
@@ -208,6 +213,7 @@ public class MenuController {
                         nameField.getText(),
                         lastnameField.getText(),
                         (char) gender.getToggleGroup().getSelectedToggle().getUserData(),
+                        bloodTypeField.getText(),
                         birthdateField.getValue(),
                         emailField.getText(),
                         phoneField.getText(),
@@ -304,6 +310,7 @@ public class MenuController {
                             "Jane",
                             "Doe",
                             'F',
+                            "0+",
                             LocalDate.now(),
                             "",
                             "",
@@ -401,6 +408,7 @@ public class MenuController {
                         "Jane",
                         "Doe",
                         'F',
+                        "0+",
                         LocalDate.now(),
                         "",
                         "",
@@ -482,6 +490,7 @@ public class MenuController {
                         "Jane",
                         "Doe",
                         'F',
+                        "0+",
                         LocalDate.now(),
                         "",
                         "",
