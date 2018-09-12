@@ -27,6 +27,8 @@ public class Main extends Application {
         MenuController controller = loader.getController();
         controller.init();
 
+        controller.showAgenda(null);
+
         this.primaryStage.setScene(scene);
         this.primaryStage.show();
     }
