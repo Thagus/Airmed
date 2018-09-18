@@ -26,7 +26,6 @@ public class Patient extends Model {
     @Column(nullable = false, length = 3)
     private String bloodType;
 
-    @Column(nullable = false)
     private String email;
 
     private String phone;

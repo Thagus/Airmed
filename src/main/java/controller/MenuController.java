@@ -135,8 +135,8 @@ public class MenuController {
         ToggleButton male = new ToggleButton("M");
         male.setToggleGroup(genderGroup);
         male.setUserData('M');
-        SegmentedButton gender = new SegmentedButton();
-        gender.getButtons().addAll(female, male);
+        SegmentedButton genderSegment = new SegmentedButton();
+        genderSegment.getButtons().addAll(female, male);
 
         TextField bloodTypeField = new TextField();
         bloodTypeField.setPromptText("Grupo sanguíneo");
@@ -157,7 +157,7 @@ public class MenuController {
         grid.add(new Label("Fecha de nacimiento"), 0, 2);
         grid.add(birthdateField, 1, 2);
         grid.add(new Label("Género"), 0, 3);
-        grid.add(gender, 1, 3);
+        grid.add(genderSegment, 1, 3);
         grid.add(new Label("Grupo Sanguíneo"), 0, 4);
         grid.add(bloodTypeField, 1, 4);
         grid.add(new Label("Correo"), 0, 5);
@@ -167,38 +167,10 @@ public class MenuController {
         grid.add(new Label("Celular"), 0, 7);
         grid.add(cellphoneField, 1, 7);
 
-        /*
-        //Disable buttons that add the patient, to wait for field validation
-        Node addButtonNode = dialog.getDialogPane().lookupButton(addPatientButton);
-        addButtonNode.setDisable(true);
-        Node recordButtonNode = dialog.getDialogPane().lookupButton(showMedicalRecordButton);
-        recordButtonNode.setDisable(true);
-
-
-        Pattern pattern = Pattern.compile("[^A-Za-z0-9 ]");
-
-        ChangeListener<String> changeListener = (observable, oldValue, newValue) -> {
-            Matcher m = pattern.matcher(newValue);
-            if(!newValue.trim().isEmpty() && !m.find()){
-                addButtonNode.setDisable(false);
-                recordButtonNode.setDisable(false);
-            }
-            else {
-                addButtonNode.setDisable(true);
-                recordButtonNode.setDisable(true);
-            }
-        };
-
-        //Add validators
-        nameField.textProperty().addListener(changeListener);
-        lastnameField.textProperty().addListener(changeListener);
-*/
-
         dialog.getDialogPane().setContent(grid);
 
         //Focus the name field whe starting the dialog
         Platform.runLater(nameField::requestFocus);
-
 
         dialog.setResultConverter(dialogButton -> {
             if(dialogButton == addPatientButton || dialogButton == showMedicalRecordButton){
@@ -207,17 +179,28 @@ public class MenuController {
                 }
 
                 ///Check that all fields are correct
+                String name = nameField.getText();
+                String lastname = lastnameField.getText();
+                char gender = (char) genderSegment.getToggleGroup().getSelectedToggle().getUserData();
+                String bloodtype = bloodTypeField.getText();
+                LocalDate birthdate = birthdateField.getValue();
+                String email = emailField.getText();
+                String phone = phoneField.getText();
+                String cellphone = cellphoneField.getText();
 
+                if(name.length()==0 || lastname.length()==0 || !(gender=='F' || gender=='M') || bloodtype.length()==0 || birthdate==null){
+                    return null;
+                }
 
                 return new Patient(
-                        nameField.getText(),
-                        lastnameField.getText(),
-                        (char) gender.getToggleGroup().getSelectedToggle().getUserData(),
-                        bloodTypeField.getText(),
-                        birthdateField.getValue(),
-                        emailField.getText(),
-                        phoneField.getText(),
-                        cellphoneField.getText()
+                        name,
+                        lastname,
+                        gender,
+                        bloodtype,
+                        birthdate,
+                        email,
+                        phone,
+                        cellphone
                 );
             }
 
