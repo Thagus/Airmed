@@ -64,7 +64,6 @@ public class Main extends Application {
                 String password = result.get();
                 if(password.length()>0) {
                     dsConfig.setPassword(password + " " + password);
-                    System.out.println("##########" + password);
 
                     ServerConfig config = new ServerConfig();
                     config.setName("airmed");
