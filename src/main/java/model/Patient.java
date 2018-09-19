@@ -1,5 +1,6 @@
 package model;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 
 import javax.persistence.*;
@@ -39,16 +40,24 @@ public class Patient extends Model {
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
-    public Patient(String name, String lastname, char gender, String bloodType, LocalDate birthdate, String email, String phone, String cellphone) {
-        this.name = name;
-        this.lastname = lastname;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.bloodType = bloodType;
-        this.email = email;
-        this.phone = phone;
-        this.cellphone = cellphone;
+    public static Finder<Integer, Patient> find = new Finder<>(Patient.class);
+
+    public static Patient create (String name, String lastname, char gender, String bloodType, LocalDate birthdate, String email, String phone, String cellphone) {
+        Patient patient = new Patient();
+
+        patient.name = name;
+        patient.lastname = lastname;
+        patient.gender = gender;
+        patient.birthdate = birthdate;
+        patient.bloodType = bloodType;
+        patient.email = email;
+        patient.phone = phone;
+        patient.cellphone = cellphone;
+
+        patient.save();
+        return patient;
     }
+
 
     public String getName() {
         return name;

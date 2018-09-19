@@ -192,7 +192,7 @@ public class MenuController {
                     return null;
                 }
 
-                return new Patient(
+                return Patient.create(
                         name,
                         lastname,
                         gender,
@@ -289,7 +289,7 @@ public class MenuController {
             patientDialog.setResultConverter(patientDialogButton -> {
                 if(patientDialogButton == selectPatient){
                     //Return the selected patient or an alert if null
-                    return new Patient(
+                    return Patient.create(
                             "Jane",
                             "Doe",
                             'F',
@@ -387,7 +387,7 @@ public class MenuController {
         patientDialog.setResultConverter(patientDialogButton -> {
             if(patientDialogButton == selectPatient){
                 //Return the selected patient or an alert if null
-                return new Patient(
+                return Patient.create(
                         "Jane",
                         "Doe",
                         'F',
@@ -469,7 +469,7 @@ public class MenuController {
         patientDialog.setResultConverter(patientDialogButton -> {
             if(patientDialogButton == selectPatient){
                 //Return the selected patient or an alert if null
-                return new Patient(
+                return Patient.create(
                         "Jane",
                         "Doe",
                         'F',
