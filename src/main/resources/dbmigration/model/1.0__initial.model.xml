@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="appointment" pkName="pk_appointment">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="patient_id" type="integer" notnull="true" references="patient.id" foreignKeyName="fk_appointment_patient_id" foreignKeyIndex="ix_appointment_patient_id"/>
+            <column name="date" type="date" notnull="true"/>
+            <column name="time" type="time" notnull="true"/>
+            <column name="answered" type="boolean" defaultValue="false" notnull="true"/>
+        </createTable>
+        <createTable name="consultation" pkName="pk_consultation">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="record_id" type="integer" notnull="true" references="record.id" foreignKeyName="fk_consultation_record_id" foreignKeyIndex="ix_consultation_record_id"/>
+            <column name="date_time" type="timestamp" notnull="true"/>
+            <column name="prescription_id" type="integer" notnull="true" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
+        </createTable>
+        <createTable name="dose" pkName="pk_dose">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="dose" type="varchar" notnull="true"/>
+            <column name="medicine_id" type="integer" references="medicine.id" foreignKeyName="fk_dose_medicine_id" foreignKeyIndex="ix_dose_medicine_id"/>
+        </createTable>
+        <createTable name="exploration" identityType="external" pkName="pk_exploration">
+            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_exploration_id"/>
+            <column name="awareness" type="varchar"/>
+            <column name="collaboration" type="varchar"/>
+            <column name="mobility" type="varchar"/>
+            <column name="attitude" type="varchar"/>
+            <column name="nutrition" type="varchar"/>
+            <column name="hydration" type="varchar"/>
+        </createTable>
+        <createTable name="measurement" identityType="external" pkName="pk_measurement">
+            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_measurement_id"/>
+            <column name="weight" type="integer" notnull="true"/>
+            <column name="height" type="integer" notnull="true"/>
+        </createTable>
+        <createTable name="medicine" pkName="pk_medicine">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="description" type="varchar"/>
+        </createTable>
+        <createTable name="patient" pkName="pk_patient">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="lastname" type="varchar" notnull="true"/>
+            <column name="gender" type="varchar" notnull="true"/>
+            <column name="birthdate" type="date" notnull="true"/>
+            <column name="blood_type" type="varchar(3)" notnull="true"/>
+            <column name="email" type="varchar"/>
+            <column name="phone" type="varchar"/>
+            <column name="cellphone" type="varchar"/>
+        </createTable>
+        <createTable name="prescription" pkName="pk_prescription">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="patient_id" type="integer" references="patient.id" foreignKeyName="fk_prescription_patient_id" foreignKeyIndex="ix_prescription_patient_id"/>
+            <column name="date_time" type="timestamp" notnull="true"/>
+            <column name="diagnostic" type="varchar"/>
+            <column name="prognosis" type="varchar"/>
+            <column name="notes" type="varchar"/>
+        </createTable>
+        <createTable name="prescription_treatment" pkName="pk_prescription_treatment">
+            <column name="prescription_id" type="integer" notnull="true" primaryKey="true"/>
+            <column name="treatment_id" type="integer" notnull="true" primaryKey="true"/>
+            <foreignKey name="fk_prescription_treatment_prescription" columnNames="prescription_id" refColumnNames="id" refTableName="prescription" indexName="ix_prescription_treatment_prescription"/>
+            <foreignKey name="fk_prescription_treatment_treatment" columnNames="treatment_id" refColumnNames="id" refTableName="treatment" indexName="ix_prescription_treatment_treatment"/>
+        </createTable>
+        <createTable name="prescription_study" pkName="pk_prescription_study">
+            <column name="prescription_id" type="integer" notnull="true" primaryKey="true"/>
+            <column name="study_id" type="integer" notnull="true" primaryKey="true"/>
+            <foreignKey name="fk_prescription_study_prescription" columnNames="prescription_id" refColumnNames="id" refTableName="prescription" indexName="ix_prescription_study_prescription"/>
+            <foreignKey name="fk_prescription_study_study" columnNames="study_id" refColumnNames="id" refTableName="study" indexName="ix_prescription_study_study"/>
+        </createTable>
+        <createTable name="prescription_dose" pkName="pk_prescription_dose">
+            <column name="prescription_id" type="integer" notnull="true" primaryKey="true"/>
+            <column name="dose_id" type="integer" notnull="true" primaryKey="true"/>
+            <foreignKey name="fk_prescription_dose_prescription" columnNames="prescription_id" refColumnNames="id" refTableName="prescription" indexName="ix_prescription_dose_prescription"/>
+            <foreignKey name="fk_prescription_dose_dose" columnNames="dose_id" refColumnNames="id" refTableName="dose" indexName="ix_prescription_dose_dose"/>
+        </createTable>
+        <createTable name="record" pkName="pk_record">
+            <column name="id" type="integer" primaryKey="true" uniqueOneToOne="uq_record_id" references="patient.id" foreignKeyName="fk_record_id"/>
+            <column name="family_bg" type="clob"/>
+            <column name="personal_bg" type="clob"/>
+            <column name="systems_bg" type="clob"/>
+            <column name="allergies" type="clob"/>
+            <column name="notes" type="clob"/>
+        </createTable>
+        <createTable name="setting" identityType="external" pkName="pk_setting">
+            <column name="setting" type="varchar" primaryKey="true"/>
+            <column name="value" type="varchar" notnull="true"/>
+        </createTable>
+        <createTable name="study" pkName="pk_study">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="description" type="varchar"/>
+        </createTable>
+        <createTable name="study_result" pkName="pk_study_result">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="study_id" type="integer" notnull="true" references="study.id" foreignKeyName="fk_study_result_study_id" foreignKeyIndex="ix_study_result_study_id"/>
+            <column name="record_id" type="integer" notnull="true" references="record.id" foreignKeyName="fk_study_result_record_id" foreignKeyIndex="ix_study_result_record_id"/>
+            <column name="date" type="date" notnull="true"/>
+            <column name="result" type="clob" notnull="true"/>
+        </createTable>
+        <createTable name="surgery" pkName="pk_surgery">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="record_id" type="integer" notnull="true" references="record.id" foreignKeyName="fk_surgery_record_id" foreignKeyIndex="ix_surgery_record_id"/>
+            <column name="date" type="date"/>
+            <column name="description" type="varchar"/>
+        </createTable>
+        <createTable name="treatment" pkName="pk_treatment">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="description" type="varchar"/>
+        </createTable>
+        <createTable name="treatment_medicine" pkName="pk_treatment_medicine">
+            <column name="treatment_id" type="integer" notnull="true" primaryKey="true"/>
+            <column name="medicine_id" type="integer" notnull="true" primaryKey="true"/>
+            <foreignKey name="fk_treatment_medicine_treatment" columnNames="treatment_id" refColumnNames="id" refTableName="treatment" indexName="ix_treatment_medicine_treatment"/>
+            <foreignKey name="fk_treatment_medicine_medicine" columnNames="medicine_id" refColumnNames="id" refTableName="medicine" indexName="ix_treatment_medicine_medicine"/>
+        </createTable>
+        <createTable name="vital_sign" identityType="external" pkName="pk_vital_sign">
+            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_vital_sign_id"/>
+            <column name="pressure_d" type="integer" notnull="true"/>
+            <column name="pressure_s" type="integer" notnull="true"/>
+            <column name="pulse" type="integer" notnull="true"/>
+            <column name="temperature" type="integer" notnull="true"/>
+            <column name="breath" type="integer" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>

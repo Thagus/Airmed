@@ -1,5 +1,4 @@
 import controller.MenuController;
-import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
 import javafx.application.Application;
@@ -16,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.avaje.datasource.DataSourceConfig;
 import utils.ShakeTransition;
-
 import java.io.IOException;
 import java.util.Locale;
 
@@ -41,6 +39,7 @@ public class Main extends Application {
         ServerConfig config = new ServerConfig();
         config.setName("airmed");
         config.setDefaultServer(true);
+        config.setRunMigration(true);
 
         //Create prompt dialog
         Dialog dialog = new Dialog();
@@ -91,21 +90,14 @@ public class Main extends Application {
 
                             //Try to initiate db connection
                             try {
-                                EbeanServer server = EbeanServerFactory.create(config);
-
-                                /*
-                                //TODO: Run migrations
-                                MigrationConfig migrationConfig = new MigrationConfig();
-                                migrationConfig.set
-                                MigrationRunner runner = new MigrationRunner();
-                                */
+                                EbeanServerFactory.create(config);
 
                                 //Close the dialog and initiate primary stage
                                 dialog.close();
                                 createPrimaryStage();
                             }
                             catch (Exception ignored){  //If the login fails, shake the dialog and ask for the password again
-                                ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t->passwordField.requestFocus());
+                                ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
                                 anim.playFromStart();
                             }
                         }
