@@ -23,13 +23,16 @@ public class Main extends Application {
     private Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         Locale.setDefault(new Locale("es", "mx"));
         this.primaryStage = primaryStage;
 
         databaseLogin();
     }
 
+    /**
+     * Login to the database based on the password provided by the user
+     */
     private void databaseLogin(){
         DataSourceConfig dsConfig = new DataSourceConfig();
         dsConfig.setUsername("airmed");
@@ -57,7 +60,7 @@ public class Main extends Application {
 
         //Add password label and field to the layout
         PasswordField passwordField = new PasswordField();
-        box.getChildren().addAll(new Label("Password :"), passwordField);
+        box.getChildren().addAll(new Label("Contraseña :"), passwordField);
 
         //Disable login button by default
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
@@ -105,6 +108,10 @@ public class Main extends Application {
                 });
     }
 
+    /**
+     * Create the primary stage, initialize the controllers and show the agenda as main view
+     * @throws IOException IF the fxml is missing from resources
+     */
     private void createPrimaryStage() throws IOException {
         this.primaryStage.setTitle("Airmed");
 
