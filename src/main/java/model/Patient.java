@@ -39,6 +39,9 @@ public class Patient extends Model {
 
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
+    
+    @OneToMany(mappedBy = "patient")
+    private List<Consultation> consultations;
 
     public static Finder<Integer, Patient> find = new Finder<>(Patient.class);
 

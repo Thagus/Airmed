@@ -4,6 +4,7 @@ import io.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
+import io.ebean.Finder;
 
 @Entity
 public class Record extends Model {
@@ -34,7 +35,6 @@ public class Record extends Model {
 
     @OneToMany(mappedBy = "record")
     private List<Surgery> surgeries;
-
-    @OneToMany(mappedBy = "record")
-    private List<Consultation> consultations;
+    
+    public static Finder<Integer, Record> find = new Finder<>(Record.class);
 }

@@ -4,6 +4,7 @@ import io.ebean.Model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import io.ebean.Finder;
 
 @Entity
 public class Consultation extends Model {
@@ -12,7 +13,7 @@ public class Consultation extends Model {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Record record;
+    private Patient patient;
 
     @Column(nullable = false)
     private LocalDateTime dateTime;
@@ -32,4 +33,6 @@ public class Consultation extends Model {
     @OneToOne
     @PrimaryKeyJoinColumn
     private Exploration exploration;
+    
+    public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
 }
