@@ -24,7 +24,7 @@
 <?import org.controlsfx.control.SegmentedButton?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientController">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecordController">
     <TabPane tabClosingPolicy="UNAVAILABLE">
         <Tab text="General">
             <AnchorPane>

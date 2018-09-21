@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import model.Patient;
 import org.controlsfx.control.textfield.CustomTextField;
 
-public class PatientController {
+public class RecordController {
     @FXML private ToggleButton maleToggle;
     @FXML private ToggleButton femaleToggle;
     //General data

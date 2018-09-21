@@ -2,15 +2,14 @@
 create table appointment (
   id                            integer auto_increment not null,
   patient_id                    integer not null,
-  date                          date not null,
-  time                          time not null,
+  date_time                     timestamp not null,
   answered                      boolean default false not null,
   constraint pk_appointment primary key (id)
 );
 
 create table consultation (
   id                            integer auto_increment not null,
-  record_id                     integer not null,
+  patient_id                    integer not null,
   date_time                     timestamp not null,
   prescription_id               integer not null,
   constraint uq_consultation_prescription_id unique (prescription_id),
@@ -157,8 +156,8 @@ create table vital_sign (
 create index ix_appointment_patient_id on appointment (patient_id);
 alter table appointment add constraint fk_appointment_patient_id foreign key (patient_id) references patient (id) on delete restrict on update restrict;
 
-create index ix_consultation_record_id on consultation (record_id);
-alter table consultation add constraint fk_consultation_record_id foreign key (record_id) references record (id) on delete restrict on update restrict;
+create index ix_consultation_patient_id on consultation (patient_id);
+alter table consultation add constraint fk_consultation_patient_id foreign key (patient_id) references patient (id) on delete restrict on update restrict;
 
 alter table consultation add constraint fk_consultation_prescription_id foreign key (prescription_id) references prescription (id) on delete restrict on update restrict;
 

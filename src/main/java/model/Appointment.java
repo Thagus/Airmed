@@ -4,6 +4,7 @@ import io.ebean.Model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import io.ebean.Finder;
 
@@ -17,22 +18,18 @@ public class Appointment extends Model {
     private Patient patient;
 
     @Column(nullable = false)
-    private LocalDate date;
-
-    @Column(nullable = false)
-    private LocalTime time;
+    private LocalDateTime dateTime;
 
     @Column(nullable = false)
     private boolean answered;
     
     public static Finder<Integer, Appointment> find = new Finder<>(Appointment.class);
 
-    public static Appointment create(Patient patient, LocalDate date, LocalTime time) {
+    public static Appointment create(Patient patient, LocalDateTime dateTime) {
         Appointment appointment = new Appointment();
         
         appointment.patient = patient;
-        appointment.date = date;
-        appointment.time = time;
+        appointment.dateTime = dateTime;
         
         appointment.save();
         return appointment;
@@ -46,19 +43,19 @@ public class Appointment extends Model {
         this.patient = patient;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public boolean isAnswered() {
+        return answered;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
     }
 }

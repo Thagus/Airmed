@@ -4,13 +4,12 @@
         <createTable name="appointment" pkName="pk_appointment">
             <column name="id" type="integer" primaryKey="true"/>
             <column name="patient_id" type="integer" notnull="true" references="patient.id" foreignKeyName="fk_appointment_patient_id" foreignKeyIndex="ix_appointment_patient_id"/>
-            <column name="date" type="date" notnull="true"/>
-            <column name="time" type="time" notnull="true"/>
+            <column name="date_time" type="timestamp" notnull="true"/>
             <column name="answered" type="boolean" defaultValue="false" notnull="true"/>
         </createTable>
         <createTable name="consultation" pkName="pk_consultation">
             <column name="id" type="integer" primaryKey="true"/>
-            <column name="record_id" type="integer" notnull="true" references="record.id" foreignKeyName="fk_consultation_record_id" foreignKeyIndex="ix_consultation_record_id"/>
+            <column name="patient_id" type="integer" notnull="true" references="patient.id" foreignKeyName="fk_consultation_patient_id" foreignKeyIndex="ix_consultation_patient_id"/>
             <column name="date_time" type="timestamp" notnull="true"/>
             <column name="prescription_id" type="integer" notnull="true" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
         </createTable>
