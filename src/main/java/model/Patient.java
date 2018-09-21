@@ -133,4 +133,8 @@ public class Patient extends Model {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
+
+    public String getFullName() {
+        return name + " " + lastname;
+    }
 }
