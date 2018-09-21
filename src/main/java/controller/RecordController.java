@@ -7,12 +7,14 @@ import model.Patient;
 import org.controlsfx.control.textfield.CustomTextField;
 
 public class RecordController {
-    @FXML private ToggleButton maleToggle;
-    @FXML private ToggleButton femaleToggle;
+    @FXML private TabPane recordTabPane;
+
     //General data
     @FXML private TextField nameField;
     @FXML private TextField lastnameField;
     @FXML private ToggleGroup genderToggleGroup;
+    @FXML private ToggleButton maleToggle;
+    @FXML private ToggleButton femaleToggle;
     @FXML private DatePicker birthdateField;
     @FXML private TextField ageField;
     @FXML private TextField bloodTypeField;
@@ -60,6 +62,9 @@ public class RecordController {
     }
 
     public void setPatient(Patient patient){
+        //Reset view
+        recordTabPane.getSelectionModel().selectFirst();
+
         //Fix some weird bug that loses the toggle buttons in a group
         genderToggleGroup.getToggles().setAll(maleToggle, femaleToggle);
 
