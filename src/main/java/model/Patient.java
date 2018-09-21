@@ -34,7 +34,6 @@ public class Patient extends Model {
     private String cellphone;
 
     @OneToOne(mappedBy = "patient")
-    @JoinColumn(nullable = false)
     private Record record;
 
     @OneToMany(mappedBy = "patient")
