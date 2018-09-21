@@ -5,6 +5,7 @@ import io.ebean.Model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import io.ebean.Finder;
 
 @Entity
 public class Appointment extends Model {
@@ -23,11 +24,18 @@ public class Appointment extends Model {
 
     @Column(nullable = false)
     private boolean answered;
+    
+    public static Finder<Integer, Appointment> find = new Finder<>(Appointment.class);
 
-    public Appointment(Patient patient, LocalDate date, LocalTime time) {
-        this.patient = patient;
-        this.date = date;
-        this.time = time;
+    public static Appointment create(Patient patient, LocalDate date, LocalTime time) {
+        Appointment appointment = new Appointment();
+        
+        appointment.patient = patient;
+        appointment.date = date;
+        appointment.time = time;
+        
+        appointment.save();
+        return appointment;
     }
 
     public Patient getPatient() {
