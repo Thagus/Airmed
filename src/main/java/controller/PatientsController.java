@@ -34,12 +34,14 @@ public class PatientsController {
     @FXML private TableColumn<Patient, Button> recordColumn;
     @FXML private TableColumn<Patient, Button> deleteColumn;
 
+    private ObservableList<Patient> patients;
+
     public void init(MenuController menuController){
         this.menuController = menuController;
 
         patientsTable.setPlaceholder(new Label("Sin resultados"));
 
-        final ObservableList<Patient> patients = FXCollections.observableList(Patient.find.all());
+        patients = FXCollections.observableList(Patient.find.all());
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
@@ -51,7 +53,20 @@ public class PatientsController {
         }));
 
         deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Borrar", (Patient patient) -> {
-            patientsTable.getItems().remove(patient);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Borrar paciente");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Estás seguro que deseas borrar a " + patient.getFullName() + " ?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            result.ifPresent(buttonType -> {
+                if(buttonType == ButtonType.OK){
+                    patient.delete();
+                    patients.remove(patient);
+                }
+            });
+
             return patient;
         }));
 
@@ -195,8 +210,10 @@ public class PatientsController {
         Optional<Patient> result = dialog.showAndWait();
 
         result.ifPresent(patient -> {
+            patients.add(patient);
+            patientsTable.refresh();
+
             if(showRecordAfterwards.get()) {
-                patientsTable.getItems().add(patient);
                 menuController.showPatientRecord(patient);
             }
         });
