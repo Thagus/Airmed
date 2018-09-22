@@ -1,14 +1,21 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.Patient;
+import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
+import utils.ActionButtonTableCell;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -19,17 +26,64 @@ public class PatientsController {
     private MenuController menuController;
 
     @FXML private CustomTextField searchField;
-    @FXML private TableView patientsTable;
+    @FXML private TableView<Patient> patientsTable;
 
-    @FXML private TableColumn nameColumn;
-    @FXML private TableColumn lastnameColumn;
-    @FXML private TableColumn gender;
-    @FXML private TableColumn recordColumn;
-    @FXML private TableColumn consultationColumn;
-    @FXML private TableColumn deleteColumn;
+    @FXML private TableColumn<Patient,String> nameColumn;
+    @FXML private TableColumn<Patient,String> lastnameColumn;
+    @FXML private TableColumn<Patient,String> genderColumn;
+    @FXML private TableColumn<Patient, Button> recordColumn;
+    @FXML private TableColumn<Patient, Button> deleteColumn;
 
     public void init(MenuController menuController){
         this.menuController = menuController;
+
+        patientsTable.setPlaceholder(new Label("Sin resultados"));
+
+        final ObservableList<Patient> patients = FXCollections.observableList(Patient.find.all());
+
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+
+        recordColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Expediente", (Patient patient) -> {
+            menuController.showPatientRecord(patient);
+            return patient;
+        }));
+
+        deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Borrar", (Patient patient) -> {
+            patientsTable.getItems().remove(patient);
+            return patient;
+        }));
+
+        FilteredList<Patient> filteredPatients = new FilteredList<>(patients, p -> true);   //Wrap the observable list into a filtered list
+
+        searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            filteredPatients.setPredicate(patient -> {
+                //If filter text is empty, display all.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                //Simplify the search string by striping accents and making it lowercase
+                String lcSearch = StringUtils.stripAccents(newValue).toLowerCase();
+
+                //Return true if all the search terms are contained in the name or the lastname
+                boolean match = true;
+                for(String term : lcSearch.split("\\s+")){
+                    match = match && (
+                            StringUtils.stripAccents(patient.getName()).toLowerCase().contains(term) ||
+                            StringUtils.stripAccents(patient.getLastname()).toLowerCase().contains(term)
+                    );
+                }
+
+                return match;
+            });
+        }));
+
+        SortedList<Patient> sortedPatients = new SortedList<>(filteredPatients);        //Wrap the filtered list in a sorted list
+        sortedPatients.comparatorProperty().bind(patientsTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
+
+        patientsTable.setItems(sortedPatients);
     }
 
     public void newPatient(ActionEvent actionEvent) {
@@ -141,9 +195,8 @@ public class PatientsController {
         Optional<Patient> result = dialog.showAndWait();
 
         result.ifPresent(patient -> {
-            //Save patient to database
-
             if(showRecordAfterwards.get()) {
+                patientsTable.getItems().add(patient);
                 menuController.showPatientRecord(patient);
             }
         });

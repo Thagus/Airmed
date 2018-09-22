@@ -36,9 +36,8 @@
         <columns>
             <TableColumn fx:id="nameColumn" text="Nombre"/>
             <TableColumn fx:id="lastnameColumn" text="Apellido"/>
-            <TableColumn fx:id="gender" text="Sexo"/>
+            <TableColumn fx:id="genderColumn" text="Sexo"/>
             <TableColumn fx:id="recordColumn"/>
-            <TableColumn fx:id="consultationColumn"/>
             <TableColumn fx:id="deleteColumn"/>
         </columns>
     </TableView>
