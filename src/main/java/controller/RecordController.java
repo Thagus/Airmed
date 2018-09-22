@@ -7,6 +7,7 @@ import model.Patient;
 import org.controlsfx.control.textfield.CustomTextField;
 
 public class RecordController {
+    @FXML private Label recordLabel;
     @FXML private TabPane recordTabPane;
 
     //General data
@@ -62,6 +63,9 @@ public class RecordController {
     }
 
     public void setPatient(Patient patient){
+        //Set record label to patient full name
+        recordLabel.setText("Expediente: " + patient.getFullName());
+
         //Reset view
         recordTabPane.getSelectionModel().selectFirst();
 

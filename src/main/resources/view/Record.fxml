@@ -25,6 +25,18 @@
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecordController">
+    <HBox alignment="CENTER_LEFT">
+        <children>
+            <Label fx:id="recordLabel" text="Expediente: " underline="true" GridPane.columnSpan="2147483647">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+        </children>
+        <VBox.margin>
+            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+        </VBox.margin>
+    </HBox>
     <TabPane fx:id="recordTabPane" tabClosingPolicy="UNAVAILABLE">
         <Tab text="General">
             <AnchorPane>
@@ -38,8 +50,6 @@
                             <ColumnConstraints />
                         </columnConstraints>
                         <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                            <RowConstraints maxHeight="25.0" minHeight="0.0" percentHeight="0.0" prefHeight="10.0" />
                             <RowConstraints />
                             <RowConstraints />
                             <RowConstraints />
@@ -48,31 +58,26 @@
                             <RowConstraints />
                         </rowConstraints>
                         <children>
-                            <Label text="Nombre" GridPane.rowIndex="2" />
-                            <Label text="Apellido" GridPane.rowIndex="3" />
-                            <Label text="Género" GridPane.rowIndex="4" />
-                            <Label prefHeight="17.0" prefWidth="124.0" text="Fecha de nacimiento" GridPane.rowIndex="5" />
-                            <Label text="Edad" GridPane.rowIndex="6" />
-                            <Label text="Grupo sanguineo" GridPane.rowIndex="7" />
-                            <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                            <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                            <DatePicker fx:id="birthdateField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                            <TextField fx:id="ageField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                            <TextField fx:id="bloodTypeField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                            <Label text="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                            <Label text="Dirección" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                            <TextField fx:id="emailField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                            <TextField fx:id="addressField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                            <Label text="Expediente: Juan Pérez González " underline="true" GridPane.columnSpan="2147483647">
-                                <font>
-                                    <Font name="System Bold" size="18.0" />
-                                </font>
-                            </Label>
-                      <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <Label text="Nombre" />
+                            <Label text="Apellido" GridPane.rowIndex="1" />
+                            <Label text="Género" GridPane.rowIndex="2" />
+                            <Label prefHeight="17.0" prefWidth="124.0" text="Fecha de nacimiento" GridPane.rowIndex="3" />
+                            <Label text="Edad" GridPane.rowIndex="4" />
+                            <Label text="Grupo sanguineo" GridPane.rowIndex="5" />
+                            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+                            <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <DatePicker fx:id="birthdateField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <TextField fx:id="ageField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            <TextField fx:id="bloodTypeField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                            <Label text="Correo electrónico" GridPane.columnIndex="3" />
+                            <Label text="Dirección" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                            <TextField fx:id="emailField" GridPane.columnIndex="4" />
+                            <TextField fx:id="addressField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                      <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="2">
                           <buttons>
                               <ToggleButton fx:id="femaleToggle" text="F" userData="F">
                                <toggleGroup>
