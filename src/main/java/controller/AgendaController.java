@@ -2,9 +2,15 @@ package controller;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -15,11 +21,13 @@ import jfxtras.scene.control.agenda.Agenda;
 import model.Appointment;
 import model.Patient;
 import model.Setting;
+import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -39,12 +47,15 @@ public class AgendaController {
     private int consLengthMins = 30;
 
     public void init(){
+        agendaView.setAllowDragging(false);
+        agendaView.setAllowResize(false);
+
         //Load week agenda
         LocalDate now = LocalDate.now();
         TemporalField field = WeekFields.of(Locale.getDefault()).dayOfWeek();
-        
-        LocalDate weekStart = now.with(field, 1);
-        LocalDate weekEnd = now.with(field, 7);
+
+        LocalDateTime weekStart = LocalDateTime.of(now.with(field, 1), LocalTime.MIN);
+        LocalDateTime weekEnd = LocalDateTime.of(now.with(field, 7), LocalTime.MAX);
 
         List<Appointment> appointments = Appointment.find.query().where().between("dateTime", weekStart, weekEnd).findList();
 
@@ -60,11 +71,13 @@ public class AgendaController {
 
         //Add all week appointments to the AgendaView
         for(Appointment appointment:appointments){
+            System.out.println(appointment);
             agendaView.appointments().add(
                     new Agenda.AppointmentImplLocal()
                     .withStartLocalDateTime(appointment.getDateTime())
                     .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
                     .withDescription(appointment.getPatient().getFullName())
+                    .withSummary(appointment.getPatient().getFullName())
             );
         }
     }
@@ -120,11 +133,49 @@ public class AgendaController {
             TableView<Patient> patientTableView = new TableView<>();
 
             TableColumn<Patient, String> nameColumn = new TableColumn<>("Nombre");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             TableColumn<Patient, String> lastnameColumn = new TableColumn<>("Apellido");
+            lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
             TableColumn<Patient, Character> genderColumn = new TableColumn<>("Género");
+            genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
             TableColumn<Patient, Integer> ageColumn = new TableColumn<>("Edad");
+            ageColumn.setCellValueFactory(cellData -> {
+                Patient patientData = cellData.getValue();
+                int years = Period.between(patientData.getBirthdate(), LocalDate.now()).getYears();
+                return new SimpleObjectProperty<>(years);
+            });
 
             patientTableView.getColumns().addAll(nameColumn, lastnameColumn, genderColumn, ageColumn);
+
+            ObservableList<Patient> patients = FXCollections.observableList(Patient.find.all());
+            FilteredList<Patient> filteredPatients = new FilteredList<>(patients, p -> true);   //Wrap the observable list into a filtered list
+
+            searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+                filteredPatients.setPredicate(patient1 -> {
+                    //If filter text is empty, display all.
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    //Simplify the search string by striping accents and making it lowercase
+                    String lcSearch = StringUtils.stripAccents(newValue).toLowerCase();
+
+                    //Return true if all the search terms are contained in the name or the lastname
+                    boolean match = true;
+                    for(String term : lcSearch.split("\\s+")){
+                        match = match && (
+                                StringUtils.stripAccents(patient1.getName()).toLowerCase().contains(term) ||
+                                        StringUtils.stripAccents(patient1.getLastname()).toLowerCase().contains(term)
+                        );
+                    }
+
+                    return match;
+                });
+            }));
+
+            SortedList<Patient> sortedPatients = new SortedList<>(filteredPatients);        //Wrap the filtered list in a sorted list
+            sortedPatients.comparatorProperty().bind(patientTableView.comparatorProperty());   //Bind the sorted list comparator to the table comparator
+            patientTableView.setItems(sortedPatients);
 
             vBox.getChildren().addAll(hBox, patientTableView);
 
@@ -133,23 +184,17 @@ public class AgendaController {
             patientDialog.setResultConverter(patientDialogButton -> {
                 if(patientDialogButton == selectPatient){
                     //Return the selected patient or an alert if null
-                    return Patient.create(
-                            "Jane",
-                            "Doe",
-                            'F',
-                            "0+",
-                            LocalDate.now(),
-                            "",
-                            "",
-                            ""
-                    );
+                    return patientTableView.getSelectionModel().getSelectedItem();
                 }
                 return null;
             });
 
             Optional<Patient> patientResult = patientDialog.showAndWait();
 
-            patientResult.ifPresent(patient::set);
+            patientResult.ifPresent(selectedPatient -> {
+                patient.set(selectedPatient);
+                patientNameField.setText(selectedPatient.getFullName());
+            });
         });
 
 
@@ -172,6 +217,7 @@ public class AgendaController {
 
         dialog.setResultConverter(dialogButton -> {
             if(dialogButton == addAppointmentButton){
+                //Save appointment to database
                 return Appointment.create(
                         patient.get(),
                         LocalDateTime.of(dateField.getValue(), timeField.getLocalTime())
@@ -184,7 +230,14 @@ public class AgendaController {
         Optional<Appointment> result = dialog.showAndWait();
 
         result.ifPresent(appointment -> {
-            //Save appointment and update agenda
+            //Update agenda
+            agendaView.appointments().add(
+                    new Agenda.AppointmentImplLocal()
+                    .withStartLocalDateTime(appointment.getDateTime())
+                    .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                    .withDescription(appointment.getPatient().getFullName())
+            );
+            agendaView.refresh();
         });
     }
 }
