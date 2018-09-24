@@ -19,7 +19,7 @@ public class Treatment extends Model {
     private String description;
 
     @ManyToMany
-    private List<Medicine> medicines;
+    private List<Dose> medicines;
 
     @ManyToMany(mappedBy = "treatments")
     private List<Prescription> prescriptions;
