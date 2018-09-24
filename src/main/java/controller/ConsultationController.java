@@ -7,14 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import model.Appointment;
-import model.Consultation;
-import model.Patient;
+import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 
@@ -26,19 +25,65 @@ import java.util.Optional;
 
 public class ConsultationController {
 
-    private Patient patient;
+    @FXML private TextField pressureField;
+    @FXML private TextField breathField;
+    @FXML private TextField pulseField;
+    @FXML private TextField temperatureField;
+
+    @FXML private TextField heightField;
+    @FXML private TextField weightField;
+
+    @FXML private TextField awarenessField;
+    @FXML private TextField collaborationField;
+    @FXML private TextField mobilityField;
+    @FXML private TextField attitudeField;
+    @FXML private TextField nutritionField;
+    @FXML private TextField hydrationField;
+
     private Consultation consultation;
     private MenuController menuController;
 
     public void init(MenuController menuController){
         this.menuController = menuController;
+
+        //Add filters to vital sign fields
+        pressureField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*") || !newValue.matches("/")) {
+                pressureField.setText(newValue.replaceAll("[^\\d/]", ""));
+            }
+        });
+        breathField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                breathField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        pulseField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                pulseField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        temperatureField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                temperatureField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        //Add numeric only filters to measurement fields
+        heightField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                heightField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        weightField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                weightField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
 
     public void setPatient(Patient patient) {
-        this.patient = patient;
-
-        LocalDate today = LocalDate.now();
         //Find if the patient had an appointment that day
+        LocalDate today = LocalDate.now();
         Appointment appointment = Appointment.find.query().where().eq("patient", patient).between("dateTime", LocalDateTime.of(today, LocalTime.MIN), LocalDateTime.of(today, LocalTime.MAX)).findOne();
 
         if(appointment!=null){
@@ -50,7 +95,32 @@ public class ConsultationController {
     }
 
     public void goToPrescription(ActionEvent actionEvent) {
+        String[] pressures = pressureField.getText().split("/");
         //Save data to consultation
+        consultation.setVitalSign(new VitalSign(
+                consultation,
+                Integer.parseInt(pressures[0]),
+                Integer.parseInt(pressures[1]),
+                Integer.parseInt(pulseField.getText()),
+                Integer.parseInt(temperatureField.getText()),
+                Integer.parseInt(breathField.getText())
+        ));
+
+        consultation.setMeasurement(new Measurement(
+                consultation,
+                Integer.parseInt(weightField.getText()),
+                Integer.parseInt(heightField.getText())
+        ));
+
+        consultation.setExploration(new Exploration(
+                consultation,
+                awarenessField.getText(),
+                collaborationField.getText(),
+                mobilityField.getText(),
+                attitudeField.getText(),
+                nutritionField.getText(),
+                hydrationField.getText()
+        ));
 
         //Begin the prescription stage
         menuController.beginPrescription(consultation);
