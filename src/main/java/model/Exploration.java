@@ -17,14 +17,22 @@ public class Exploration extends Model {
     private String nutrition;
     private String hydration;
 
-    public Exploration(Consultation consultation, String awareness, String collaboration, String mobility, String attitude, String nutrition, String hydration) {
-        this.id = consultation.getId();
-        this.awareness = awareness;
-        this.collaboration = collaboration;
-        this.mobility = mobility;
-        this.attitude = attitude;
-        this.nutrition = nutrition;
-        this.hydration = hydration;
+    public static Exploration create(Consultation consultation, String awareness, String collaboration, String mobility, String attitude, String nutrition, String hydration){
+        if(awareness.length()==0 && collaboration.length()==0 && mobility.length()==0 && attitude.length()==0 && nutrition.length()==0 && hydration.length()==0){
+            return null;
+        }
+
+        Exploration exploration = new Exploration();
+
+        exploration.id = consultation.getId();
+        exploration.awareness = awareness;
+        exploration.collaboration = collaboration;
+        exploration.mobility = mobility;
+        exploration.attitude = attitude;
+        exploration.nutrition = nutrition;
+        exploration.hydration = hydration;
+
+        return exploration;
     }
 
     public int getId() {

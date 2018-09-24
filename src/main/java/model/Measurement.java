@@ -13,10 +13,18 @@ public class Measurement extends Model {
     private int weight;
     private int height;
 
-    public Measurement(Consultation consultation, int weight, int height) {
-        this.id = consultation.getId();
-        this.weight = weight;
-        this.height = height;
+    public static Measurement create(Consultation consultation, int weight, int height){
+        if(weight==0 && height==0){
+            return null;
+        }
+
+        Measurement measurement = new Measurement();
+
+        measurement.id = consultation.getId();
+        measurement.weight = weight;
+        measurement.height = height;
+
+        return measurement;
     }
 
     public int getId() {
