@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,6 +19,7 @@ import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -31,6 +33,7 @@ public class PatientsController {
     @FXML private TableColumn<Patient,String> nameColumn;
     @FXML private TableColumn<Patient,String> lastnameColumn;
     @FXML private TableColumn<Patient,String> genderColumn;
+    @FXML private TableColumn<Patient,Integer> ageColumn;
     @FXML private TableColumn<Patient, Button> recordColumn;
     @FXML private TableColumn<Patient, Button> deleteColumn;
 
@@ -46,6 +49,11 @@ public class PatientsController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        ageColumn.setCellValueFactory(cellData -> {
+            Patient patientData = cellData.getValue();
+            int years = Period.between(patientData.getBirthdate(), LocalDate.now()).getYears();
+            return new SimpleObjectProperty<>(years);
+        });
 
         recordColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Expediente", (Patient patient) -> {
             menuController.showPatientRecord(patient);

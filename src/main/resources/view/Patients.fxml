@@ -37,6 +37,7 @@
             <TableColumn fx:id="nameColumn" text="Nombre" minWidth="200"/>
             <TableColumn fx:id="lastnameColumn" text="Apellido" minWidth="250"/>
             <TableColumn fx:id="genderColumn" text="Sexo"/>
+            <TableColumn fx:id="ageColumn" text="Edad"/>
             <TableColumn fx:id="recordColumn"/>
             <TableColumn fx:id="deleteColumn"/>
         </columns>
