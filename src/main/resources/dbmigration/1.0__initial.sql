@@ -137,10 +137,10 @@ create table treatment (
   constraint pk_treatment primary key (id)
 );
 
-create table treatment_medicine (
+create table treatment_dose (
   treatment_id                  integer not null,
-  medicine_id                   integer not null,
-  constraint pk_treatment_medicine primary key (treatment_id,medicine_id)
+  dose_id                       integer not null,
+  constraint pk_treatment_dose primary key (treatment_id,dose_id)
 );
 
 create table vital_sign (
@@ -200,11 +200,11 @@ alter table study_result add constraint fk_study_result_record_id foreign key (r
 create index ix_surgery_record_id on surgery (record_id);
 alter table surgery add constraint fk_surgery_record_id foreign key (record_id) references record (id) on delete restrict on update restrict;
 
-create index ix_treatment_medicine_treatment on treatment_medicine (treatment_id);
-alter table treatment_medicine add constraint fk_treatment_medicine_treatment foreign key (treatment_id) references treatment (id) on delete restrict on update restrict;
+create index ix_treatment_dose_treatment on treatment_dose (treatment_id);
+alter table treatment_dose add constraint fk_treatment_dose_treatment foreign key (treatment_id) references treatment (id) on delete restrict on update restrict;
 
-create index ix_treatment_medicine_medicine on treatment_medicine (medicine_id);
-alter table treatment_medicine add constraint fk_treatment_medicine_medicine foreign key (medicine_id) references medicine (id) on delete restrict on update restrict;
+create index ix_treatment_dose_dose on treatment_dose (dose_id);
+alter table treatment_dose add constraint fk_treatment_dose_dose foreign key (dose_id) references dose (id) on delete restrict on update restrict;
 
 alter table vital_sign add constraint fk_vital_sign_id foreign key (id) references consultation (id) on delete restrict on update restrict;
 

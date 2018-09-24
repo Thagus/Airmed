@@ -110,11 +110,11 @@
             <column name="name" type="varchar" notnull="true"/>
             <column name="description" type="varchar"/>
         </createTable>
-        <createTable name="treatment_medicine" pkName="pk_treatment_medicine">
+        <createTable name="treatment_dose" pkName="pk_treatment_dose">
             <column name="treatment_id" type="integer" notnull="true" primaryKey="true"/>
-            <column name="medicine_id" type="integer" notnull="true" primaryKey="true"/>
-            <foreignKey name="fk_treatment_medicine_treatment" columnNames="treatment_id" refColumnNames="id" refTableName="treatment" indexName="ix_treatment_medicine_treatment"/>
-            <foreignKey name="fk_treatment_medicine_medicine" columnNames="medicine_id" refColumnNames="id" refTableName="medicine" indexName="ix_treatment_medicine_medicine"/>
+            <column name="dose_id" type="integer" notnull="true" primaryKey="true"/>
+            <foreignKey name="fk_treatment_dose_treatment" columnNames="treatment_id" refColumnNames="id" refTableName="treatment" indexName="ix_treatment_dose_treatment"/>
+            <foreignKey name="fk_treatment_dose_dose" columnNames="dose_id" refColumnNames="id" refTableName="dose" indexName="ix_treatment_dose_dose"/>
         </createTable>
         <createTable name="vital_sign" identityType="external" pkName="pk_vital_sign">
             <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_vital_sign_id"/>
