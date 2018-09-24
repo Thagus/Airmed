@@ -48,13 +48,13 @@ public class PrescriptionController {
     }
 
     public void setPatient(Patient patient) {
-        setConsultation(new Consultation(
-                //Give patient
-        ));
+        this.consultation = null;
+        this.prescription = new Prescription();
     }
 
     public void setConsultation(Consultation consultation) {
         this.consultation = consultation;
+        this.prescription = new Prescription();
     }
 
     public void savePrescription(ActionEvent actionEvent) {
