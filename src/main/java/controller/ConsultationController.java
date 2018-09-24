@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 
 import java.time.LocalDate;
@@ -96,23 +97,32 @@ public class ConsultationController {
 
     public void goToPrescription(ActionEvent actionEvent) {
         String[] pressures = pressureField.getText().split("/");
+
+        int pressureD = 0;
+        int pressureS = 0;
+
+        if(pressures.length>=2) {
+            pressureD = NumberUtils.toInt(pressures[0], 0);
+            pressureS = NumberUtils.toInt(pressures[1], 0);
+        }
+
         //Save data to consultation
-        consultation.setVitalSign(new VitalSign(
+        consultation.setVitalSign(VitalSign.create(
                 consultation,
-                Integer.parseInt(pressures[0]),
-                Integer.parseInt(pressures[1]),
-                Integer.parseInt(pulseField.getText()),
-                Integer.parseInt(temperatureField.getText()),
-                Integer.parseInt(breathField.getText())
+                pressureD,
+                pressureS,
+                NumberUtils.toInt(pulseField.getText(), 0),
+                NumberUtils.toInt(temperatureField.getText(), 0),
+                NumberUtils.toInt(breathField.getText(), 0)
         ));
 
-        consultation.setMeasurement(new Measurement(
+        consultation.setMeasurement(Measurement.create(
                 consultation,
-                Integer.parseInt(weightField.getText()),
-                Integer.parseInt(heightField.getText())
+                NumberUtils.toInt(weightField.getText(), 0),
+                NumberUtils.toInt(heightField.getText(), 0)
         ));
 
-        consultation.setExploration(new Exploration(
+        consultation.setExploration(Exploration.create(
                 consultation,
                 awarenessField.getText(),
                 collaborationField.getText(),
@@ -121,6 +131,7 @@ public class ConsultationController {
                 nutritionField.getText(),
                 hydrationField.getText()
         ));
+
 
         //Begin the prescription stage
         menuController.beginPrescription(consultation);
