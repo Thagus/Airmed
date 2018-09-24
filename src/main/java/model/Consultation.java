@@ -35,4 +35,57 @@ public class Consultation extends Model {
     private Exploration exploration;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
+
+    public Consultation(Patient patient, LocalDateTime dateTime) {
+        this.patient = patient;
+        this.dateTime = dateTime;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
+    }
+
+    public Measurement getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(Measurement measurement) {
+        this.measurement = measurement;
+    }
+
+    public VitalSign getVitalSign() {
+        return vitalSign;
+    }
+
+    public void setVitalSign(VitalSign vitalSign) {
+        this.vitalSign = vitalSign;
+    }
+
+    public Exploration getExploration() {
+        return exploration;
+    }
+
+    public void setExploration(Exploration exploration) {
+        this.exploration = exploration;
+    }
 }
