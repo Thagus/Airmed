@@ -13,7 +13,8 @@ public class Measurement extends Model {
     private int weight;
     private int height;
 
-    public Measurement(int weight, int height) {
+    public Measurement(Consultation consultation, int weight, int height) {
+        this.id = consultation.getId();
         this.weight = weight;
         this.height = height;
     }

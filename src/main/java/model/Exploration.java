@@ -17,7 +17,8 @@ public class Exploration extends Model {
     private String nutrition;
     private String hydration;
 
-    public Exploration(String awareness, String collaboration, String mobility, String attitude, String nutrition, String hydration) {
+    public Exploration(Consultation consultation, String awareness, String collaboration, String mobility, String attitude, String nutrition, String hydration) {
+        this.id = consultation.getId();
         this.awareness = awareness;
         this.collaboration = collaboration;
         this.mobility = mobility;

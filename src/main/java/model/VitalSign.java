@@ -16,7 +16,8 @@ public class VitalSign extends Model {
     private int temperature;
     private int breath;
 
-    public VitalSign(int pressureD, int pressureS, int pulse, int temperature, int breath) {
+    public VitalSign(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath) {
+        this.id = consultation.getId();
         this.pressureD = pressureD;
         this.pressureS = pressureS;
         this.pulse = pulse;

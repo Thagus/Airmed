@@ -41,6 +41,10 @@ public class Consultation extends Model {
         this.dateTime = dateTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Patient getPatient() {
         return patient;
     }
