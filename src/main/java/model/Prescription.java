@@ -34,4 +34,81 @@ public class Prescription extends Model {
 
     @ManyToMany
     private List<Dose> medicines;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getDiagnostic() {
+        return diagnostic;
+    }
+
+    public void setDiagnostic(String diagnostic) {
+        this.diagnostic = diagnostic;
+    }
+
+    public String getPrognosis() {
+        return prognosis;
+    }
+
+    public void setPrognosis(String prognosis) {
+        this.prognosis = prognosis;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+    }
+
+    public List<Treatment> getTreatments() {
+        return treatments;
+    }
+
+    public List<Study> getStudies() {
+        return studies;
+    }
+
+    public List<Dose> getMedicines() {
+        return medicines;
+    }
+
+    public void setTreatments(List<Treatment> treatments) {
+        this.treatments = treatments;
+    }
+
+    public void setStudies(List<Study> studies) {
+        this.studies = studies;
+    }
+
+    public void setMedicines(List<Dose> medicines) {
+        this.medicines = medicines;
+    }
 }
