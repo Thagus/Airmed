@@ -40,7 +40,7 @@ public class StudiesController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        editColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Expediente", (Study study) -> {
+        editColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Editar", (Study study) -> {
             editStudy(study);
             return study;
         }));
