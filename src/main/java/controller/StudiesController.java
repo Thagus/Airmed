@@ -79,7 +79,10 @@ public class StudiesController {
                 //Return true if all the search terms are contained in the name
                 boolean match = true;
                 for(String term : lcSearch.split("\\s+")){
-                    match = match && StringUtils.stripAccents(study.getName()).toLowerCase().contains(term);
+                    match = match && (
+                            StringUtils.stripAccents(study.getName()).toLowerCase().contains(term) ||
+                            StringUtils.stripAccents(study.getDescription()).toLowerCase().contains(term)
+                    );
                 }
 
                 return match;
