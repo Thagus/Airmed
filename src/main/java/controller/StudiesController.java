@@ -86,10 +86,10 @@ public class StudiesController {
             });
         }));
 
-        SortedList<Study> sortedPatients = new SortedList<>(filteredStudies);        //Wrap the filtered list in a sorted list
-        sortedPatients.comparatorProperty().bind(studiesTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
+        SortedList<Study> sortedStudies = new SortedList<>(filteredStudies);        //Wrap the filtered list in a sorted list
+        sortedStudies.comparatorProperty().bind(studiesTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
 
-        studiesTable.setItems(sortedPatients);
+        studiesTable.setItems(sortedStudies);
     }
 
     public void newStudy(ActionEvent actionEvent) {
