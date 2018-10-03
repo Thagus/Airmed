@@ -100,8 +100,8 @@ public class StudiesController {
         dialog.setHeaderText(null);
 
         // Add buttons
-        ButtonType addPatientButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addPatientButton);
+        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
 
         //Form fields
         GridPane grid = new GridPane();
@@ -129,7 +129,7 @@ public class StudiesController {
         Platform.runLater(nameField::requestFocus);
 
         dialog.setResultConverter(dialogButton -> {
-            if(dialogButton == addPatientButton){
+            if(dialogButton == addButton){
 
                 ///Check that all fields are correct
                 String name = nameField.getText();
