@@ -57,9 +57,12 @@ public class RecordController {
     //Notes
     @FXML private TextArea notesArea;
 
+    private MenuController menuController;
+
     private Patient patient;
 
-    public void init() {
+    public void init(MenuController menuController) {
+        this.menuController = menuController;
     }
 
     public void setPatient(Patient patient){
@@ -100,8 +103,12 @@ public class RecordController {
 
     }
 
-    public void newVitalSign(ActionEvent actionEvent) {
+    public void newConsultation(ActionEvent actionEvent) {
+        menuController.beginConsultation(patient);
+    }
 
+    public void newPrescription(ActionEvent actionEvent) {
+        menuController.beginPrescription(patient);
     }
 
     public void savePatient(ActionEvent actionEvent) {
@@ -111,12 +118,5 @@ public class RecordController {
     private boolean isInputValid(){
 
         return false;
-    }
-
-
-    public void newConsultation(ActionEvent actionEvent) {
-    }
-
-    public void newPrescription(ActionEvent actionEvent) {
     }
 }
