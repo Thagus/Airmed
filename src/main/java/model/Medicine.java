@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@UniqueConstraint(columnNames = "name")
 public class Medicine extends Model {
     @Id
     private int id;
@@ -14,18 +15,15 @@ public class Medicine extends Model {
     @Column(nullable = false)
     private String name;
 
-    private String description;
-
     @OneToMany(mappedBy = "medicine")
     private List<Dose> doses;
 
     public static Finder<Integer, Medicine> find = new Finder<>(Medicine.class);
 
-    public static Medicine create(String name, String description) {
+    public static Medicine create(String name) {
         Medicine medicine = new Medicine();
 
         medicine.name = name;
-        medicine.description = description;
 
         medicine.save();
         return medicine;
@@ -39,19 +37,11 @@ public class Medicine extends Model {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public List<Dose> getDoses() {
         return doses;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

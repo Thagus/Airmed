@@ -44,7 +44,7 @@ create table measurement (
 create table medicine (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
-  description                   varchar(255),
+  constraint uq_medicine_name unique (name),
   constraint pk_medicine primary key (id)
 );
 

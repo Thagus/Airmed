@@ -35,7 +35,7 @@
         <createTable name="medicine" pkName="pk_medicine">
             <column name="id" type="integer" primaryKey="true"/>
             <column name="name" type="varchar" notnull="true"/>
-            <column name="description" type="varchar"/>
+            <uniqueConstraint name="uq_medicine_name" columnNames="name" oneToOne="false" nullableColumns=""/>
         </createTable>
         <createTable name="patient" pkName="pk_patient">
             <column name="id" type="integer" primaryKey="true"/>
