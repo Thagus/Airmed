@@ -119,6 +119,7 @@ public class TreatmentsController {
         //Limit the amount of characters in the text field
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
+        descriptionField.setWrapText(true);
 
         grid.add(new Label("Nombre"), 0, 0);
         grid.add(nameField, 1, 0);
@@ -128,7 +129,7 @@ public class TreatmentsController {
         VBox vBox = new VBox();
         TableView<Dose> doseTable = TableFactory.createTreatmentDosesTable(vBox, null);
 
-        grid.add(vBox, 2, 0, 2, 0);
+        grid.add(vBox, 0, 2, 2, 1);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -188,7 +189,7 @@ public class TreatmentsController {
         //Limit the amount of characters in the text field
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
-
+        descriptionField.setWrapText(true);
         grid.add(new Label("Nombre"), 0, 0);
         grid.add(nameField, 1, 0);
         grid.add(new Label("Descripción"), 0, 1);
@@ -197,7 +198,7 @@ public class TreatmentsController {
         VBox vBox = new VBox();
         TableView<Dose> doseTable = TableFactory.createTreatmentDosesTable(vBox, oTreatment.getMedicines());
 
-        grid.add(vBox, 2, 0, 2, 0);
+        grid.add(vBox, 0, 2, 2, 1);
 
         dialog.getDialogPane().setContent(grid);
 

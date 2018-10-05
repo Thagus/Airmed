@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
@@ -108,14 +109,20 @@ public class TableFactory {
         TableColumn<Dose, String> doseColumn = new TableColumn<>();
         TableColumn<Dose, Button> deleteColumn = new TableColumn<>();
 
+        medicineColumn.setText("Medicina");
+        medicineColumn.setMinWidth(100);
+        doseColumn.setText("Dósis");
+        doseColumn.setMinWidth(175);
+
         //Table data
         ObservableList<Dose> doseObservableList = FXCollections.observableList(doses);
         medicineTable.setItems(doseObservableList);
 
         //Column data definitions
-        medicineColumn.setCellValueFactory(dose ->
-                new SimpleObjectProperty<>(dose.getValue().getMedicine().getName())
-        );
+        medicineColumn.setCellValueFactory(cellData -> {
+            Dose dose = cellData.getValue();
+            return new SimpleObjectProperty<>(dose.getMedicine().getName());
+        });
         doseColumn.setCellValueFactory(new PropertyValueFactory<>("dose"));
         deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Borrar", (Dose dose) -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -154,8 +161,9 @@ public class TableFactory {
 
             TextField nameField = new TextField();
             nameField.setPromptText("Nombre del medicamento");
+            nameField.setText(medicineField.getText());
 
-            TextArea doseField = new TextArea();
+            TextField doseField = new TextField();
             doseField.setPromptText("Dósis del medicamento");
             //Limit the amount of characters in the text field
             doseField.setTextFormatter(new TextFormatter<String>(change ->
@@ -168,8 +176,11 @@ public class TableFactory {
 
             dialog.getDialogPane().setContent(grid);
 
-            //Focus the name field whe starting the dialog
-            Platform.runLater(nameField::requestFocus);
+            //Focus the name field whe starting the dialog if there's no name
+            if(nameField.getText().length()>0)
+                Platform.runLater(nameField::requestFocus);
+            else
+                Platform.runLater(doseField::requestFocus);
 
             dialog.setResultConverter(dialogButton -> {
                 if(dialogButton == addButton){
