@@ -1,24 +1,28 @@
 package utils;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import model.Patient;
+import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TableFactory {
     public static TableView<Patient> createPatientTable (VBox vBox){
@@ -86,5 +90,131 @@ public class TableFactory {
         vBox.getChildren().addAll(hBox, patientTableView);
 
         return patientTableView;
+    }
+
+    public static TableView<Dose> createTreatmentDosesTable (VBox vBox, List<Dose> doses){
+        if(doses==null){
+            doses = new ArrayList<>();
+        }
+
+        HBox hBox = new HBox();
+        TextField medicineField = new TextField();
+        Button addMedicineButton = new Button();
+        hBox.getChildren().addAll(medicineField, new Region(), addMedicineButton);
+
+        //Define table and columns
+        TableView<Dose> medicineTable = new TableView<>();
+        TableColumn<Dose, String> medicineColumn = new TableColumn<>();
+        TableColumn<Dose, String> doseColumn = new TableColumn<>();
+        TableColumn<Dose, Button> deleteColumn = new TableColumn<>();
+
+        //Table data
+        ObservableList<Dose> doseObservableList = FXCollections.observableList(doses);
+        medicineTable.setItems(doseObservableList);
+
+        //Column data definitions
+        medicineColumn.setCellValueFactory(dose ->
+                new SimpleObjectProperty<>(dose.getValue().getMedicine().getName())
+        );
+        doseColumn.setCellValueFactory(new PropertyValueFactory<>("dose"));
+        deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Borrar", (Dose dose) -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Borrar medicamento");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Estás seguro que deseas borrar el medicamento " + dose.getMedicine().getName() + " ?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            result.ifPresent(buttonType -> {
+                if(buttonType == ButtonType.OK){
+                    doseObservableList.remove(dose);
+                }
+            });
+
+            return dose;
+        }));
+
+        //Add button action
+        addMedicineButton.setOnAction((event -> {
+            //Open dialog to fill dose data, based on existing db medicines with autocomplete?
+            //Or autocomplete the medicineField, or both
+            Dialog<Dose> dialog = new Dialog<>();
+            dialog.setTitle("Agregar medicamento");
+            dialog.setHeaderText(null);
+
+            // Add buttons
+            ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
+
+            //Form fields
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            TextField nameField = new TextField();
+            nameField.setPromptText("Nombre del medicamento");
+
+            TextArea doseField = new TextArea();
+            doseField.setPromptText("Dósis del medicamento");
+            //Limit the amount of characters in the text field
+            doseField.setTextFormatter(new TextFormatter<String>(change ->
+                    change.getControlNewText().length() <= 255 ? change : null));
+
+            grid.add(new Label("Nombre"), 0, 0);
+            grid.add(nameField, 1, 0);
+            grid.add(new Label("Dósis"), 0, 1);
+            grid.add(doseField, 1, 1);
+
+            dialog.getDialogPane().setContent(grid);
+
+            //Focus the name field whe starting the dialog
+            Platform.runLater(nameField::requestFocus);
+
+            dialog.setResultConverter(dialogButton -> {
+                if(dialogButton == addButton){
+
+                    ///Check that all fields are correct
+                    String name = nameField.getText();
+                    String doseStr = doseField.getText();
+
+                    if(name.length()==0 || doseStr.length()==0){
+                        return null;
+                    }
+
+                    //Find if the medicine already exists
+                    Medicine medicine = Medicine.find.query().where().eq("name", name).findOne();
+                    Dose dose = null;
+
+                    //If the medicine exists, try to find an existing dose
+                    if(medicine!=null) {
+                        dose = Dose.find.query().where().eq("dose", doseStr).eq("medicine", medicine).findOne();
+                    }
+                    //If the medicine doesn't exist, create it
+                    else {
+                        Medicine.create(name);
+                    }
+
+                    //If the dose hasn't been found, create it
+                    if(dose==null){
+                        dose = Dose.create(doseStr, medicine);
+                    }
+
+                    return dose;
+                }
+
+                return null;
+            });
+
+            Optional<Dose> result = dialog.showAndWait();
+
+            result.ifPresent(doseObservableList::add);
+        }));
+
+        medicineTable.getColumns().addAll(medicineColumn, doseColumn, deleteColumn);
+
+        vBox.getChildren().addAll(hBox, medicineTable);
+
+        return medicineTable;
     }
 }
