@@ -171,7 +171,7 @@ public class TreatmentsController {
         dialog.setHeaderText(null);
 
         // Add buttons
-        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        ButtonType addButton = new ButtonType("Editar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
 
         //Form fields

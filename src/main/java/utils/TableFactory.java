@@ -177,7 +177,7 @@ public class TableFactory {
             dialog.getDialogPane().setContent(grid);
 
             //Focus the name field whe starting the dialog if there's no name
-            if(nameField.getText().length()>0)
+            if(nameField.getText().length()==0)
                 Platform.runLater(nameField::requestFocus);
             else
                 Platform.runLater(doseField::requestFocus);

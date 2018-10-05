@@ -162,7 +162,7 @@ public class StudiesController {
         dialog.setHeaderText(null);
 
         // Add buttons
-        ButtonType addPatientButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        ButtonType addPatientButton = new ButtonType("Editar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addPatientButton);
 
         //Form fields
