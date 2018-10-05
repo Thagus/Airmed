@@ -173,9 +173,10 @@ public class StudiesController {
 
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre del estudio");
-
+        nameField.setText(study.getName());
         TextArea descriptionField = new TextArea();
         descriptionField.setPromptText("Descripción del estudio");
+        descriptionField.setText(study.getDescription());
         //Limit the amount of characters in the text field
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
