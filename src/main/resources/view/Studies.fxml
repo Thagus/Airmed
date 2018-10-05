@@ -35,8 +35,8 @@
     </HBox>
     <TableView fx:id="studiesTable">
         <columns>
-            <TableColumn fx:id="nameColumn" text="Nombre"/>
-            <TableColumn fx:id="descriptionColumn" text="Descripción"/>
+            <TableColumn fx:id="nameColumn" text="Nombre" minWidth="120"/>
+            <TableColumn fx:id="descriptionColumn" text="Descripción" minWidth="200"/>
             <TableColumn fx:id="editColumn"/>
             <TableColumn fx:id="deleteColumn"/>
         </columns>

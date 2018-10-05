@@ -190,6 +190,7 @@ public class TreatmentsController {
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
         descriptionField.setWrapText(true);
+
         grid.add(new Label("Nombre"), 0, 0);
         grid.add(nameField, 1, 0);
         grid.add(new Label("Descripción"), 0, 1);
