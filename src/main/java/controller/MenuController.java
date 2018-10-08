@@ -71,7 +71,7 @@ public class MenuController {
         loader = new FXMLLoader(getClass().getResource("/view/Record.fxml"));
         patientRecordPane = loader.load();
         recordController = loader.getController();
-        recordController.init();
+        recordController.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Consultation.fxml"));
         consultationPane = loader.load();
