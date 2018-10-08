@@ -17,7 +17,6 @@ public class RecordController {
     @FXML private ToggleButton maleToggle;
     @FXML private ToggleButton femaleToggle;
     @FXML private DatePicker birthdateField;
-    @FXML private TextField ageField;
     @FXML private TextField bloodTypeField;
     @FXML private TextField emailField;
     @FXML private TextField addressField;
