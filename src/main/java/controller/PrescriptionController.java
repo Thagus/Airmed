@@ -17,17 +17,16 @@ public class PrescriptionController {
     @FXML private TextArea notesArea;
 
     @FXML private TextField treatmentField;
-    @FXML private TextField medicineField;
-    @FXML private TextField studyField;
-
     @FXML private TableView treatmentsTable;
     @FXML private TableColumn treatmentNameColumn;
     @FXML private TableColumn deleteTreatmentColumn;
 
+    @FXML private TextField studyField;
     @FXML private TableView studiesTable;
     @FXML private TableColumn studyNameColumn;
     @FXML private TableColumn deleteStudyColumn;
 
+    @FXML private TextField medicineField;
     @FXML private TableView medicinesTable;
     @FXML private TableColumn medicineNameColumn;
     @FXML private TableColumn doseColumn;
@@ -54,6 +53,11 @@ public class PrescriptionController {
     }
 
     public void savePrescription(ActionEvent actionEvent) {
+        //Get data
+        prescription.setDiagnostic(diagnosisArea.getText());
+        prescription.setPrognosis(prognosisArea.getText());
+        prescription.setNotes(notesArea.getText());
+
         ///Save to database
         if(consultation!=null){
             consultation.save();
@@ -68,6 +72,7 @@ public class PrescriptionController {
 
     public void printPrescription(ActionEvent actionEvent) {
         //Save to database
+        savePrescription(null);
 
         //Show printing dialog
 
