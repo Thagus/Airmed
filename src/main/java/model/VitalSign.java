@@ -1,5 +1,6 @@
 package model;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ public class VitalSign extends Model {
     private int pulse;
     private int temperature;
     private int breath;
+
+    public static Finder<Integer, VitalSign> find = new Finder<>(VitalSign.class);
 
     public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath){
         if(pressureD==0 && pressureS==0 && pulse==0 && temperature==0 && breath==0){
