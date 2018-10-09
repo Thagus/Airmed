@@ -12,7 +12,7 @@ public class Record extends Model {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(nullable = false)
     private Patient patient;
 
     @Column(columnDefinition = "clob")
@@ -42,6 +42,7 @@ public class Record extends Model {
         Record record = new Record();
 
         record.patient = patient;
+        patient.setRecord(record);
 
         record.save();
         return record;

@@ -91,11 +91,13 @@ create table prescription_dose (
 
 create table record (
   id                            integer auto_increment not null,
+  patient_id                    integer not null,
   family_bg                     clob,
   personal_bg                   clob,
   systems_bg                    clob,
   allergies                     clob,
   notes                         clob,
+  constraint uq_record_patient_id unique (patient_id),
   constraint pk_record primary key (id)
 );
 
@@ -189,7 +191,7 @@ alter table prescription_dose add constraint fk_prescription_dose_prescription f
 create index ix_prescription_dose_dose on prescription_dose (dose_id);
 alter table prescription_dose add constraint fk_prescription_dose_dose foreign key (dose_id) references dose (id) on delete restrict on update restrict;
 
-alter table record add constraint fk_record_id foreign key (id) references patient (id) on delete restrict on update restrict;
+alter table record add constraint fk_record_patient_id foreign key (patient_id) references patient (id) on delete restrict on update restrict;
 
 create index ix_study_result_study_id on study_result (study_id);
 alter table study_result add constraint fk_study_result_study_id foreign key (study_id) references study (id) on delete restrict on update restrict;

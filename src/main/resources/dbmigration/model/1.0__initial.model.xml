@@ -75,7 +75,8 @@
             <foreignKey name="fk_prescription_dose_dose" columnNames="dose_id" refColumnNames="id" refTableName="dose" indexName="ix_prescription_dose_dose"/>
         </createTable>
         <createTable name="record" pkName="pk_record">
-            <column name="id" type="integer" primaryKey="true" uniqueOneToOne="uq_record_id" references="patient.id" foreignKeyName="fk_record_id"/>
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="patient_id" type="integer" notnull="true" uniqueOneToOne="uq_record_patient_id" references="patient.id" foreignKeyName="fk_record_patient_id"/>
             <column name="family_bg" type="clob"/>
             <column name="personal_bg" type="clob"/>
             <column name="systems_bg" type="clob"/>
