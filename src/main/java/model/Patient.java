@@ -136,4 +136,16 @@ public class Patient extends Model {
     public String getFullName() {
         return name + " " + lastname;
     }
+
+    public void setRecord(Record record) {
+        this.record = record;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
+    }
 }
