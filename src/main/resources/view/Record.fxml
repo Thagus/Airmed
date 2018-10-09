@@ -67,13 +67,11 @@
                             <DatePicker fx:id="birthdateField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <TextField fx:id="bloodTypeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             <Label text="Correo electrónico" GridPane.columnIndex="3" />
-                            <Label text="Dirección" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                             <TextField fx:id="emailField" GridPane.columnIndex="4" />
-                            <TextField fx:id="addressField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                       <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="2">
                           <buttons>
                               <ToggleButton fx:id="femaleToggle" text="F" userData="F">
