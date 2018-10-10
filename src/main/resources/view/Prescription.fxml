@@ -16,71 +16,69 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrescriptionController">
     <GridPane hgap="10.0" vgap="5.0">
         <columnConstraints>
-            <ColumnConstraints percentWidth="45.0"/>
-            <ColumnConstraints maxWidth="94.0" minWidth="10.0" prefWidth="40.0"/>
-            <ColumnConstraints maxWidth="110.0" minWidth="69.0" prefWidth="110.0"/>
-            <ColumnConstraints percentWidth="35.0"/>
-            <ColumnConstraints/>
+            <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+            <ColumnConstraints minWidth="110.0" prefWidth="110.0" />
+            <ColumnConstraints maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+         <ColumnConstraints maxWidth="16.0" minWidth="16.0" prefWidth="16.0" />
+            <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+            <ColumnConstraints minWidth="110.0" prefWidth="110.0" />
+         <ColumnConstraints maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </padding>
-        <Label text="Diagnóstico"/>
-        <TextArea fx:id="diagnosisArea" GridPane.rowIndex="1"/>
-        <Label text="Pronóstico" GridPane.rowIndex="2"/>
-        <Label text="Notas" GridPane.rowIndex="4"/>
-        <TextArea fx:id="prognosisArea" GridPane.rowIndex="3"/>
-        <TextArea fx:id="notesArea" GridPane.rowIndex="5"/>
-        <Label text="Tratamiento" GridPane.columnIndex="2"/>
-        <TextField fx:id="treatmentField" GridPane.columnIndex="3"/>
-        <TextField fx:id="studyField" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-        <TextField fx:id="medicineField" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
-        <Label minWidth="75.0" text="Medicamento" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
-        <Label text="Estudio" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addMedicine" text="+" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
-        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addStudy" text="+" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
-        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addTreatment" text="+" GridPane.columnIndex="4"/>
-        <TableView fx:id="treatmentsTable" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <Label text="Tratamiento" GridPane.columnIndex="0" GridPane.halignment="CENTER" />
+        <Label text="Estudio" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+        <Label text="Medicamento" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <Label text="Notas" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+        <TextArea fx:id="notesArea" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+        <TextField fx:id="treatmentField" GridPane.columnIndex="1" />
+        <TextField fx:id="studyField" GridPane.columnIndex="5" />
+        <TextField fx:id="medicineField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addMedicine" text="+" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addStudy" text="+" GridPane.columnIndex="6" />
+        <Button minWidth="25.0" mnemonicParsing="false" onAction="#addTreatment" text="+" GridPane.columnIndex="2" />
+        <TableView fx:id="treatmentsTable" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1">
           <columns>
-              <TableColumn fx:id="treatmentNameColumn" text="Nombre"/>
-              <TableColumn fx:id="deleteTreatmentColumn"/>
+              <TableColumn fx:id="treatmentNameColumn" text="Nombre" />
+              <TableColumn fx:id="deleteTreatmentColumn" />
           </columns>
         </TableView>
-        <TableView fx:id="studiesTable" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3">
+        <TableView fx:id="studiesTable" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="1">
           <columns>
-              <TableColumn fx:id="studyNameColumn" text="Nombre"/>
-              <TableColumn fx:id="deleteStudyColumn"/>
+              <TableColumn fx:id="studyNameColumn" text="Nombre" />
+              <TableColumn fx:id="deleteStudyColumn" />
           </columns>
         </TableView>
-        <TableView fx:id="medicinesTable" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5">
+        <TableView fx:id="medicinesTable" GridPane.columnSpan="3" GridPane.rowIndex="5">
           <columns>
-              <TableColumn fx:id="medicineNameColumn" text="Nombre"/>
-              <TableColumn fx:id="doseColumn" text="Dósis"/>
-              <TableColumn fx:id="deleteMedicineColumn"/>
+              <TableColumn fx:id="medicineNameColumn" text="Nombre" />
+              <TableColumn fx:id="doseColumn" text="Dósis" />
+              <TableColumn fx:id="deleteMedicineColumn" />
           </columns>
         </TableView>
     </GridPane>
     <HBox alignment="CENTER_RIGHT">
         <VBox.margin>
-            <Insets right="5.0"/>
+            <Insets right="5.0" />
         </VBox.margin>
         <Button mnemonicParsing="false" onAction="#savePrescription" text="Finalizar">
            <HBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0"/>
+               <Insets bottom="5.0" left="5.0" right="5.0" />
            </HBox.margin>
         </Button>
         <Button defaultButton="true" mnemonicParsing="false" onAction="#printPrescription" text="Imprimir receta">
            <HBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0"/>
+               <Insets bottom="5.0" left="5.0" right="5.0" />
            </HBox.margin>
         </Button>
     </HBox>

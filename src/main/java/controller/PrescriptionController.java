@@ -12,8 +12,6 @@ import java.util.Optional;
 
 public class PrescriptionController {
 
-    @FXML private TextArea diagnosisArea;
-    @FXML private TextArea prognosisArea;
     @FXML private TextArea notesArea;
 
     @FXML private TextField treatmentField;
@@ -54,13 +52,12 @@ public class PrescriptionController {
 
     public void savePrescription(ActionEvent actionEvent) {
         //Get data
-        prescription.setDiagnostic(diagnosisArea.getText());
-        prescription.setPrognosis(prognosisArea.getText());
         prescription.setNotes(notesArea.getText());
 
         ///Save to database
         if(consultation!=null){
             consultation.save();
+            prescription.save();
         }
         else {
             prescription.save();

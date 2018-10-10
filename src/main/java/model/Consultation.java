@@ -18,6 +18,10 @@ public class Consultation extends Model {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    private String diagnostic;
+
+    private String prognosis;
+
     @OneToOne
     @JoinColumn(nullable = false)
     private Prescription prescription;
@@ -91,5 +95,21 @@ public class Consultation extends Model {
 
     public void setExploration(Exploration exploration) {
         this.exploration = exploration;
+    }
+
+    public String getDiagnostic() {
+        return diagnostic;
+    }
+
+    public void setDiagnostic(String diagnostic) {
+        this.diagnostic = diagnostic;
+    }
+
+    public String getPrognosis() {
+        return prognosis;
+    }
+
+    public void setPrognosis(String prognosis) {
+        this.prognosis = prognosis;
     }
 }

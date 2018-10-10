@@ -11,6 +11,8 @@ create table consultation (
   id                            integer auto_increment not null,
   patient_id                    integer not null,
   date_time                     timestamp not null,
+  diagnostic                    varchar(255),
+  prognosis                     varchar(255),
   prescription_id               integer not null,
   constraint uq_consultation_prescription_id unique (prescription_id),
   constraint pk_consultation primary key (id)
@@ -65,8 +67,6 @@ create table prescription (
   id                            integer auto_increment not null,
   patient_id                    integer,
   date_time                     timestamp not null,
-  diagnostic                    varchar(255),
-  prognosis                     varchar(255),
   notes                         varchar(255),
   constraint pk_prescription primary key (id)
 );

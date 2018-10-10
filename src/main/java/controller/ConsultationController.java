@@ -29,6 +29,9 @@ public class ConsultationController {
     @FXML private TextField nutritionField;
     @FXML private TextField hydrationField;
 
+    @FXML private TextArea diagnosisArea;
+    @FXML private TextArea prognosisArea;
+
     private Consultation consultation;
     private MenuController menuController;
 
@@ -68,6 +71,12 @@ public class ConsultationController {
                 weightField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+
+        diagnosisArea.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
+
+        prognosisArea.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
     }
 
     public void setPatient(Patient patient) {
@@ -120,6 +129,8 @@ public class ConsultationController {
                 hydrationField.getText()
         ));
 
+        consultation.setDiagnostic(diagnosisArea.getText());
+        consultation.setPrognosis(prognosisArea.getText());
 
         //Begin the prescription stage
         menuController.beginPrescription(consultation);

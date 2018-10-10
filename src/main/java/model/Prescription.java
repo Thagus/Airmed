@@ -1,5 +1,6 @@
 package model;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 
 import javax.persistence.*;
@@ -17,10 +18,6 @@ public class Prescription extends Model {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
-    private String diagnostic;
-
-    private String prognosis;
-
     private String notes;
 
     @OneToOne(mappedBy = "prescription")
@@ -35,6 +32,7 @@ public class Prescription extends Model {
     @ManyToMany
     private List<Dose> medicines;
 
+    public static Finder<Integer, Prescription> find = new Finder<>(Prescription.class);
 
     public int getId() {
         return id;
@@ -54,22 +52,6 @@ public class Prescription extends Model {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public String getDiagnostic() {
-        return diagnostic;
-    }
-
-    public void setDiagnostic(String diagnostic) {
-        this.diagnostic = diagnostic;
-    }
-
-    public String getPrognosis() {
-        return prognosis;
-    }
-
-    public void setPrognosis(String prognosis) {
-        this.prognosis = prognosis;
     }
 
     public String getNotes() {
