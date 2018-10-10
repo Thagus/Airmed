@@ -74,12 +74,12 @@
                             <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                       <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="2">
                           <buttons>
-                              <ToggleButton fx:id="femaleToggle" text="F" userData="F">
+                              <ToggleButton fx:id="femaleToggle" text="F" userData='F'>
                                <toggleGroup>
                                   <ToggleGroup fx:id="genderToggleGroup" />
                                </toggleGroup>
                               </ToggleButton>
-                              <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData="M" />
+                              <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData='M' />
                           </buttons>
                       </SegmentedButton>
                         </children>
@@ -194,38 +194,6 @@
               </VBox>
           </content>
         </Tab>
-        <Tab text="Signos vitales">
-          <content>
-              <VBox>
-                  <children>
-                      <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
-                          <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                          </VBox.margin>
-                          <Region HBox.hgrow="ALWAYS" />
-                          <CustomTextField fx:id="vitalSignsSearchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
-                              <left>
-                                  <Label style="-fx-padding: 0 2 0 7;">
-                                      <graphic>
-                                          <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
-                                      </graphic>
-                                  </Label>
-                              </left>
-                          </CustomTextField>
-                      </HBox>
-                      <TableView fx:id="vitalSignsTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                              <TableColumn fx:id="vitalSignDateColumn" text="Fecha" />
-                              <TableColumn fx:id="pressureColumn" text="Presión" />
-                              <TableColumn fx:id="respirationColumn" text="Respiración" />
-                              <TableColumn fx:id="temperatureColumn" text="Temperatura" />
-                              <TableColumn fx:id="glucoseColumn" text="Glucosa" />
-                          </columns>
-                      </TableView>
-                  </children>
-              </VBox>
-          </content>
-        </Tab>
       <Tab text="Consultas">
         <content>
           <VBox>
@@ -252,11 +220,11 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView>
+                  <TableView fx:id="consultationsTable">
                     <columns>
-                      <TableColumn text="Fecha" />
-                      <TableColumn text="Diagnóstico" />
-                        <TableColumn text="Pronóstico" />
+                      <TableColumn fx:id="consultationDateColumn" text="Fecha" />
+                      <TableColumn fx:id="consultationDiagnosisColumn" text="Diagnóstico" />
+                        <TableColumn fx:id="consultationPrognosisColumn" text="Pronóstico" />
                     </columns>
                   </TableView>
                </children></VBox>
