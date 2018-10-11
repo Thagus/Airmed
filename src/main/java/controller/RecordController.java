@@ -163,14 +163,47 @@ public class RecordController {
         consultationsTable.setPlaceholder(new Label("Sin resultados"));
         consultations = FXCollections.observableArrayList();
 
-        consultationDateColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        consultationDiagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        consultationPrognosisColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        consultationDateColumn.setCellValueFactory(cellData -> {
+            Consultation consultation = cellData.getValue();
+            return new SimpleObjectProperty<>(consultation.getDateTime().toLocalDate());
+        });
+        consultationDiagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("diagnostic"));
+        consultationPrognosisColumn.setCellValueFactory(new PropertyValueFactory<>("prognosis"));
         consultationViewColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Ver", (Consultation consultation) -> {
             menuController.showConsultation(consultation);
 
             return consultation;
         }));
+
+        FilteredList<Consultation> filteredConsultations = new FilteredList<>(consultations, p -> true);   //Wrap the observable list into a filtered list
+
+        consultationSearchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            filteredConsultations.setPredicate(consultation -> {
+                //If filter text is empty, display all.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                //Simplify the search string by striping accents and making it lowercase
+                String lcSearch = StringUtils.stripAccents(newValue).toLowerCase();
+
+                //Return true if all the search terms are contained in the name
+                boolean match = true;
+                for(String term : lcSearch.split("\\s+")){
+                    match = match && (
+                            StringUtils.stripAccents(consultation.getDiagnostic()).toLowerCase().contains(term) ||
+                                    StringUtils.stripAccents(consultation.getPrognosis()).toLowerCase().contains(term) ||
+                                    consultation.getDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")).contains(term)
+                    );
+                }
+
+                return match;
+            });
+        }));
+
+        SortedList<Consultation> sortedConsultations = new SortedList<>(filteredConsultations);        //Wrap the filtered list in a sorted list
+        sortedConsultations.comparatorProperty().bind(consultationsTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
+        consultationsTable.setItems(sortedConsultations);
     }
 
     public void setPatient(Patient patient){
