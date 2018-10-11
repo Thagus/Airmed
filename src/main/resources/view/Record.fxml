@@ -225,6 +225,7 @@
                       <TableColumn fx:id="consultationDateColumn" text="Fecha" />
                       <TableColumn fx:id="consultationDiagnosisColumn" text="Diagnóstico" />
                         <TableColumn fx:id="consultationPrognosisColumn" text="Pronóstico" />
+                        <TableColumn fx:id="consultationViewColumn" />
                     </columns>
                   </TableView>
                </children></VBox>

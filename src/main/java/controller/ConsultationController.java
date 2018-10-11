@@ -35,8 +35,11 @@ public class ConsultationController {
     private Consultation consultation;
     private MenuController menuController;
 
+    private boolean onlyShowConsultation;
+
     public void init(MenuController menuController){
         this.menuController = menuController;
+        this.onlyShowConsultation = false;
 
         //Add filters to vital sign fields
         pressureField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,6 +83,8 @@ public class ConsultationController {
     }
 
     public void setPatient(Patient patient) {
+        this.onlyShowConsultation = false;
+        changeFieldStatus(true);
         //Find if the patient had an appointment that day
         LocalDate today = LocalDate.now();
         Appointment appointment = Appointment.find.query().where().eq("patient", patient).between("dateTime", LocalDateTime.of(today, LocalTime.MIN), LocalDateTime.of(today, LocalTime.MAX)).findOne();
@@ -93,47 +98,77 @@ public class ConsultationController {
     }
 
     public void goToPrescription(ActionEvent actionEvent) {
-        String[] pressures = pressureField.getText().split("/");
+        if(!onlyShowConsultation) {
+            String[] pressures = pressureField.getText().split("/");
 
-        int pressureD = 0;
-        int pressureS = 0;
+            int pressureD = 0;
+            int pressureS = 0;
 
-        if(pressures.length>=2) {
-            pressureD = NumberUtils.toInt(pressures[0], 0);
-            pressureS = NumberUtils.toInt(pressures[1], 0);
+            if (pressures.length >= 2) {
+                pressureD = NumberUtils.toInt(pressures[0], 0);
+                pressureS = NumberUtils.toInt(pressures[1], 0);
+            }
+
+            //Save data to consultation
+            consultation.setVitalSign(VitalSign.create(
+                    consultation,
+                    pressureD,
+                    pressureS,
+                    NumberUtils.toInt(pulseField.getText(), 0),
+                    NumberUtils.toInt(temperatureField.getText(), 0),
+                    NumberUtils.toInt(breathField.getText(), 0)
+            ));
+
+            consultation.setMeasurement(Measurement.create(
+                    consultation,
+                    NumberUtils.toInt(weightField.getText(), 0),
+                    NumberUtils.toInt(heightField.getText(), 0)
+            ));
+
+            consultation.setExploration(Exploration.create(
+                    consultation,
+                    awarenessField.getText(),
+                    collaborationField.getText(),
+                    mobilityField.getText(),
+                    attitudeField.getText(),
+                    nutritionField.getText(),
+                    hydrationField.getText()
+            ));
+
+            consultation.setDiagnostic(diagnosisArea.getText());
+            consultation.setPrognosis(prognosisArea.getText());
+
+            //Begin the prescription stage
+            menuController.beginPrescription(consultation);
         }
+        else {
+            menuController.showPrescription(consultation);
+        }
+    }
 
-        //Save data to consultation
-        consultation.setVitalSign(VitalSign.create(
-                consultation,
-                pressureD,
-                pressureS,
-                NumberUtils.toInt(pulseField.getText(), 0),
-                NumberUtils.toInt(temperatureField.getText(), 0),
-                NumberUtils.toInt(breathField.getText(), 0)
-        ));
+    public void showConsultation(Consultation consultation){
+        this.onlyShowConsultation = true;
+        //Fill textfields
+        pressureField.setText(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());
+        breathField.setText(consultation.getVitalSign().getBreath()+"");
+        pulseField.setText(consultation.getVitalSign().getPulse()+"");
+        temperatureField.setText(consultation.getVitalSign().getTemperature()+"");
 
-        consultation.setMeasurement(Measurement.create(
-                consultation,
-                NumberUtils.toInt(weightField.getText(), 0),
-                NumberUtils.toInt(heightField.getText(), 0)
-        ));
+        heightField.setText(consultation.getMeasurement().getHeight()+"");
+        weightField.setText(consultation.getMeasurement().getWeight()+"");
 
-        consultation.setExploration(Exploration.create(
-                consultation,
-                awarenessField.getText(),
-                collaborationField.getText(),
-                mobilityField.getText(),
-                attitudeField.getText(),
-                nutritionField.getText(),
-                hydrationField.getText()
-        ));
+        awarenessField.setText(consultation.getExploration().getAwareness());
+        collaborationField.setText(consultation.getExploration().getCollaboration());
+        mobilityField.setText(consultation.getExploration().getMobility());
+        attitudeField.setText(consultation.getExploration().getAttitude());
+        nutritionField.setText(consultation.getExploration().getNutrition());
+        hydrationField.setText(consultation.getExploration().getHydration());
 
-        consultation.setDiagnostic(diagnosisArea.getText());
-        consultation.setPrognosis(prognosisArea.getText());
+        diagnosisArea.setText(consultation.getDiagnostic());
+        prognosisArea.setText(consultation.getPrognosis());
 
-        //Begin the prescription stage
-        menuController.beginPrescription(consultation);
+        //Disable input for fields
+        changeFieldStatus(false);
     }
 
     public void newConsultation() {
@@ -160,5 +195,53 @@ public class ConsultationController {
         Optional<Patient> patientResult = patientDialog.showAndWait();
 
         patientResult.ifPresent(menuController::beginConsultation);
+    }
+
+    private void changeFieldStatus(boolean status){
+        pressureField.setEditable(status);
+        pressureField.setMouseTransparent(!status);
+        pressureField.setFocusTraversable(status);
+        breathField.setEditable(status);
+        breathField.setMouseTransparent(!status);
+        breathField.setFocusTraversable(status);
+        pulseField.setEditable(status);
+        pulseField.setMouseTransparent(!status);
+        pulseField.setFocusTraversable(status);
+        temperatureField.setEditable(status);
+        temperatureField.setMouseTransparent(!status);
+        temperatureField.setFocusTraversable(status);
+
+        heightField.setEditable(status);
+        heightField.setMouseTransparent(!status);
+        heightField.setFocusTraversable(status);
+        weightField.setEditable(status);
+        weightField.setMouseTransparent(!status);
+        weightField.setFocusTraversable(status);
+
+        awarenessField.setEditable(status);
+        awarenessField.setMouseTransparent(!status);
+        awarenessField.setFocusTraversable(status);
+        collaborationField.setEditable(status);
+        collaborationField.setMouseTransparent(!status);
+        collaborationField.setFocusTraversable(status);
+        mobilityField.setEditable(status);
+        mobilityField.setMouseTransparent(!status);
+        mobilityField.setFocusTraversable(status);
+        attitudeField.setEditable(status);
+        attitudeField.setMouseTransparent(!status);
+        attitudeField.setFocusTraversable(status);
+        nutritionField.setEditable(status);
+        nutritionField.setMouseTransparent(!status);
+        nutritionField.setFocusTraversable(status);
+        hydrationField.setEditable(status);
+        hydrationField.setMouseTransparent(!status);
+        hydrationField.setFocusTraversable(status);
+
+        diagnosisArea.setEditable(status);
+        diagnosisArea.setMouseTransparent(!status);
+        diagnosisArea.setFocusTraversable(status);
+        prognosisArea.setEditable(status);
+        prognosisArea.setMouseTransparent(!status);
+        prognosisArea.setFocusTraversable(status);
     }
 }

@@ -13,6 +13,7 @@ public class Prescription extends Model {
     private int id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Patient patient;
 
     @Column(nullable = false)
@@ -33,6 +34,15 @@ public class Prescription extends Model {
     private List<Dose> medicines;
 
     public static Finder<Integer, Prescription> find = new Finder<>(Prescription.class);
+
+    public static Prescription create(Patient patient){
+        Prescription prescription = new Prescription();
+
+        prescription.patient = patient;
+
+        prescription.save();
+        return prescription;
+    }
 
     public int getId() {
         return id;

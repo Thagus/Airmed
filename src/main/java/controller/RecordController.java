@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
+import utils.ActionButtonTableCell;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -60,6 +61,7 @@ public class RecordController {
     @FXML private TableColumn<Consultation, LocalDate> consultationDateColumn;
     @FXML private TableColumn<Consultation, String> consultationDiagnosisColumn;
     @FXML private TableColumn<Consultation, String> consultationPrognosisColumn;
+    @FXML private TableColumn<Consultation, Button> consultationViewColumn;
     private ObservableList<Consultation> consultations;
 
     //Notes
@@ -164,14 +166,21 @@ public class RecordController {
         consultationDateColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         consultationDiagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         consultationPrognosisColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        consultationViewColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Ver", (Consultation consultation) -> {
+            menuController.showConsultation(consultation);
+
+            return consultation;
+        }));
     }
 
     public void setPatient(Patient patient){
         //Set record label to patient full name
         recordLabel.setText("Expediente: " + patient.getFullName());
 
-        //Reset view
-        recordTabPane.getSelectionModel().selectFirst();
+        if(this.patient!=patient) {
+            //Reset view if the patient is different
+            recordTabPane.getSelectionModel().selectFirst();
+        }
 
         //Fix some weird bug that loses the toggle buttons in a group
         genderToggleGroup.getToggles().setAll(maleToggle, femaleToggle);

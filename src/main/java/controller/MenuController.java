@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Consultation;
 import model.Patient;
+import model.Prescription;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
 
@@ -123,6 +124,13 @@ public class MenuController {
         consultationPane.setVisible(true);
     }
 
+    public void showConsultation(Consultation consultation) {
+        consultationController.showConsultation(consultation);
+
+        hideAll();
+        consultationPane.setVisible(true);
+    }
+
     public void beginPrescription(Consultation consultation){
         prescriptionController.setConsultation(consultation);
 
@@ -132,6 +140,13 @@ public class MenuController {
 
     public void beginPrescription(Patient patient){
         prescriptionController.setPatient(patient);
+
+        hideAll();
+        prescriptionPane.setVisible(true);
+    }
+
+    public void showPrescription(Consultation consultation) {
+        prescriptionController.showPrescription(consultation);
 
         hideAll();
         prescriptionPane.setVisible(true);

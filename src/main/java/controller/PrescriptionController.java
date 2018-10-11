@@ -35,46 +35,82 @@ public class PrescriptionController {
 
     private MenuController menuController;
 
+    private boolean onlyShowPrescription;
+
     public void init(MenuController menuController){
         this.menuController = menuController;
+        this.onlyShowPrescription = false;
     }
 
     public void setPatient(Patient patient) {
+        this.onlyShowPrescription = false;
         this.consultation = null;
-        this.prescription = new Prescription();
+        this.prescription = Prescription.create(patient);
     }
 
     public void setConsultation(Consultation consultation) {
+        this.onlyShowPrescription = false;
         this.consultation = consultation;
-        this.prescription = new Prescription();
+        this.prescription = Prescription.create(consultation.getPatient());
         this.consultation.setPrescription(prescription);
     }
 
     public void savePrescription(ActionEvent actionEvent) {
-        //Get data
-        prescription.setNotes(notesArea.getText());
+        if(!onlyShowPrescription) {
+            //Get data
+            prescription.setNotes(notesArea.getText());
 
-        ///Save to database
-        if(consultation!=null){
-            consultation.save();
-            prescription.save();
+            ///Save to database
+            if (consultation != null) {
+                consultation.save();
+                prescription.save();
+            } else {
+                prescription.save();
+            }
+
+            //Return to the agenda
+            menuController.showAgenda(null);
         }
         else {
-            prescription.save();
+            menuController.showPatientRecord(consultation.getPatient());
         }
-
-        //Return to the agenda
-        menuController.showAgenda(null);
     }
 
     public void printPrescription(ActionEvent actionEvent) {
         //Save to database
-        savePrescription(null);
+        if(!onlyShowPrescription) {
+            //Get data
+            prescription.setNotes(notesArea.getText());
+
+            ///Save to database
+            if (consultation != null) {
+                consultation.save();
+                prescription.save();
+            } else {
+                prescription.save();
+            }
+        }
 
         //Show printing dialog
 
-        //Return to the agenda
-        menuController.showAgenda(null);
+        if(!onlyShowPrescription) {
+            //Return to the agenda
+            menuController.showAgenda(null);
+        }
+        else {
+            menuController.showPatientRecord(consultation.getPatient());
+        }
+    }
+
+    public void showPrescription(Consultation consultation) {
+        this.onlyShowPrescription = true;
+
+        this.consultation = consultation;
+        this.prescription = consultation.getPrescription();
+        //Fill prescription fields
+
+        //Disable input for fields
+
     }
 
     public void addMedicine(ActionEvent actionEvent) {
@@ -111,5 +147,9 @@ public class PrescriptionController {
         Optional<Patient> patientResult = patientDialog.showAndWait();
 
         patientResult.ifPresent(menuController::beginPrescription);
+    }
+
+    private void changeFieldStatus(boolean status){
+
     }
 }
