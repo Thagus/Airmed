@@ -100,7 +100,7 @@ public class TableFactory {
 
         HBox hBox = new HBox();
         TextField medicineField = new TextField();
-        Button addMedicineButton = new Button();
+        Button addMedicineButton = new Button("+");
         hBox.getChildren().addAll(medicineField, new Region(), addMedicineButton);
 
         //Define table and columns
