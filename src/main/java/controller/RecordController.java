@@ -343,6 +343,69 @@ public class RecordController {
 
     public void newSurgery(ActionEvent actionEvent) {
         Dialog<Surgery> dialog = new Dialog<>();
+        dialog.setTitle("Nueva cirugía");
+        dialog.setHeaderText(null);
+
+        // Add buttons
+        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
+
+        //Form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nameField = new TextField();
+        nameField.setPromptText("Nombre de la cirugía");
+
+        DatePicker datePicker = new DatePicker();
+
+        TextArea descriptionField = new TextArea();
+        descriptionField.setPromptText("Descripción");
+        descriptionField.setWrapText(true);
+
+        grid.add(new Label("Nombre"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Fecha"), 0, 1);
+        grid.add(datePicker, 1, 1);
+        grid.add(new Label("Descripción"), 0, 2);
+        grid.add(descriptionField, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        //Focus the name field whe starting the dialog
+        Platform.runLater(nameField::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == addButton){
+
+                ///Check that all fields are correct
+                String name = nameField.getText();
+                LocalDate date = datePicker.getValue();
+                String description = descriptionField.getText();
+
+                if(name.length()==0 || description.length()==0 || date==null){
+                    return null;
+                }
+
+                return Surgery.create(
+                        name,
+                        patientRecord,
+                        date,
+                        description
+                );
+            }
+
+            return null;
+        });
+
+        Optional<Surgery> result = dialog.showAndWait();
+
+        result.ifPresent(surgery -> {
+            surgeries.add(surgery);
+            surgeriesTable.refresh();
+        });
     }
 
     public void newConsultation(ActionEvent actionEvent) {
