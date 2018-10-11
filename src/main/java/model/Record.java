@@ -11,7 +11,7 @@ public class Record extends Model {
     @Id
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Patient patient;
 

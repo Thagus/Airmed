@@ -25,13 +25,13 @@ public class Consultation extends Model {
     @OneToOne
     private Prescription prescription;
 
-    @OneToOne(mappedBy = "consultation")
+    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private Measurement measurement;
 
-    @OneToOne(mappedBy = "consultation")
+    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private VitalSign vitalSign;
 
-    @OneToOne(mappedBy = "consultation")
+    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private Exploration exploration;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);

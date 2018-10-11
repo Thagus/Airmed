@@ -66,15 +66,6 @@ public class PrescriptionController {
             if (consultation != null) {
                 prescription.save();
                 consultation.save();
-                if(consultation.getVitalSign()!=null) {
-                    consultation.getVitalSign().save();
-                }
-                if(consultation.getMeasurement()!=null) {
-                    consultation.getMeasurement().save();
-                }
-                if(consultation.getExploration()!=null) {
-                    consultation.getExploration().save();
-                }
             } else {
                 prescription.save();
             }
@@ -97,15 +88,6 @@ public class PrescriptionController {
             if (consultation != null) {
                 prescription.save();
                 consultation.save();
-                if(consultation.getVitalSign()!=null) {
-                    consultation.getVitalSign().save();
-                }
-                if(consultation.getMeasurement()!=null) {
-                    consultation.getMeasurement().save();
-                }
-                if(consultation.getExploration()!=null) {
-                    consultation.getExploration().save();
-                }
             } else {
                 prescription.save();
             }
