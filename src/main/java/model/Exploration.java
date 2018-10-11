@@ -4,11 +4,15 @@ import io.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Exploration extends Model {
     @Id
     private int id;
+
+    @OneToOne
+    private Consultation consultation;
 
     private String awareness;
     private String collaboration;
@@ -24,7 +28,7 @@ public class Exploration extends Model {
 
         Exploration exploration = new Exploration();
 
-        exploration.id = consultation.getId();
+        exploration.consultation = consultation;
         exploration.awareness = awareness;
         exploration.collaboration = collaboration;
         exploration.mobility = mobility;

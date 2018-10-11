@@ -20,8 +20,9 @@
             <column name="dose" type="varchar" notnull="true"/>
             <column name="medicine_id" type="integer" references="medicine.id" foreignKeyName="fk_dose_medicine_id" foreignKeyIndex="ix_dose_medicine_id"/>
         </createTable>
-        <createTable name="exploration" identityType="external" pkName="pk_exploration">
-            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_exploration_id"/>
+        <createTable name="exploration" pkName="pk_exploration">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="consultation_id" type="integer" uniqueOneToOne="uq_exploration_consultation_id" references="consultation.id" foreignKeyName="fk_exploration_consultation_id"/>
             <column name="awareness" type="varchar"/>
             <column name="collaboration" type="varchar"/>
             <column name="mobility" type="varchar"/>
@@ -29,8 +30,9 @@
             <column name="nutrition" type="varchar"/>
             <column name="hydration" type="varchar"/>
         </createTable>
-        <createTable name="measurement" identityType="external" pkName="pk_measurement">
-            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_measurement_id"/>
+        <createTable name="measurement" pkName="pk_measurement">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="consultation_id" type="integer" uniqueOneToOne="uq_measurement_consultation_id" references="consultation.id" foreignKeyName="fk_measurement_consultation_id"/>
             <column name="weight" type="integer" notnull="true"/>
             <column name="height" type="integer" notnull="true"/>
         </createTable>
@@ -52,7 +54,7 @@
         </createTable>
         <createTable name="prescription" pkName="pk_prescription">
             <column name="id" type="integer" primaryKey="true"/>
-            <column name="patient_id" type="integer" references="patient.id" foreignKeyName="fk_prescription_patient_id" foreignKeyIndex="ix_prescription_patient_id"/>
+            <column name="patient_id" type="integer" notnull="true" references="patient.id" foreignKeyName="fk_prescription_patient_id" foreignKeyIndex="ix_prescription_patient_id"/>
             <column name="date_time" type="timestamp" notnull="true"/>
             <column name="notes" type="varchar"/>
         </createTable>
@@ -117,8 +119,9 @@
             <foreignKey name="fk_treatment_dose_treatment" columnNames="treatment_id" refColumnNames="id" refTableName="treatment" indexName="ix_treatment_dose_treatment"/>
             <foreignKey name="fk_treatment_dose_dose" columnNames="dose_id" refColumnNames="id" refTableName="dose" indexName="ix_treatment_dose_dose"/>
         </createTable>
-        <createTable name="vital_sign" identityType="external" pkName="pk_vital_sign">
-            <column name="id" type="integer" primaryKey="true" references="consultation.id" foreignKeyName="fk_vital_sign_id"/>
+        <createTable name="vital_sign" pkName="pk_vital_sign">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="consultation_id" type="integer" uniqueOneToOne="uq_vital_sign_consultation_id" references="consultation.id" foreignKeyName="fk_vital_sign_consultation_id"/>
             <column name="pressure_d" type="integer" notnull="true"/>
             <column name="pressure_s" type="integer" notnull="true"/>
             <column name="pulse" type="integer" notnull="true"/>

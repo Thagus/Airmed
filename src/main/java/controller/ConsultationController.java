@@ -85,6 +85,7 @@ public class ConsultationController {
     public void setPatient(Patient patient) {
         this.onlyShowConsultation = false;
         changeFieldStatus(true);
+        clearFields();
         //Find if the patient had an appointment that day
         LocalDate today = LocalDate.now();
         Appointment appointment = Appointment.find.query().where().eq("patient", patient).between("dateTime", LocalDateTime.of(today, LocalTime.MIN), LocalDateTime.of(today, LocalTime.MAX)).findOne();
@@ -94,7 +95,7 @@ public class ConsultationController {
             appointment.update();
         }
 
-        consultation = new Consultation(patient, LocalDateTime.now());
+        consultation = Consultation.create(patient, LocalDateTime.now());
     }
 
     public void goToPrescription(ActionEvent actionEvent) {
@@ -148,21 +149,32 @@ public class ConsultationController {
 
     public void showConsultation(Consultation consultation){
         this.onlyShowConsultation = true;
+        this.consultation = consultation;
+        clearFields();
+
         //Fill textfields
-        pressureField.setText(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());
-        breathField.setText(consultation.getVitalSign().getBreath()+"");
-        pulseField.setText(consultation.getVitalSign().getPulse()+"");
-        temperatureField.setText(consultation.getVitalSign().getTemperature()+"");
+        if(consultation.getVitalSign()!=null) {
+            VitalSign vitalSign = consultation.getVitalSign();
+            System.out.println(vitalSign);
+            pressureField.setText(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());
+            breathField.setText(consultation.getVitalSign().getBreath() + "");
+            pulseField.setText(consultation.getVitalSign().getPulse() + "");
+            temperatureField.setText(consultation.getVitalSign().getTemperature() + "");
+        }
 
-        heightField.setText(consultation.getMeasurement().getHeight()+"");
-        weightField.setText(consultation.getMeasurement().getWeight()+"");
+        if(consultation.getMeasurement()!=null) {
+            heightField.setText(consultation.getMeasurement().getHeight() + "");
+            weightField.setText(consultation.getMeasurement().getWeight() + "");
+        }
 
-        awarenessField.setText(consultation.getExploration().getAwareness());
-        collaborationField.setText(consultation.getExploration().getCollaboration());
-        mobilityField.setText(consultation.getExploration().getMobility());
-        attitudeField.setText(consultation.getExploration().getAttitude());
-        nutritionField.setText(consultation.getExploration().getNutrition());
-        hydrationField.setText(consultation.getExploration().getHydration());
+        if(consultation.getExploration()!=null) {
+            awarenessField.setText(consultation.getExploration().getAwareness());
+            collaborationField.setText(consultation.getExploration().getCollaboration());
+            mobilityField.setText(consultation.getExploration().getMobility());
+            attitudeField.setText(consultation.getExploration().getAttitude());
+            nutritionField.setText(consultation.getExploration().getNutrition());
+            hydrationField.setText(consultation.getExploration().getHydration());
+        }
 
         diagnosisArea.setText(consultation.getDiagnostic());
         prognosisArea.setText(consultation.getPrognosis());
@@ -243,5 +255,25 @@ public class ConsultationController {
         prognosisArea.setEditable(status);
         prognosisArea.setMouseTransparent(!status);
         prognosisArea.setFocusTraversable(status);
+    }
+
+    private void clearFields(){
+        pressureField.setText("");
+        breathField.setText("");
+        pulseField.setText("");
+        temperatureField.setText("");
+
+        heightField.setText("");
+        weightField.setText("");
+
+        awarenessField.setText("");
+        collaborationField.setText("");
+        mobilityField.setText("");
+        attitudeField.setText("");
+        nutritionField.setText("");
+        hydrationField.setText("");
+
+        diagnosisArea.setText("");
+        prognosisArea.setText("");
     }
 }

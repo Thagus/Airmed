@@ -4,11 +4,15 @@ import io.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Measurement extends Model {
     @Id
     private int id;
+
+    @OneToOne
+    private Consultation consultation;
 
     private int weight;
     private int height;
@@ -20,7 +24,7 @@ public class Measurement extends Model {
 
         Measurement measurement = new Measurement();
 
-        measurement.id = consultation.getId();
+        measurement.consultation = consultation;
         measurement.weight = weight;
         measurement.height = height;
 

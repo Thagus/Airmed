@@ -5,11 +5,15 @@ import io.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class VitalSign extends Model {
     @Id
     private int id;
+
+    @OneToOne
+    private Consultation consultation;
 
     private int pressureD;
     private int pressureS;
@@ -26,7 +30,7 @@ public class VitalSign extends Model {
 
         VitalSign vitalSign = new VitalSign();
 
-        vitalSign.id = consultation.getId();
+        vitalSign.consultation = consultation;
         vitalSign.pressureD = pressureD;
         vitalSign.pressureS = pressureS;
         vitalSign.pulse = pulse;

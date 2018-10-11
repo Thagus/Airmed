@@ -40,6 +40,8 @@ public class PrescriptionController {
     public void init(MenuController menuController){
         this.menuController = menuController;
         this.onlyShowPrescription = false;
+
+        notesArea.setFocusTraversable(false);
     }
 
     public void setPatient(Patient patient) {
@@ -62,8 +64,17 @@ public class PrescriptionController {
 
             ///Save to database
             if (consultation != null) {
-                consultation.save();
                 prescription.save();
+                consultation.save();
+                if(consultation.getVitalSign()!=null) {
+                    consultation.getVitalSign().save();
+                }
+                if(consultation.getMeasurement()!=null) {
+                    consultation.getMeasurement().save();
+                }
+                if(consultation.getExploration()!=null) {
+                    consultation.getExploration().save();
+                }
             } else {
                 prescription.save();
             }
@@ -84,8 +95,17 @@ public class PrescriptionController {
 
             ///Save to database
             if (consultation != null) {
-                consultation.save();
                 prescription.save();
+                consultation.save();
+                if(consultation.getVitalSign()!=null) {
+                    consultation.getVitalSign().save();
+                }
+                if(consultation.getMeasurement()!=null) {
+                    consultation.getMeasurement().save();
+                }
+                if(consultation.getExploration()!=null) {
+                    consultation.getExploration().save();
+                }
             } else {
                 prescription.save();
             }
@@ -107,9 +127,8 @@ public class PrescriptionController {
 
         this.consultation = consultation;
         this.prescription = consultation.getPrescription();
-        //Fill prescription fields
 
-        //Disable input for fields
+        //Fill prescription fields
 
     }
 
@@ -147,9 +166,5 @@ public class PrescriptionController {
         Optional<Patient> patientResult = patientDialog.showAndWait();
 
         patientResult.ifPresent(menuController::beginPrescription);
-    }
-
-    private void changeFieldStatus(boolean status){
-
     }
 }

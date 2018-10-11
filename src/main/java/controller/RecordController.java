@@ -210,9 +210,10 @@ public class RecordController {
         //Set record label to patient full name
         recordLabel.setText("Expediente: " + patient.getFullName());
 
-        if(this.patient!=patient) {
+        if(this.patient != null && !this.patient.equals(patient)) {
             //Reset view if the patient is different
             recordTabPane.getSelectionModel().selectFirst();
+            System.out.println("Resetting: " + patient + " " + this.patient);
         }
 
         //Fix some weird bug that loses the toggle buttons in a group

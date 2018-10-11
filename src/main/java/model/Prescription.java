@@ -39,8 +39,8 @@ public class Prescription extends Model {
         Prescription prescription = new Prescription();
 
         prescription.patient = patient;
+        prescription.dateTime = LocalDateTime.now();
 
-        prescription.save();
         return prescription;
     }
 

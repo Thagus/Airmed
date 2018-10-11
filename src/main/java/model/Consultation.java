@@ -23,26 +23,26 @@ public class Consultation extends Model {
     private String prognosis;
 
     @OneToOne
-    @JoinColumn(nullable = false)
     private Prescription prescription;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "consultation")
     private Measurement measurement;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "consultation")
     private VitalSign vitalSign;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "consultation")
     private Exploration exploration;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
 
-    public Consultation(Patient patient, LocalDateTime dateTime) {
-        this.patient = patient;
-        this.dateTime = dateTime;
+    public static Consultation create(Patient patient, LocalDateTime dateTime) {
+        Consultation consultation = new Consultation();
+
+        consultation.patient = patient;
+        consultation.dateTime = dateTime;
+
+        return consultation;
     }
 
     public int getId() {
