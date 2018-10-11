@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,14 +8,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class RecordController {
     @FXML private Label recordLabel;
@@ -265,11 +269,80 @@ public class RecordController {
     }
 
     public void newStudy(ActionEvent actionEvent) {
+        Dialog<StudyResult> dialog = new Dialog<>();
+        dialog.setTitle("Nuevo resultado de estudio");
+        dialog.setHeaderText(null);
 
+        // Add buttons
+        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
+
+        //Form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nameField = new TextField();
+        nameField.setPromptText("Nombre del estudio");
+
+        DatePicker datePicker = new DatePicker();
+
+        TextArea resultField = new TextArea();
+        resultField.setPromptText("Resultado del estudio");
+        resultField.setWrapText(true);
+
+        grid.add(new Label("Nombre"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Fecha"), 0, 1);
+        grid.add(datePicker, 1, 1);
+        grid.add(new Label("Resultado"), 0, 2);
+        grid.add(resultField, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        //Focus the name field whe starting the dialog
+        Platform.runLater(nameField::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == addButton){
+
+                ///Check that all fields are correct
+                String name = nameField.getText();
+                LocalDate date = datePicker.getValue();
+                String result = resultField.getText();
+
+                if(name.length()==0 || result.length()==0 || date==null){
+                    return null;
+                }
+
+                Study study = Study.find.query().where().ieq("name", name.toLowerCase()).findOne();
+
+                if(study==null){
+                    study = Study.create(name, "");
+                }
+
+                return StudyResult.create(
+                        study,
+                        patientRecord,
+                        date,
+                        result
+                );
+            }
+
+            return null;
+        });
+
+        Optional<StudyResult> result = dialog.showAndWait();
+
+        result.ifPresent(study -> {
+            studies.add(study);
+            studiesTable.refresh();
+        });
     }
 
     public void newSurgery(ActionEvent actionEvent) {
-
+        Dialog<Surgery> dialog = new Dialog<>();
     }
 
     public void newConsultation(ActionEvent actionEvent) {
@@ -298,10 +371,5 @@ public class RecordController {
 
         patient.update();
         patientRecord.update();
-    }
-
-    private boolean isInputValid(){
-
-        return false;
     }
 }
