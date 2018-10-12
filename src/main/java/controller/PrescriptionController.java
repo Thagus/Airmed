@@ -1,13 +1,22 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import model.Consultation;
-import model.Patient;
-import model.Prescription;
+import model.*;
+import utils.ActionButtonTableCell;
 import utils.TableFactory;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 
 public class PrescriptionController {
@@ -15,20 +24,20 @@ public class PrescriptionController {
     @FXML private TextArea notesArea;
 
     @FXML private TextField treatmentField;
-    @FXML private TableView treatmentsTable;
-    @FXML private TableColumn treatmentNameColumn;
-    @FXML private TableColumn deleteTreatmentColumn;
+    @FXML private TableView<Treatment> treatmentsTable;
+    @FXML private TableColumn<Treatment, String> treatmentNameColumn;
+    @FXML private TableColumn<Treatment, Button> deleteTreatmentColumn;
 
     @FXML private TextField studyField;
-    @FXML private TableView studiesTable;
-    @FXML private TableColumn studyNameColumn;
-    @FXML private TableColumn deleteStudyColumn;
+    @FXML private TableView<Study> studiesTable;
+    @FXML private TableColumn<Study, String> studyNameColumn;
+    @FXML private TableColumn<Study, Button> deleteStudyColumn;
 
     @FXML private TextField medicineField;
-    @FXML private TableView medicinesTable;
-    @FXML private TableColumn medicineNameColumn;
-    @FXML private TableColumn doseColumn;
-    @FXML private TableColumn deleteMedicineColumn;
+    @FXML private TableView<Dose> medicinesTable;
+    @FXML private TableColumn<Dose, String> medicineNameColumn;
+    @FXML private TableColumn<Dose, String> doseColumn;
+    @FXML private TableColumn<Dose, Button> deleteMedicineColumn;
 
     private Consultation consultation;
     private Prescription prescription;
@@ -37,21 +46,55 @@ public class PrescriptionController {
 
     private boolean onlyShowPrescription;
 
+    private ObservableList<Dose> medicines;
+    private ObservableList<Study> studies;
+    private ObservableList<Treatment> treatments;
+
     public void init(MenuController menuController){
         this.menuController = menuController;
         this.onlyShowPrescription = false;
 
         notesArea.setFocusTraversable(false);
+
+        medicines = FXCollections.observableArrayList();
+        medicineNameColumn.setCellValueFactory(cellData -> {
+            Dose dose = cellData.getValue();
+            return new SimpleObjectProperty<>(dose.getMedicine().getName());
+        });
+        doseColumn.setCellValueFactory(new PropertyValueFactory<>("dose"));
+        deleteMedicineColumn.setCellFactory(ActionButtonTableCell.forTableColumn("X", (Dose dose) -> {
+            medicines.remove(dose);
+            return dose;
+        }));
+        medicinesTable.setItems(medicines);
+
+        studies = FXCollections.observableArrayList();
+        studyNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        deleteStudyColumn.setCellFactory(ActionButtonTableCell.forTableColumn("X", (Study study) -> {
+            studies.remove(study);
+            return study;
+        }));
+        studiesTable.setItems(studies);
+
+        treatments = FXCollections.observableArrayList();
+        treatmentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        deleteTreatmentColumn.setCellFactory(ActionButtonTableCell.forTableColumn("X", (Treatment treatment) -> {
+            treatments.remove(treatment);
+            return treatment;
+        }));
+        treatmentsTable.setItems(treatments);
     }
 
     public void setPatient(Patient patient) {
         this.onlyShowPrescription = false;
+        clearFields();
         this.consultation = null;
         this.prescription = Prescription.create(patient);
     }
 
     public void setConsultation(Consultation consultation) {
         this.onlyShowPrescription = false;
+        clearFields();
         this.consultation = consultation;
         this.prescription = Prescription.create(consultation.getPatient());
         this.consultation.setPrescription(prescription);
@@ -106,21 +149,143 @@ public class PrescriptionController {
 
     public void showPrescription(Consultation consultation) {
         this.onlyShowPrescription = true;
+        clearFields();
 
         this.consultation = consultation;
         this.prescription = consultation.getPrescription();
 
         //Fill prescription fields
+        notesArea.setText(prescription.getNotes());
 
+        medicines.setAll(prescription.getMedicines());
+        studies.setAll(prescription.getStudies());
+        treatments.setAll(prescription.getTreatments());
+
+        medicinesTable.refresh();
+        studiesTable.refresh();
+        treatmentsTable.refresh();
     }
 
     public void addMedicine(ActionEvent actionEvent) {
+        Dialog<Dose> dialog = new Dialog<>();
+        dialog.setTitle("Agregar medicamento");
+        dialog.setHeaderText(null);
+
+        // Add buttons
+        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
+
+        //Form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nameField = new TextField();
+        nameField.setPromptText("Nombre del medicamento");
+        nameField.setText(medicineField.getText());
+
+        TextField doseField = new TextField();
+        doseField.setPromptText("Dósis del medicamento");
+        //Limit the amount of characters in the text field
+        doseField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
+
+        grid.add(new Label("Nombre"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Dósis"), 0, 1);
+        grid.add(doseField, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        //Focus the name field whe starting the dialog if there's no name
+        if(nameField.getText().length()==0)
+            Platform.runLater(nameField::requestFocus);
+        else
+            Platform.runLater(doseField::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == addButton){
+                ///Check that all fields are correct
+                String name = nameField.getText();
+                String doseStr = doseField.getText();
+
+                if(name.length()==0 || doseStr.length()==0){
+                    return null;
+                }
+
+                //Find if the medicine already exists
+                Medicine medicine = Medicine.find.query().where().eq("name", name).findOne();
+                Dose dose = null;
+
+                //If the medicine exists, try to find an existing dose
+                if(medicine!=null) {
+                    dose = Dose.find.query().where().eq("dose", doseStr).eq("medicine", medicine).findOne();
+                }
+                //If the medicine doesn't exist, create it
+                else {
+                    Medicine.create(name);
+                }
+
+                //If the dose hasn't been found, create it
+                if(dose==null){
+                    dose = Dose.create(doseStr, medicine);
+                }
+
+                return dose;
+            }
+
+            return null;
+        });
+
+        Optional<Dose> result = dialog.showAndWait();
+
+        result.ifPresent((dose -> {
+            medicines.add(dose);
+            medicinesTable.refresh();
+        }));
     }
 
     public void addStudy(ActionEvent actionEvent) {
+        String studyString = studyField.getText();
+
+        if(studyString.length()==0){
+            return;
+        }
+
+        Study study = Study.find.query().where().ieq("name", studyString.toLowerCase()).findOne();
+
+        if(study==null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Estudio inválido");
+            alert.setHeaderText(null);
+            alert.setContentText("Cree primero el estudio para poder recetarlo");
+        }
+        else {
+            studies.add(study);
+            studiesTable.refresh();
+        }
     }
 
     public void addTreatment(ActionEvent actionEvent) {
+        String treatmentString = treatmentField.getText();
+
+        if(treatmentString.length()==0){
+            return;
+        }
+
+        Treatment treatment = Treatment.find.query().where().ieq("name", treatmentString.toLowerCase()).findOne();
+
+        if(treatment==null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Tratamiento inválido");
+            alert.setHeaderText(null);
+            alert.setContentText("Cree primero el tratamiento para poder recetarlo");
+        }
+        else {
+            treatments.add(treatment);
+            treatmentsTable.refresh();
+        }
     }
 
     public void newPrescription() {
@@ -148,5 +313,16 @@ public class PrescriptionController {
         Optional<Patient> patientResult = patientDialog.showAndWait();
 
         patientResult.ifPresent(menuController::beginPrescription);
+    }
+
+    private void clearFields(){
+        medicines.clear();
+        studies.clear();
+        treatments.clear();
+
+        notesArea.clear();
+        medicineField.clear();
+        studyField.clear();
+        treatmentField.clear();
     }
 }
