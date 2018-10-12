@@ -3,13 +3,11 @@ package model;
 import io.ebean.Finder;
 import io.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@UniqueConstraint(columnNames = "name")
 public class Study extends Model {
     @Id
     private int id;
@@ -30,8 +28,13 @@ public class Study extends Model {
         study.name = name;
         study.description = description;
 
-        study.save();
-        return study;
+        try {
+            study.save();
+            return study;
+        }
+        catch (Exception ignored){
+            return null;
+        }
     }
 
     public int getId() {

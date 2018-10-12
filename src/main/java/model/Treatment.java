@@ -3,13 +3,11 @@ package model;
 import io.ebean.Finder;
 import io.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@UniqueConstraint(columnNames = "name")
 public class Treatment extends Model {
     @Id
     private int id;
@@ -34,8 +32,13 @@ public class Treatment extends Model {
         treatment.description = description;
         treatment.medicines = medicines;
 
-        treatment.save();
-        return treatment;
+        try {
+            treatment.save();
+            return treatment;
+        }
+        catch (Exception ignored){
+            return null;
+        }
     }
 
     public int getId() {

@@ -13,7 +13,7 @@
             <column name="date_time" type="timestamp" notnull="true"/>
             <column name="diagnostic" type="varchar"/>
             <column name="prognosis" type="varchar"/>
-            <column name="prescription_id" type="integer" notnull="true" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
+            <column name="prescription_id" type="integer" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
         </createTable>
         <createTable name="dose" pkName="pk_dose">
             <column name="id" type="integer" primaryKey="true"/>
@@ -93,6 +93,7 @@
             <column name="id" type="integer" primaryKey="true"/>
             <column name="name" type="varchar" notnull="true"/>
             <column name="description" type="varchar"/>
+            <uniqueConstraint name="uq_study_name" columnNames="name" oneToOne="false" nullableColumns=""/>
         </createTable>
         <createTable name="study_result" pkName="pk_study_result">
             <column name="id" type="integer" primaryKey="true"/>
@@ -112,6 +113,7 @@
             <column name="id" type="integer" primaryKey="true"/>
             <column name="name" type="varchar" notnull="true"/>
             <column name="description" type="varchar"/>
+            <uniqueConstraint name="uq_treatment_name" columnNames="name" oneToOne="false" nullableColumns=""/>
         </createTable>
         <createTable name="treatment_dose" pkName="pk_treatment_dose">
             <column name="treatment_id" type="integer" notnull="true" primaryKey="true"/>

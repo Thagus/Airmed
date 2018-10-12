@@ -13,7 +13,7 @@ create table consultation (
   date_time                     timestamp not null,
   diagnostic                    varchar(255),
   prognosis                     varchar(255),
-  prescription_id               integer not null,
+  prescription_id               integer,
   constraint uq_consultation_prescription_id unique (prescription_id),
   constraint pk_consultation primary key (id)
 );
@@ -115,6 +115,7 @@ create table study (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
   description                   varchar(255),
+  constraint uq_study_name unique (name),
   constraint pk_study primary key (id)
 );
 
@@ -140,6 +141,7 @@ create table treatment (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
   description                   varchar(255),
+  constraint uq_treatment_name unique (name),
   constraint pk_treatment primary key (id)
 );
 
