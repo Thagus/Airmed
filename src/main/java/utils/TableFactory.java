@@ -97,11 +97,13 @@ public class TableFactory {
         if(doses==null){
             doses = new ArrayList<>();
         }
+        vBox.setSpacing(5);
 
         HBox hBox = new HBox();
+        hBox.setSpacing(10);
         TextField medicineField = new TextField();
         Button addMedicineButton = new Button("+");
-        hBox.getChildren().addAll(medicineField, new Region(), addMedicineButton);
+        hBox.getChildren().addAll(new Label("Medicina"), medicineField, addMedicineButton);
 
         //Define table and columns
         TableView<Dose> medicineTable = new TableView<>();
