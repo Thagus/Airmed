@@ -40,9 +40,11 @@ public class AgendaController {
 
     @FXML private Agenda agendaView;
 
-    @FXML private CustomTextField searchField;
+    @FXML private Button prevWeekButton;
+    @FXML private Button todayButton;
+    @FXML private Button nextWeekButton;
 
-    @FXML private CalendarPicker calendarPicker;
+    private ObservableList<Appointment> todaysAppointments;
 
     private int consLengthMins = 30;
 
