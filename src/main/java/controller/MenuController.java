@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.Appointment;
 import model.Consultation;
 import model.Patient;
 import model.Prescription;
@@ -47,7 +48,7 @@ public class MenuController {
         loader.setLocation(getClass().getResource("/view/Agenda.fxml"));
         agendaView = loader.load();
         agendaController = loader.getController();
-        agendaController.init();
+        agendaController.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Patients.fxml"));
         patientsPane = loader.load();
@@ -115,6 +116,13 @@ public class MenuController {
 
     public void newConsultation(ActionEvent actionEvent) {
         consultationController.newConsultation();
+    }
+
+    public void startAppointment(Appointment appointment){
+        consultationController.startAppointment(appointment);
+
+        hideAll();
+        consultationPane.setVisible(true);
     }
 
     public void beginConsultation(Patient patient){

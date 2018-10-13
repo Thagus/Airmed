@@ -98,6 +98,22 @@ public class ConsultationController {
         consultation = Consultation.create(patient, LocalDateTime.now());
     }
 
+    public void startAppointment(Appointment appointment){
+        this.onlyShowConsultation = false;
+        changeFieldStatus(true);
+        clearFields();
+
+        if(appointment!=null){
+            appointment.setAnswered(true);
+            appointment.update();
+
+            consultation = Consultation.create(appointment.getPatient(), LocalDateTime.now());
+        }
+        else {
+            menuController.showAgenda(null);
+        }
+    }
+
     public void goToPrescription(ActionEvent actionEvent) {
         if(!onlyShowConsultation) {
             String[] pressures = pressureField.getText().split("/");

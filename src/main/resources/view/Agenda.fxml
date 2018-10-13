@@ -27,7 +27,7 @@
          <padding>
             <Insets bottom="5.0" />
          </padding></HBox>
-      <ListView VBox.vgrow="ALWAYS" />
+      <ListView fx:id="todayAppointmentsList" VBox.vgrow="ALWAYS" />
       <HBox.margin>
          <Insets right="5.0" />
       </HBox.margin>

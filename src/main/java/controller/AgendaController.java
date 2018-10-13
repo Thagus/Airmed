@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -15,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.LocalTimePicker;
 import jfxtras.scene.control.agenda.Agenda;
 import model.Appointment;
@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -38,6 +39,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AgendaController {
 
+    @FXML private ListView<Appointment> todayAppointmentsList;
     @FXML private Agenda agendaView;
 
     @FXML private Button prevWeekButton;
@@ -46,20 +48,16 @@ public class AgendaController {
 
     private ObservableList<Appointment> todaysAppointments;
 
-    private int consLengthMins = 30;
+    private MenuController menuController;
 
-    public void init(){
+    private DateTimeFormatter hourFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+    private int consLengthMins = 60;
+
+    public void init(MenuController menuController){
+        this.menuController = menuController;
         agendaView.setAllowDragging(false);
         agendaView.setAllowResize(false);
-
-        //Load week agenda
-        LocalDate now = LocalDate.now();
-        TemporalField field = WeekFields.of(Locale.getDefault()).dayOfWeek();
-
-        LocalDateTime weekStart = LocalDateTime.of(now.with(field, 1), LocalTime.MIN);
-        LocalDateTime weekEnd = LocalDateTime.of(now.with(field, 7), LocalTime.MAX);
-
-        List<Appointment> appointments = Appointment.find.query().where().between("dateTime", weekStart, weekEnd).findList();
 
         Setting consLength = Setting.find.byId("cons_length");
 
@@ -71,16 +69,105 @@ public class AgendaController {
             consLengthMins = Integer.parseInt(consLength.getValue());
         }
 
+        todaysAppointments = FXCollections.observableArrayList();
+
+        //Set this week appointment
+        setWeekAppointments(LocalDate.now());
+        setTodaysAppointments();
+
+        //Make buttons change DisplayedDateTime on the agenda
+        prevWeekButton.setOnAction(event -> {
+            agendaView.setDisplayedLocalDateTime(agendaView.getDisplayedLocalDateTime().minusWeeks(1));
+            //Set the appointments of the week
+            setWeekAppointments(agendaView.getDisplayedLocalDateTime().toLocalDate());
+        });
+        nextWeekButton.setOnAction(event -> {
+            agendaView.setDisplayedLocalDateTime(agendaView.getDisplayedLocalDateTime().plusWeeks(1));
+            //Set the appointments of the week
+            setWeekAppointments(agendaView.getDisplayedLocalDateTime().toLocalDate());
+        });
+        todayButton.setOnAction(event -> {
+            agendaView.setDisplayedLocalDateTime(LocalDateTime.now());
+            //Reload this week appointments
+            setWeekAppointments(LocalDate.now());
+            setTodaysAppointments();
+        });
+
+        //Disable de edit popup
+        agendaView.setEditAppointmentCallback(param -> null);
+        //When double clicked, show edit pane
+        agendaView.setActionCallback((appointment) -> {
+            Appointment appointmentObj = Appointment.find.byId(Integer.valueOf(appointment.getDescription()));
+            if(appointmentObj!=null)
+                editAppointment(appointment, appointmentObj);
+            return null;
+        });
+
+        //Populate list with this week appointments: https://stackoverflow.com/questions/36657299/how-can-i-populate-a-listview-in-javafx-using-custom-objects, https://stackoverflow.com/questions/22542015/how-to-add-a-mouse-doubleclick-event-listener-to-the-cells-of-a-listview-in-java
+        todayAppointmentsList.setCellFactory(param -> new ListCell<Appointment>() {
+            @Override
+            protected void updateItem(Appointment appointment, boolean empty) {
+                super.updateItem(appointment, empty);
+
+                if (empty || appointment == null) {
+                    setText(null);
+                } else {
+                    setText(appointment.getPatient().getFullName() + "\n" + appointment.getDateTime().format(hourFormatter));
+                }
+            }
+        });
+        todayAppointmentsList.setOnMouseClicked(click -> {
+            if (click.getClickCount() == 2) {
+                //Start the double clicked appointment as consultation
+                menuController.startAppointment(todayAppointmentsList.getSelectionModel().getSelectedItem());
+            }
+        });
+        todayAppointmentsList.setItems(todaysAppointments);
+    }
+
+    private void setTodaysAppointments() {
+        //Find the appointments that occur today, excluding those that already should have happened
+        todaysAppointments.setAll(
+                Appointment.find.query()
+                        .where()
+                        .between("dateTime",
+                                LocalDateTime.of(LocalDate.now(), LocalTime.now().minusMinutes(consLengthMins)),
+                                LocalDateTime.of(LocalDate.now(), LocalTime.MAX)).orderBy("dateTime").findList()
+        );
+    }
+
+    private void setWeekAppointments(LocalDate date){
+        agendaView.appointments().clear();
+
+        TemporalField field = WeekFields.of(Locale.getDefault()).dayOfWeek();
+
+        LocalDateTime weekStart = LocalDateTime.of(date.with(field, 1), LocalTime.MIN);
+        LocalDateTime weekEnd = LocalDateTime.of(date.with(field, 7), LocalTime.MAX);
+
+        List<Appointment> appointments = Appointment.find.query().where().between("dateTime", weekStart, weekEnd).findList();
+
         //Add all week appointments to the AgendaView
-        for(Appointment appointment:appointments){
-            System.out.println(appointment);
-            agendaView.appointments().add(
-                    new Agenda.AppointmentImplLocal()
-                    .withStartLocalDateTime(appointment.getDateTime())
-                    .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
-                    .withDescription(appointment.getPatient().getFullName())
-                    .withSummary(appointment.getPatient().getFullName())
-            );
+        for(Appointment appointment : appointments){
+            if(appointment.isAnswered() || appointment.getDateTime().isBefore(LocalDateTime.now().minusMinutes(consLengthMins))){   //Appointment that has ended
+                agendaView.appointments().add(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(appointment.getDateTime())
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withDescription("" + appointment.getId())
+                                .withSummary(appointment.getPatient().getFullName())
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group18"))
+                );
+            }
+            else {
+                agendaView.appointments().add(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(appointment.getDateTime())
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withDescription("" + appointment.getId())
+                                .withSummary(appointment.getPatient().getFullName())
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group9"))
+                );
+            }
         }
     }
 
@@ -203,6 +290,7 @@ public class AgendaController {
         DatePicker dateField = new DatePicker();
 
         LocalTimePicker timeField = new LocalTimePicker();
+        timeField.setMinuteStep(consLengthMins);
 
         grid.add(new Label("Paciente"), 0, 0);
         grid.add(patientNameField, 1, 0);
@@ -216,13 +304,34 @@ public class AgendaController {
 
         Platform.runLater(patientNameField::requestFocus);
 
+        final Button addButton = (Button) dialog.getDialogPane().lookupButton(addAppointmentButton);
+        //Verify that there isn't an appointment already at that time
+        addButton.addEventFilter(ActionEvent.ACTION, event -> {
+            LocalDateTime dateTime = LocalDateTime.of(dateField.getValue(), timeField.getLocalTime());
+
+            //Search for an appointment that starts between the desired start and the expected end
+            Appointment existingAppointment = Appointment.find.query().where().between("dateTime", dateTime, dateTime.plusMinutes(consLengthMins)).findOne();
+
+            if(existingAppointment!=null){
+                //Alert the user that there's already an appointment in that moment
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Conflicto de citas");
+                alert.setHeaderText(null);
+                alert.setContentText("Ya existe una cita para esa fecha, para el paciente " + existingAppointment.getPatient().getFullName() + ", que empieza a las " + existingAppointment.getDateTime().format(hourFormatter));
+
+                alert.showAndWait();
+
+                event.consume();
+            }
+        });
 
         dialog.setResultConverter(dialogButton -> {
             if(dialogButton == addAppointmentButton){
+                LocalDateTime dateTime = LocalDateTime.of(dateField.getValue(), timeField.getLocalTime());
                 //Save appointment to database
                 return Appointment.create(
                         patient.get(),
-                        LocalDateTime.of(dateField.getValue(), timeField.getLocalTime())
+                        dateTime
                 );
             }
 
@@ -232,14 +341,129 @@ public class AgendaController {
         Optional<Appointment> result = dialog.showAndWait();
 
         result.ifPresent(appointment -> {
-            //Update agenda
-            agendaView.appointments().add(
-                    new Agenda.AppointmentImplLocal()
-                    .withStartLocalDateTime(appointment.getDateTime())
-                    .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
-                    .withDescription(appointment.getPatient().getFullName())
-            );
+                //Add the appointment and update agenda
+            if(appointment.isAnswered() || appointment.getDateTime().isBefore(LocalDateTime.now().minusMinutes(consLengthMins))){   //Appointment that has ended
+                agendaView.appointments().add(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(appointment.getDateTime())
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withDescription("" + appointment.getId())
+                                .withSummary(appointment.getPatient().getFullName())
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group18"))
+                );
+            }
+            else {
+                agendaView.appointments().add(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(appointment.getDateTime())
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withDescription("" + appointment.getId())
+                                .withSummary(appointment.getPatient().getFullName())
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group9"))
+                );
+            }
             agendaView.refresh();
+
+            //If the appointment is today, also refresh the list
+            if(appointment.getDateTime().toLocalDate().isEqual(LocalDate.now())){
+                setTodaysAppointments();
+            }
         });
+    }
+
+    private void editAppointment(Agenda.Appointment appointmentInAgenda, Appointment appointmentToEdit){
+        //Display dialog to edit or delete an appointment
+        Dialog<Appointment> dialog = new Dialog<>();
+        dialog.setTitle("Editar cita");
+        dialog.setHeaderText(null);
+
+        // Add buttons
+        ButtonType addAppointmentButton = new ButtonType("Editar", ButtonBar.ButtonData.OK_DONE);
+        ButtonType deleteAppointmentButton = new ButtonType("Borrar", ButtonBar.ButtonData.LEFT);
+        dialog.getDialogPane().getButtonTypes().addAll(addAppointmentButton, ButtonType.CANCEL, deleteAppointmentButton);
+
+        //Form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 100, 10, 10));
+
+
+        DatePicker dateField = new DatePicker();
+        LocalTimePicker timeField = new LocalTimePicker();
+        timeField.setMinuteStep(consLengthMins);
+
+        dateField.setValue(appointmentToEdit.getDateTime().toLocalDate());
+        timeField.setLocalTime(appointmentToEdit.getDateTime().toLocalTime());
+
+        grid.add(new Label("Paciente: " + appointmentToEdit.getPatient().getFullName()), 0, 0, 2, 1);
+        grid.add(new Label("Fecha"), 0, 1);
+        grid.add(dateField, 1, 1);
+        grid.add(new Label("Hora"), 0, 2);
+        grid.add(timeField, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        final Button deleteButton = (Button) dialog.getDialogPane().lookupButton(deleteAppointmentButton);
+        //Verify that there isn't an appointment already at that time
+        deleteButton.addEventFilter(ActionEvent.ACTION, event -> {
+            //Alert the user that there's already an appointment in that moment
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Eliminar cita");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Esta seguro que desea eliminar esta cita?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            result.ifPresent(buttonType -> {
+                if(buttonType == ButtonType.OK){
+                    appointmentToEdit.delete();
+                    agendaView.appointments().remove(appointmentInAgenda);
+                    todaysAppointments.remove(appointmentToEdit);
+                }
+                else {
+                    event.consume();
+                }
+            });
+        });
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == addAppointmentButton){
+                LocalDateTime dateTime = LocalDateTime.of(dateField.getValue(), timeField.getLocalTime());
+                //Update appointment
+                appointmentToEdit.setDateTime(dateTime);
+                appointmentToEdit.update();
+
+                appointmentInAgenda.setStartLocalDateTime(dateTime);
+                appointmentInAgenda.setEndLocalDateTime(dateTime.plusMinutes(consLengthMins));
+
+                if(dateTime.isBefore(LocalDateTime.now().minusMinutes(consLengthMins))){
+                    appointmentInAgenda.setAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group18"));
+                }
+                else {
+                    appointmentInAgenda.setAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group9"));
+                }
+
+                return appointmentToEdit;
+            }
+
+            return null;
+        });
+
+        Optional<Appointment> result = dialog.showAndWait();
+
+        result.ifPresent(appointment -> {
+            agendaView.refresh();
+
+            //If the appointment is today, also refresh the list
+            if(appointment.getDateTime().toLocalDate().isEqual(LocalDate.now())){
+                setTodaysAppointments();
+            }
+        });
+
+        //Check if the appointment was today or is now today, to update the todayAppointmentsList
+        if(appointmentToEdit.getDateTime().toLocalDate().isEqual(LocalDate.now())){
+            setTodaysAppointments();
+        }
     }
 }

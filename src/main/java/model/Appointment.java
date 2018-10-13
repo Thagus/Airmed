@@ -39,6 +39,10 @@ public class Appointment extends Model {
         return patient;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
