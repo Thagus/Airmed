@@ -15,6 +15,7 @@ import model.Study;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
+import utils.AutocompleteBindings;
 
 import java.util.Optional;
 
@@ -54,6 +55,7 @@ public class StudiesController {
 
             result.ifPresent(buttonType -> {
                 if(buttonType == ButtonType.OK){
+                    AutocompleteBindings.getInstance().removeStudyName(study.getName());
                     study.delete();
                     studies.remove(study);
                 }
@@ -152,6 +154,7 @@ public class StudiesController {
         Optional<Study> result = dialog.showAndWait();
 
         result.ifPresent(study -> {
+            AutocompleteBindings.getInstance().addStudyName(study.getName());
             studies.add(study);
             studiesTable.refresh();
         });
@@ -204,10 +207,25 @@ public class StudiesController {
                     return null;
                 }
 
+                String prevName = null;
+                if(!study.getName().equals(name)){
+                    prevName = study.getName();
+                }
+
                 study.setName(name);
                 study.setDescription(description);
 
-                return study;
+                try {
+                    study.update();
+                    if(prevName!=null){
+                        AutocompleteBindings.getInstance().removeStudyName(prevName);
+                        AutocompleteBindings.getInstance().addStudyName(name);
+                    }
+                    return study;
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             return null;
@@ -215,9 +233,6 @@ public class StudiesController {
 
         Optional<Study> result = dialog.showAndWait();
 
-        result.ifPresent(s -> {
-            study.update();
-            studiesTable.refresh();
-        });
+        result.ifPresent(s -> studiesTable.refresh());
     }
 }

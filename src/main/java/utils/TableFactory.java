@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.CustomTextField;
 
 import java.time.LocalDate;
@@ -206,6 +207,7 @@ public class TableFactory {
                     //If the medicine doesn't exist, create it
                     else {
                         Medicine.create(name);
+                        AutocompleteBindings.getInstance().addMedicineName(name);
                     }
 
                     //If the dose hasn't been found, create it

@@ -18,6 +18,7 @@ import model.Treatment;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
+import utils.AutocompleteBindings;
 import utils.TableFactory;
 
 import java.util.Optional;
@@ -57,6 +58,7 @@ public class TreatmentsController {
 
             result.ifPresent(buttonType -> {
                 if(buttonType == ButtonType.OK){
+                    AutocompleteBindings.getInstance().removeTreatmentName(treatment.getName());
                     treatment.delete();
                     treatments.remove(treatment);
                 }
@@ -166,12 +168,13 @@ public class TreatmentsController {
         Optional<Treatment> result = dialog.showAndWait();
 
         result.ifPresent(treatment -> {
+            AutocompleteBindings.getInstance().addTreatmentName(treatment.getName());
             treatments.add(treatment);
             treatmentsTable.refresh();
         });
     }
 
-    public void editTreatment(Treatment oTreatment){
+    public void editTreatment(Treatment treatment){
         Dialog<Treatment> dialog = new Dialog<>();
         dialog.setTitle("Nuevo tratamiento");
         dialog.setHeaderText(null);
@@ -188,10 +191,10 @@ public class TreatmentsController {
 
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre del tratamiento");
-        nameField.setText(oTreatment.getName());
+        nameField.setText(treatment.getName());
         TextArea descriptionField = new TextArea();
         descriptionField.setPromptText("Descripción del tratamiento");
-        descriptionField.setText(oTreatment.getDescription());
+        descriptionField.setText(treatment.getDescription());
         //Limit the amount of characters in the text field
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
@@ -203,7 +206,7 @@ public class TreatmentsController {
         grid.add(descriptionField, 1, 1);
 
         VBox vBox = new VBox();
-        TableView<Dose> doseTable = TableFactory.createTreatmentDosesTable(vBox, oTreatment.getMedicines());
+        TableView<Dose> doseTable = TableFactory.createTreatmentDosesTable(vBox, treatment.getMedicines());
 
         grid.add(vBox, 0, 2, 2, 1);
 
@@ -223,11 +226,26 @@ public class TreatmentsController {
                     return null;
                 }
 
-                oTreatment.setName(name);
-                oTreatment.setDescription(description);
-                oTreatment.setMedicines(doseTable.getItems());
+                String prevName = null;
+                if(!treatment.getName().equals(name)){
+                    prevName = treatment.getName();
+                }
 
-                return oTreatment;
+                treatment.setName(name);
+                treatment.setDescription(description);
+                treatment.setMedicines(doseTable.getItems());
+
+                try {
+                    treatment.update();
+                    if(prevName!=null){
+                        AutocompleteBindings.getInstance().removeTreatmentName(prevName);
+                        AutocompleteBindings.getInstance().addTreatmentName(name);
+                    }
+                    return treatment;
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             return null;
@@ -235,9 +253,6 @@ public class TreatmentsController {
 
         Optional<Treatment> result = dialog.showAndWait();
 
-        result.ifPresent(treatment -> {
-            oTreatment.update();
-            treatmentsTable.refresh();
-        });
+        result.ifPresent(t -> treatmentsTable.refresh());
     }
 }

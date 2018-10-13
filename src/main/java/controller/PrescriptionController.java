@@ -12,11 +12,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.*;
+import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
+import utils.AutocompleteBindings;
 import utils.TableFactory;
-
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Optional;
 
 public class PrescriptionController {
@@ -66,6 +65,8 @@ public class PrescriptionController {
             medicines.remove(dose);
             return dose;
         }));
+        medicineNameColumn.setMinWidth(200);
+        doseColumn.setMinWidth(200);
         medicinesTable.setItems(medicines);
 
         studies = FXCollections.observableArrayList();
@@ -74,6 +75,7 @@ public class PrescriptionController {
             studies.remove(study);
             return study;
         }));
+        studyNameColumn.setMinWidth(300);
         studiesTable.setItems(studies);
 
         treatments = FXCollections.observableArrayList();
@@ -82,7 +84,13 @@ public class PrescriptionController {
             treatments.remove(treatment);
             return treatment;
         }));
+        treatmentNameColumn.setMinWidth(300);
         treatmentsTable.setItems(treatments);
+
+
+        TextFields.bindAutoCompletion(treatmentField, AutocompleteBindings.getInstance().getTreatmentNames());
+        TextFields.bindAutoCompletion(studyField, AutocompleteBindings.getInstance().getStudyNames());
+        TextFields.bindAutoCompletion(medicineField, AutocompleteBindings.getInstance().getMedicineNames());
     }
 
     public void setPatient(Patient patient) {
@@ -191,6 +199,10 @@ public class PrescriptionController {
         doseField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
 
+        if(nameField.getText().length()>0){
+            TextFields.bindAutoCompletion(doseField, AutocompleteBindings.getInstance().getDosesForMedicine(nameField.getText()));
+        }
+
         grid.add(new Label("Nombre"), 0, 0);
         grid.add(nameField, 1, 0);
         grid.add(new Label("Dósis"), 0, 1);
@@ -225,6 +237,7 @@ public class PrescriptionController {
                 //If the medicine doesn't exist, create it
                 else {
                     Medicine.create(name);
+                    AutocompleteBindings.getInstance().addMedicineName(name);
                 }
 
                 //If the dose hasn't been found, create it

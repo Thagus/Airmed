@@ -16,6 +16,8 @@ import model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
+import utils.AutocompleteBindings;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -320,6 +322,7 @@ public class RecordController {
 
                 if(study==null){
                     study = Study.create(name, "");
+                    AutocompleteBindings.getInstance().addStudyName(name);
                 }
 
                 return StudyResult.create(
