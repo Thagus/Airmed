@@ -14,11 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -171,6 +170,10 @@ public class TableFactory {
             //Limit the amount of characters in the text field
             doseField.setTextFormatter(new TextFormatter<String>(change ->
                     change.getControlNewText().length() <= 255 ? change : null));
+
+            if(nameField.getText().length()>0){
+                TextFields.bindAutoCompletion(doseField, AutocompleteBindings.getInstance().getDosesForMedicine(nameField.getText()));
+            }
 
             grid.add(new Label("Nombre"), 0, 0);
             grid.add(nameField, 1, 0);
