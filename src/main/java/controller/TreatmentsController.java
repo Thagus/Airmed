@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -109,7 +110,7 @@ public class TreatmentsController {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(20, 10, 10, 10));
 
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre del tratamiento");
@@ -120,6 +121,11 @@ public class TreatmentsController {
         descriptionField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
         descriptionField.setWrapText(true);
+
+        final Button addButtonObj = (Button) dialog.getDialogPane().lookupButton(addButton);
+        addButtonObj.disableProperty().bind(
+                Bindings.isEmpty(nameField.textProperty())
+        );
 
         grid.add(new Label("Nombre"), 0, 0);
         grid.add(nameField, 1, 0);
