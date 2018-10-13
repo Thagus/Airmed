@@ -236,7 +236,7 @@ public class PrescriptionController {
                 }
                 //If the medicine doesn't exist, create it
                 else {
-                    Medicine.create(name);
+                    medicine = Medicine.create(name);
                     AutocompleteBindings.getInstance().addMedicineName(name);
                 }
 
