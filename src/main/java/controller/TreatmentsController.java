@@ -143,7 +143,7 @@ public class TreatmentsController {
                 String name = nameField.getText();
                 String description = descriptionField.getText();
 
-                if(name.length()==0 || description.length()==0){
+                if(name.length()==0){
                     return null;
                 }
 
