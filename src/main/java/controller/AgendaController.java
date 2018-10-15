@@ -1,5 +1,6 @@
 package controller;
 
+import agenda.AgendaWeekSkin;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -58,6 +59,11 @@ public class AgendaController {
         this.menuController = menuController;
         agendaView.setAllowDragging(false);
         agendaView.setAllowResize(false);
+
+        AgendaWeekSkin agendaWeekSkin = new AgendaWeekSkin(agendaView);
+        agendaView.setSkin(agendaWeekSkin);
+
+        agendaView.setDisplayedLocalDateTime(LocalDateTime.now());
 
         Setting consLength = Setting.find.byId("cons_length");
 
