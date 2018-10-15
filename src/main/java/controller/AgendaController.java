@@ -158,7 +158,7 @@ public class AgendaController {
                 agendaView.appointments().add(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(appointment.getDateTime())
-                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins-1, ChronoUnit.MINUTES))
                                 .withDescription("" + appointment.getId())
                                 .withSummary(appointment.getPatient().getFullName())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group18"))
@@ -168,7 +168,7 @@ public class AgendaController {
                 agendaView.appointments().add(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(appointment.getDateTime())
-                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins-1, ChronoUnit.MINUTES))
                                 .withDescription("" + appointment.getId())
                                 .withSummary(appointment.getPatient().getFullName())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group9"))
@@ -352,7 +352,7 @@ public class AgendaController {
                 agendaView.appointments().add(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(appointment.getDateTime())
-                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins-1, ChronoUnit.MINUTES))
                                 .withDescription("" + appointment.getId())
                                 .withSummary(appointment.getPatient().getFullName())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group18"))
@@ -362,7 +362,7 @@ public class AgendaController {
                 agendaView.appointments().add(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(appointment.getDateTime())
-                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins, ChronoUnit.MINUTES))
+                                .withEndLocalDateTime(appointment.getDateTime().plus(consLengthMins-1, ChronoUnit.MINUTES))
                                 .withDescription("" + appointment.getId())
                                 .withSummary(appointment.getPatient().getFullName())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group9"))
