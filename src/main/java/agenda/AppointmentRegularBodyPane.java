@@ -42,26 +42,12 @@ public class AppointmentRegularBodyPane extends AppointmentAbstractTrackedPane {
 	public AppointmentRegularBodyPane(LocalDate localDate, Appointment appointment, LayoutHelp layoutHelp) {
 		super(localDate, appointment, layoutHelp);
 		
-		// strings
-		this.startAsString = layoutHelp.timeDateTimeFormatter.format(this.startDateTime);
-		this.endAsString = layoutHelp.timeDateTimeFormatter.format(this.endDateTime);
-
-		// add the duration as text
-		Text lTimeText = new Text((firstPaneOfAppointment ? startAsString : "") + "-" + (lastPaneOfAppointment ? endAsString : ""));
-		{
-			lTimeText.getStyleClass().add("AppointmentTimeLabel");
-			lTimeText.setX(layoutHelp.paddingProperty.get() );
-			lTimeText.setY(lTimeText.prefHeight(0));
-			layoutHelp.clip(this, lTimeText, widthProperty().subtract( layoutHelp.paddingProperty ), heightProperty().add(0.0), true, 0.0);
-			getChildren().add(lTimeText);
-		}
-		
 		// add summary
 		Text lSummaryText = new Text(appointment.getSummary());
 		{
 			lSummaryText.getStyleClass().add("AppointmentLabel");
 			lSummaryText.setX( layoutHelp.paddingProperty.get() );
-			lSummaryText.setY( lTimeText.getY() + layoutHelp.textHeightProperty.get());
+			lSummaryText.setY( lSummaryText.prefHeight(0));
 			lSummaryText.wrappingWidthProperty().bind(widthProperty().subtract( layoutHelp.paddingProperty.get() ));
 			layoutHelp.clip(this, lSummaryText, widthProperty().add(0.0), heightProperty().subtract( layoutHelp.paddingProperty ), false, 0.0);
 			getChildren().add(lSummaryText);			
@@ -74,8 +60,7 @@ public class AppointmentRegularBodyPane extends AppointmentAbstractTrackedPane {
 		layoutHelp.skinnable.allowResizeProperty().addListener(new WeakInvalidationListener(allowResizeInvalidationListener));
 		setupDurationDragger();
 	}
-	private String startAsString;
-	private String endAsString;
+
 	final private InvalidationListener allowResizeInvalidationListener = new InvalidationListener() {
 		@Override
 		public void invalidated(Observable arg0) {
