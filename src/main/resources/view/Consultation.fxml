@@ -82,6 +82,12 @@
           <TextField fx:id="attitudeField" GridPane.columnIndex="7" GridPane.rowIndex="6" />
           <TextField fx:id="nutritionField" GridPane.columnIndex="7" GridPane.rowIndex="7" />
           <TextField fx:id="hydrationField" GridPane.columnIndex="7" GridPane.rowIndex="8" />
+         <Label text="D/S" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+         <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+         <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+         <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+         <Label text="cm" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+         <Label text="gr" GridPane.columnIndex="5" GridPane.rowIndex="4" />
        </children>
        <padding>
           <Insets left="5.0" right="5.0" top="5.0" />
