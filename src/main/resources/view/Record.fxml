@@ -55,6 +55,11 @@
                             <RowConstraints />
                             <RowConstraints />
                             <RowConstraints />
+                     <RowConstraints prefHeight="15.0" />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
                         </rowConstraints>
                         <children>
                             <Label text="Nombre" />
@@ -82,6 +87,16 @@
                               <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData="M" />
                           </buttons>
                       </SegmentedButton>
+                     <Label text="Facturación" GridPane.rowIndex="6">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font></Label>
+                     <Label text="Nombre" GridPane.rowIndex="7" />
+                     <Label text="Dirección" GridPane.rowIndex="8" />
+                     <Label text="RFC" GridPane.rowIndex="9" />
+                     <TextField fx:id="billingNameField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                     <TextField fx:id="billingAddressField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                     <TextField fx:id="billingCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
                         </children>
                         <padding>
                             <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
@@ -123,6 +138,41 @@
                 </AnchorPane>
             </content>
         </Tab>
+        <Tab text="Cirugías">
+            <content>
+                <VBox>
+                    <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                            <Button mnemonicParsing="false" onAction="#newSurgery" text="Registrar">
+                                <HBox.margin>
+                                    <Insets left="5.0" />
+                                </HBox.margin>
+                            </Button>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <CustomTextField fx:id="surgerySearchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
+                                <left>
+                                    <Label style="-fx-padding: 0 2 0 7;">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
+                                        </graphic>
+                                    </Label>
+                                </left>
+                            </CustomTextField>
+                        </HBox>
+                        <TableView fx:id="surgeriesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn fx:id="surgeryNameColumn" text="Nombre" />
+                                <TableColumn fx:id="surgeryDateColumn" text="Fecha" />
+                                <TableColumn fx:id="surgeryDescColumn" text="Descripción" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
         <Tab text="Estudios">
           <content>
               <VBox>
@@ -131,7 +181,7 @@
                           <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                           </VBox.margin>
-                          <Button mnemonicParsing="false" onAction="#newStudy" text="Agregar">
+                          <Button mnemonicParsing="false" onAction="#newStudy" text="Registrar">
                               <HBox.margin>
                                   <Insets left="5.0" />
                               </HBox.margin>
@@ -153,41 +203,6 @@
                               <TableColumn fx:id="studyDateColumn" text="Fecha" />
                               <TableColumn fx:id="studyDescColumn" text="Descripción" />
                               <TableColumn fx:id="studyResultColumn" text="Resultado" />
-                          </columns>
-                      </TableView>
-                  </children>
-              </VBox>
-          </content>
-        </Tab>
-        <Tab text="Cirugías">
-          <content>
-              <VBox>
-                  <children>
-                      <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
-                          <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                          </VBox.margin>
-                          <Button mnemonicParsing="false" onAction="#newSurgery" text="Registrar">
-                              <HBox.margin>
-                                  <Insets left="5.0" />
-                              </HBox.margin>
-                          </Button>
-                          <Region HBox.hgrow="ALWAYS" />
-                          <CustomTextField fx:id="surgerySearchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
-                              <left>
-                                  <Label style="-fx-padding: 0 2 0 7;">
-                                      <graphic>
-                                          <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
-                                      </graphic>
-                                  </Label>
-                              </left>
-                          </CustomTextField>
-                      </HBox>
-                      <TableView fx:id="surgeriesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                              <TableColumn fx:id="surgeryNameColumn" text="Nombre" />
-                              <TableColumn fx:id="surgeryDateColumn" text="Fecha" />
-                              <TableColumn fx:id="surgeryDescColumn" text="Descripción" />
                           </columns>
                       </TableView>
                   </children>

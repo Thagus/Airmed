@@ -37,6 +37,10 @@ public class RecordController {
     @FXML private TextField emailField;
     @FXML private TextField phoneField;
     @FXML private TextField cellphoneField;
+    //Billing
+    @FXML private TextField billingNameField;
+    @FXML private TextField billingAddressField;
+    @FXML private TextField billingCodeField;
 
     //Background
     @FXML private TextArea familyHistoryArea;
@@ -210,6 +214,9 @@ public class RecordController {
         SortedList<Consultation> sortedConsultations = new SortedList<>(filteredConsultations);        //Wrap the filtered list in a sorted list
         sortedConsultations.comparatorProperty().bind(consultationsTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
         consultationsTable.setItems(sortedConsultations);
+
+        billingAddressField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
     }
 
     public void setPatient(Patient patient){
@@ -247,6 +254,9 @@ public class RecordController {
         cellphoneField.setText(patient.getCellphone());
         bloodTypeField.setText(patient.getBloodType());
 
+        billingNameField.setText(patient.getBillingName());
+        billingAddressField.setText(patient.getBillingAddress());
+        billingCodeField.setText(patient.getBillingCode());
 
         patientRecord = patient.getRecord();
 
@@ -428,6 +438,10 @@ public class RecordController {
         patient.setPhone(phoneField.getText());
         patient.setCellphone(cellphoneField.getText());
         patient.setGender((Character) genderToggleGroup.getSelectedToggle().getUserData());
+
+        patient.setBillingName(billingNameField.getText());
+        patient.setBillingAddress(billingAddressField.getText());
+        patient.setBillingCode(billingCodeField.getText());
 
         patientRecord.setAllergies(allergiesArea.getText());
         patientRecord.setFamilyBg(familyHistoryArea.getText());

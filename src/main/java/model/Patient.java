@@ -33,6 +33,10 @@ public class Patient extends Model {
 
     private String cellphone;
 
+    private String billingName;
+    private String billingAddress;
+    private String billingCode;
+
     @OneToOne(mappedBy = "patient")
     private Record record;
 
@@ -147,5 +151,29 @@ public class Patient extends Model {
 
     public List<Consultation> getConsultations() {
         return consultations;
+    }
+
+    public String getBillingName() {
+        return billingName;
+    }
+
+    public void setBillingName(String billingName) {
+        this.billingName = billingName;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getBillingCode() {
+        return billingCode;
+    }
+
+    public void setBillingCode(String billingCode) {
+        this.billingCode = billingCode;
     }
 }
