@@ -296,7 +296,8 @@ public class AgendaController {
         DatePicker dateField = new DatePicker();
 
         LocalTimePicker timeField = new LocalTimePicker();
-        timeField.setMinuteStep(consLengthMins);
+        if(consLengthMins<60 && consLengthMins>0)
+            timeField.setMinuteStep(consLengthMins);
 
         grid.add(new Label("Paciente"), 0, 0);
         grid.add(patientNameField, 1, 0);
@@ -397,7 +398,8 @@ public class AgendaController {
 
         DatePicker dateField = new DatePicker();
         LocalTimePicker timeField = new LocalTimePicker();
-        timeField.setMinuteStep(consLengthMins);
+        if(consLengthMins<60 && consLengthMins>0)
+            timeField.setMinuteStep(consLengthMins);
 
         dateField.setValue(appointmentToEdit.getDateTime().toLocalDate());
         timeField.setLocalTime(appointmentToEdit.getDateTime().toLocalTime());
