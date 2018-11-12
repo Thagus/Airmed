@@ -21,7 +21,7 @@
           <ColumnConstraints />
           <ColumnConstraints />
          <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-         <ColumnConstraints />
+         <ColumnConstraints hgrow="ALWAYS" />
          <ColumnConstraints />
        </columnConstraints>
        <rowConstraints>
@@ -32,7 +32,6 @@
           <RowConstraints />
           <RowConstraints />
           <RowConstraints />
-          <RowConstraints minHeight="10.0" />
           <RowConstraints />
           <RowConstraints />
           <RowConstraints />
@@ -42,7 +41,7 @@
          <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
        </rowConstraints>
        <children>
-          <Label text="Consulta de Juan Pérez González" GridPane.columnSpan="2147483647">
+          <Label fx:id="consultationLabel" text="Consulta de Juan Pérez González" GridPane.columnSpan="2147483647">
              <font>
                 <Font name="System Bold" size="18.0" />
              </font></Label>
@@ -70,24 +69,17 @@
              <font>
                 <Font name="System Bold" size="14.0" />
              </font></Label>
-          <Label text="Conciencia" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-          <Label text="Colaboración" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-          <Label text="Mobilidad" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-          <Label text="Actitud" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-          <Label text="Nutrición" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-          <Label text="Hidratación" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-          <TextField fx:id="awarenessField" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-          <TextField fx:id="collaborationField" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-          <TextField fx:id="mobilityField" GridPane.columnIndex="7" GridPane.rowIndex="5" />
-          <TextField fx:id="attitudeField" GridPane.columnIndex="7" GridPane.rowIndex="6" />
-          <TextField fx:id="nutritionField" GridPane.columnIndex="7" GridPane.rowIndex="7" />
-          <TextField fx:id="hydrationField" GridPane.columnIndex="7" GridPane.rowIndex="8" />
          <Label text="S/D" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="6" />
          <Label text="cm" GridPane.columnIndex="5" GridPane.rowIndex="3" />
          <Label text="gr" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+         <TextArea fx:id="explorationField" prefHeight="50.0" GridPane.columnIndex="6" GridPane.rowIndex="3" GridPane.rowSpan="2" />
+         <Label text="Motivo de la consulta" GridPane.columnIndex="6" GridPane.rowIndex="5"><font>
+             <Font name="System Bold" size="14.0" />
+         </font></Label>
+         <TextField fx:id="motiveField" GridPane.columnIndex="6" GridPane.rowIndex="6" />
        </children>
        <padding>
           <Insets left="5.0" right="5.0" top="5.0" />
@@ -104,8 +96,12 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <Label text="Diagnóstico" />
-         <Label text="Pronóstico" GridPane.columnIndex="2" />
+         <Label text="Diagnóstico"><font>
+             <Font name="System Bold" size="14.0" />
+         </font></Label>
+         <Label text="Pronóstico" GridPane.columnIndex="2"><font>
+             <Font name="System Bold" size="14.0" />
+         </font></Label>
          <TextArea fx:id="diagnosisArea" GridPane.rowIndex="1" />
          <TextArea fx:id="prognosisArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       </children>

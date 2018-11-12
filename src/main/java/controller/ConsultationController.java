@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public class ConsultationController {
 
+    @FXML private Label consultationLabel;
+
     @FXML private TextField pressureField;
     @FXML private TextField breathField;
     @FXML private TextField pulseField;
@@ -22,12 +24,8 @@ public class ConsultationController {
     @FXML private TextField heightField;
     @FXML private TextField weightField;
 
-    @FXML private TextField awarenessField;
-    @FXML private TextField collaborationField;
-    @FXML private TextField mobilityField;
-    @FXML private TextField attitudeField;
-    @FXML private TextField nutritionField;
-    @FXML private TextField hydrationField;
+    @FXML private TextField motiveField;
+    @FXML private TextArea explorationField;
 
     @FXML private TextArea diagnosisArea;
     @FXML private TextArea prognosisArea;
@@ -43,7 +41,7 @@ public class ConsultationController {
 
         //Add filters to vital sign fields
         pressureField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*") || !newValue.matches("/")) {
+            if (!newValue.matches("\\d*/")) {
                 pressureField.setText(newValue.replaceAll("[^\\d/]", ""));
             }
         });
@@ -86,6 +84,8 @@ public class ConsultationController {
         this.onlyShowConsultation = false;
         changeFieldStatus(true);
         clearFields();
+
+        consultationLabel.setText("Consulta de " + patient.getFullName());
         //Find if the patient had an appointment that day
         LocalDate today = LocalDate.now();
         Appointment appointment = Appointment.find.query().where().eq("patient", patient).between("dateTime", LocalDateTime.of(today, LocalTime.MIN), LocalDateTime.of(today, LocalTime.MAX)).findOne();
@@ -142,16 +142,9 @@ public class ConsultationController {
                     NumberUtils.toInt(heightField.getText(), 0)
             ));
 
-            consultation.setExploration(Exploration.create(
-                    consultation,
-                    awarenessField.getText(),
-                    collaborationField.getText(),
-                    mobilityField.getText(),
-                    attitudeField.getText(),
-                    nutritionField.getText(),
-                    hydrationField.getText()
-            ));
+            consultation.setExploration(explorationField.getText());
 
+            consultation.setMotive(motiveField.getText());
             consultation.setDiagnostic(diagnosisArea.getText());
             consultation.setPrognosis(prognosisArea.getText());
 
@@ -168,6 +161,8 @@ public class ConsultationController {
         this.consultation = consultation;
         clearFields();
 
+        consultationLabel.setText("Consulta de " + consultation.getPatient().getFullName());
+
         //Fill textfields
         if(consultation.getVitalSign()!=null) {
             VitalSign vitalSign = consultation.getVitalSign();
@@ -183,15 +178,8 @@ public class ConsultationController {
             weightField.setText(consultation.getMeasurement().getWeight() + "");
         }
 
-        if(consultation.getExploration()!=null) {
-            awarenessField.setText(consultation.getExploration().getAwareness());
-            collaborationField.setText(consultation.getExploration().getCollaboration());
-            mobilityField.setText(consultation.getExploration().getMobility());
-            attitudeField.setText(consultation.getExploration().getAttitude());
-            nutritionField.setText(consultation.getExploration().getNutrition());
-            hydrationField.setText(consultation.getExploration().getHydration());
-        }
-
+        explorationField.setText(consultation.getExploration());
+        motiveField.setText(consultation.getMotive());
         diagnosisArea.setText(consultation.getDiagnostic());
         prognosisArea.setText(consultation.getPrognosis());
 
@@ -246,24 +234,13 @@ public class ConsultationController {
         weightField.setMouseTransparent(!status);
         weightField.setFocusTraversable(status);
 
-        awarenessField.setEditable(status);
-        awarenessField.setMouseTransparent(!status);
-        awarenessField.setFocusTraversable(status);
-        collaborationField.setEditable(status);
-        collaborationField.setMouseTransparent(!status);
-        collaborationField.setFocusTraversable(status);
-        mobilityField.setEditable(status);
-        mobilityField.setMouseTransparent(!status);
-        mobilityField.setFocusTraversable(status);
-        attitudeField.setEditable(status);
-        attitudeField.setMouseTransparent(!status);
-        attitudeField.setFocusTraversable(status);
-        nutritionField.setEditable(status);
-        nutritionField.setMouseTransparent(!status);
-        nutritionField.setFocusTraversable(status);
-        hydrationField.setEditable(status);
-        hydrationField.setMouseTransparent(!status);
-        hydrationField.setFocusTraversable(status);
+        motiveField.setEditable(status);
+        motiveField.setMouseTransparent(!status);
+        motiveField.setFocusTraversable(status);
+
+        explorationField.setEditable(status);
+        explorationField.setMouseTransparent(!status);
+        explorationField.setFocusTraversable(status);
 
         diagnosisArea.setEditable(status);
         diagnosisArea.setMouseTransparent(!status);
@@ -282,13 +259,9 @@ public class ConsultationController {
         heightField.setText("");
         weightField.setText("");
 
-        awarenessField.setText("");
-        collaborationField.setText("");
-        mobilityField.setText("");
-        attitudeField.setText("");
-        nutritionField.setText("");
-        hydrationField.setText("");
+        explorationField.setText("");
 
+        motiveField.setText("");
         diagnosisArea.setText("");
         prognosisArea.setText("");
     }

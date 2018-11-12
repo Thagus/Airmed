@@ -22,6 +22,8 @@ public class Consultation extends Model {
 
     private String prognosis;
 
+    private String motive;
+
     @OneToOne
     private Prescription prescription;
 
@@ -31,8 +33,7 @@ public class Consultation extends Model {
     @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private VitalSign vitalSign;
 
-    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
-    private Exploration exploration;
+    private String exploration;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
 
@@ -89,14 +90,6 @@ public class Consultation extends Model {
         this.vitalSign = vitalSign;
     }
 
-    public Exploration getExploration() {
-        return exploration;
-    }
-
-    public void setExploration(Exploration exploration) {
-        this.exploration = exploration;
-    }
-
     public String getDiagnostic() {
         return diagnostic;
     }
@@ -111,5 +104,21 @@ public class Consultation extends Model {
 
     public void setPrognosis(String prognosis) {
         this.prognosis = prognosis;
+    }
+
+    public String getMotive() {
+        return motive;
+    }
+
+    public void setMotive(String motive) {
+        this.motive = motive;
+    }
+
+    public String getExploration() {
+        return exploration;
+    }
+
+    public void setExploration(String exploration) {
+        this.exploration = exploration;
     }
 }
