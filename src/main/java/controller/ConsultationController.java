@@ -143,7 +143,7 @@ public class ConsultationController {
             int height= 0;
 
             if(weightField.getText().length()>0){
-                weight = new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
+                weight = new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue();
             }
 
             if(heightField.getText().length()>0){
@@ -189,7 +189,7 @@ public class ConsultationController {
 
         if(consultation.getMeasurement()!=null) {
             heightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
-            weightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
+            weightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString());
         }
 
         explorationField.setText(consultation.getExploration());
