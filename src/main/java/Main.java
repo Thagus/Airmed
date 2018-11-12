@@ -121,7 +121,7 @@ public class Main extends Application {
 
         scene.setRoot(loader.load());
         MenuController controller = loader.getController();
-        controller.init();
+        controller.init(primaryStage);
 
         controller.showAgenda(null);
 
