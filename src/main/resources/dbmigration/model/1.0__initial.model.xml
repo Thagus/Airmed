@@ -43,6 +43,9 @@
             <column name="email" type="varchar"/>
             <column name="phone" type="varchar"/>
             <column name="cellphone" type="varchar"/>
+            <column name="billing_name" type="varchar"/>
+            <column name="billing_address" type="varchar"/>
+            <column name="billing_code" type="varchar"/>
         </createTable>
         <createTable name="prescription" pkName="pk_prescription">
             <column name="id" type="integer" primaryKey="true"/>

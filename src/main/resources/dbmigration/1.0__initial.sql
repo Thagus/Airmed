@@ -53,6 +53,9 @@ create table patient (
   email                         varchar(255),
   phone                         varchar(255),
   cellphone                     varchar(255),
+  billing_name                  varchar(255),
+  billing_address               varchar(255),
+  billing_code                  varchar(255),
   constraint pk_patient primary key (id)
 );
 
