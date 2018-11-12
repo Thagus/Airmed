@@ -14,9 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConsultationController {
-
     @FXML private Label consultationLabel;
 
     @FXML private TextField pressureField;
@@ -26,6 +26,7 @@ public class ConsultationController {
 
     @FXML private TextField heightField;
     @FXML private TextField weightField;
+    @FXML private TextField imcField;
 
     @FXML private TextField motiveField;
     @FXML private TextArea explorationField;
@@ -64,17 +65,48 @@ public class ConsultationController {
             }
         });
 
+        //Values to keep track of imc
+        AtomicInteger weight = new AtomicInteger(0);
+        AtomicInteger height = new AtomicInteger(0);
+
         //Add numeric only filters to measurement fields
         heightField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*.")) {
+            if (!newValue.matches("^([0-9]+\\.?[0-9]*|[0-9]*\\.[0-9]+)")) {
                 heightField.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+            else {
+                height.set(new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue());
+
+                if(weight.get()!=0){
+                    imcField.setText(BigDecimal.valueOf((weight.get()/((double)height.get()*(double)height.get()))*10).setScale(2, RoundingMode.CEILING).toPlainString());
+                }
+            }
+            if(newValue.length()==0){
+                imcField.setText("");
+                height.set(0);
             }
         });
         weightField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*.")) {
+            if (!newValue.matches("^([0-9]+\\.?[0-9]*|[0-9]*\\.[0-9]+)")) {
                 weightField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
+            else {
+                weight.set(new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue());
+
+                if(height.get()!=0){
+                    imcField.setText(BigDecimal.valueOf((weight.get()/((double)height.get()*(double)height.get()))*10).setScale(2, RoundingMode.CEILING).toPlainString());
+                }
+                else {
+                    imcField.setText("");
+                }
+            }
+            if(newValue.length()==0){
+                imcField.setText("");
+                weight.set(0);
+            }
         });
+
+        imcField.setEditable(false);
 
         diagnosisArea.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
