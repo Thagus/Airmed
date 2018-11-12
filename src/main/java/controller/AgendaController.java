@@ -474,4 +474,11 @@ public class AgendaController {
             setTodaysAppointments();
         }
     }
+
+    public void refresh() {
+        consLengthMins = Integer.parseInt(Setting.find.byId("cons_length").getValue());
+        setWeekAppointments(LocalDate.now());
+        setTodaysAppointments();
+        agendaView.refresh();
+    }
 }
