@@ -122,8 +122,8 @@ public class ConsultationController {
             int pressureS = 0;
 
             if (pressures.length >= 2) {
-                pressureD = NumberUtils.toInt(pressures[0], 0);
-                pressureS = NumberUtils.toInt(pressures[1], 0);
+                pressureS = NumberUtils.toInt(pressures[0], 0);
+                pressureD = NumberUtils.toInt(pressures[1], 0);
             }
 
             //Save data to consultation

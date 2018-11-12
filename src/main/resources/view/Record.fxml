@@ -74,12 +74,12 @@
                             <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                       <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="2">
                           <buttons>
-                              <ToggleButton fx:id="femaleToggle" text="F" userData='F'>
+                              <ToggleButton fx:id="femaleToggle" text="F" userData="F">
                                <toggleGroup>
                                   <ToggleGroup fx:id="genderToggleGroup" />
                                </toggleGroup>
                               </ToggleButton>
-                              <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData='M' />
+                              <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData="M" />
                           </buttons>
                       </SegmentedButton>
                         </children>
@@ -108,8 +108,8 @@
                             <children>
                                 <Label text="Familiares" />
                                 <TextArea fx:id="familyHistoryArea" wrapText="true" GridPane.columnIndex="1" />
-                                <Label text="Personales" GridPane.rowIndex="1" />
-                                <Label prefHeight="17.0" prefWidth="117.0" text="Aparatos y sistemas" GridPane.rowIndex="2" />
+                                <Label prefHeight="37.0" prefWidth="122.0" text="Personales Patológicos" GridPane.rowIndex="1" />
+                                <Label prefHeight="43.0" prefWidth="117.0" text="Personales No Patológicos" wrapText="true" GridPane.rowIndex="2" />
                                 <Label text="Alergias" GridPane.rowIndex="3" />
                                 <TextArea fx:id="personalHistoryArea" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <TextArea fx:id="allergiesArea" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -167,7 +167,7 @@
                           <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                           </VBox.margin>
-                          <Button mnemonicParsing="false" onAction="#newSurgery" text="Agregar">
+                          <Button mnemonicParsing="false" onAction="#newSurgery" text="Registrar">
                               <HBox.margin>
                                   <Insets left="5.0" />
                               </HBox.margin>
