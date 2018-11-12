@@ -108,6 +108,12 @@ public class ConsultationController {
 
         imcField.setEditable(false);
 
+        explorationField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
+
+        motiveField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
+
         diagnosisArea.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
 
