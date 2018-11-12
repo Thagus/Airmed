@@ -13,22 +13,14 @@
             <column name="date_time" type="timestamp" notnull="true"/>
             <column name="diagnostic" type="varchar"/>
             <column name="prognosis" type="varchar"/>
+            <column name="motive" type="varchar"/>
             <column name="prescription_id" type="integer" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
+            <column name="exploration" type="varchar"/>
         </createTable>
         <createTable name="dose" pkName="pk_dose">
             <column name="id" type="integer" primaryKey="true"/>
             <column name="dose" type="varchar" notnull="true"/>
             <column name="medicine_id" type="integer" references="medicine.id" foreignKeyName="fk_dose_medicine_id" foreignKeyIndex="ix_dose_medicine_id"/>
-        </createTable>
-        <createTable name="exploration" pkName="pk_exploration">
-            <column name="id" type="integer" primaryKey="true"/>
-            <column name="consultation_id" type="integer" uniqueOneToOne="uq_exploration_consultation_id" references="consultation.id" foreignKeyName="fk_exploration_consultation_id"/>
-            <column name="awareness" type="varchar"/>
-            <column name="collaboration" type="varchar"/>
-            <column name="mobility" type="varchar"/>
-            <column name="attitude" type="varchar"/>
-            <column name="nutrition" type="varchar"/>
-            <column name="hydration" type="varchar"/>
         </createTable>
         <createTable name="measurement" pkName="pk_measurement">
             <column name="id" type="integer" primaryKey="true"/>
