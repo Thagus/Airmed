@@ -102,6 +102,7 @@ public class TableFactory {
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         TextField medicineField = new TextField();
+        TextFields.bindAutoCompletion(medicineField, AutocompleteBindings.getInstance().getMedicineNames());
         Button addMedicineButton = new Button("+");
         hBox.getChildren().addAll(new Label("Medicina"), medicineField, addMedicineButton);
 
