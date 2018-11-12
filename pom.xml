@@ -6,7 +6,7 @@
 
     <groupId>com.lantapps.airmed</groupId>
     <artifactId>Airmed</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <build>
         <plugins>
@@ -87,13 +87,13 @@
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>ebean</artifactId>
-            <version>11.19.1</version>
+            <version>11.24.1</version>
         </dependency>
 
         <dependency>
             <groupId>io.ebean.test</groupId>
             <artifactId>ebean-test-config</artifactId>
-            <version>11.19.1</version>
+            <version>11.24.1</version>
         </dependency>
 
         <dependency>

@@ -1,6 +1,7 @@
 import controller.MenuController;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
+import io.ebean.datasource.DataSourceConfig;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -13,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.avaje.datasource.DataSourceConfig;
 import utils.ShakeTransition;
 import java.io.IOException;
 import java.util.Locale;
@@ -121,7 +121,7 @@ public class Main extends Application {
 
         scene.setRoot(loader.load());
         MenuController controller = loader.getController();
-        controller.init();
+        controller.init(primaryStage);
 
         controller.showAgenda(null);
 
