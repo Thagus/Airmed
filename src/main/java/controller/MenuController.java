@@ -1,24 +1,14 @@
 package controller;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Appointment;
 import model.Consultation;
 import model.Patient;
-import model.Prescription;
-import org.controlsfx.control.SegmentedButton;
-import org.controlsfx.control.textfield.CustomTextField;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MenuController {
 
@@ -28,7 +18,7 @@ public class MenuController {
     private VBox patientsPane;
     private VBox treatmentsPane;
     private VBox studiesPane;
-    private VBox configPane;
+    private VBox settingsPane;
     private VBox patientRecordPane;
     private VBox prescriptionPane;
     private VBox consultationPane;
@@ -37,15 +27,20 @@ public class MenuController {
     private PatientsController patientsController;
     private TreatmentsController treatmentsController;
     private StudiesController studiesController;
-    private ConfigController configController;
+    private SettingsController settingsController;
     private RecordController recordController;
     private ConsultationController consultationController;
     private PrescriptionController prescriptionController;
 
     public void init() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader;
 
-        loader.setLocation(getClass().getResource("/view/Agenda.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));
+        settingsPane = loader.load();
+        settingsController = loader.getController();
+        settingsController.init(settingsPane);
+
+        loader = new FXMLLoader(getClass().getResource("/view/Agenda.fxml"));
         agendaView = loader.load();
         agendaController = loader.getController();
         agendaController.init(this);
@@ -64,11 +59,6 @@ public class MenuController {
         studiesPane = loader.load();
         studiesController = loader.getController();
         studiesController.init();
-
-        loader = new FXMLLoader(getClass().getResource("/view/Config.fxml"));
-        configPane = loader.load();
-        configController = loader.getController();
-        configController.init();
 
         loader = new FXMLLoader(getClass().getResource("/view/Record.fxml"));
         patientRecordPane = loader.load();
@@ -90,7 +80,7 @@ public class MenuController {
                 patientsPane,
                 treatmentsPane,
                 studiesPane,
-                configPane,
+                settingsPane,
                 patientRecordPane,
                 consultationPane,
                 prescriptionPane
@@ -166,6 +156,7 @@ public class MenuController {
 
     public void showAgenda(ActionEvent actionEvent) {
         hideAll();
+        agendaController.refresh();
         agendaView.setVisible(true);
     }
 
@@ -186,7 +177,7 @@ public class MenuController {
 
     public void showConfig(ActionEvent actionEvent) {
         hideAll();
-        configPane.setVisible(true);
+        settingsPane.setVisible(true);
     }
 
     private void hideAll(){
@@ -194,7 +185,7 @@ public class MenuController {
         patientsPane.setVisible(false);
         treatmentsPane.setVisible(false);
         studiesPane.setVisible(false);
-        configPane.setVisible(false);
+        settingsPane.setVisible(false);
         patientRecordPane.setVisible(false);
         consultationPane.setVisible(false);
         prescriptionPane.setVisible(false);
