@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.print.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -16,6 +17,9 @@ import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
 import utils.AutocompleteBindings;
 import utils.TableFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PrescriptionController {
@@ -112,6 +116,9 @@ public class PrescriptionController {
         if(!onlyShowPrescription) {
             //Get data
             prescription.setNotes(notesArea.getText());
+            prescription.setMedicines(medicines);
+            prescription.setTreatments(treatments);
+            prescription.setStudies(studies);
 
             ///Save to database
             if (consultation != null) {
@@ -134,6 +141,9 @@ public class PrescriptionController {
         if(!onlyShowPrescription) {
             //Get data
             prescription.setNotes(notesArea.getText());
+            prescription.setMedicines(medicines);
+            prescription.setTreatments(treatments);
+            prescription.setStudies(studies);
 
             ///Save to database
             if (consultation != null) {
@@ -145,6 +155,33 @@ public class PrescriptionController {
         }
 
         //Show printing dialog
+        VBox prescriptionPane = new VBox();
+        prescriptionPane.setSpacing(15);
+
+        //Hardcoded values for the given prescription format sample
+        prescriptionPane.setPadding(new Insets(45, 0, 0, 200));
+
+        List<Dose> doses = new ArrayList<>(prescription.getMedicines());
+        for(Treatment treatment : prescription.getTreatments()){
+            doses.addAll(treatment.getMedicines());
+        }
+
+        for(Dose dose : doses) {
+            prescriptionPane.getChildren().add(new Label(dose.getMedicine().getName() + "\n- " + dose.getDose()));
+        }
+
+        for(Study study : prescription.getStudies()){
+            prescriptionPane.getChildren().add(new Label(study.getName() + "\n" + study.getDescription()));
+        }
+
+
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
+            boolean success = printerJob.printPage(prescriptionPane);
+            if (success) {
+                printerJob.endJob();
+            }
+        }
 
         if(!onlyShowPrescription) {
             //Return to the agenda
