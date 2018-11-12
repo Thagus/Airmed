@@ -7,6 +7,9 @@ import javafx.scene.layout.VBox;
 import model.*;
 import org.apache.commons.lang3.math.NumberUtils;
 import utils.TableFactory;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -63,13 +66,13 @@ public class ConsultationController {
 
         //Add numeric only filters to measurement fields
         heightField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                heightField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("\\d*.")) {
+                heightField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
         weightField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                weightField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("\\d*.")) {
+                weightField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
 
@@ -136,10 +139,21 @@ public class ConsultationController {
                     NumberUtils.toInt(breathField.getText(), 0)
             ));
 
+            int weight = 0;
+            int height= 0;
+
+            if(weightField.getText().length()>0){
+                weight = new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
+            }
+
+            if(heightField.getText().length()>0){
+                height = new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
+            }
+
             consultation.setMeasurement(Measurement.create(
                     consultation,
-                    NumberUtils.toInt(weightField.getText(), 0),
-                    NumberUtils.toInt(heightField.getText(), 0)
+                    weight,
+                    height
             ));
 
             consultation.setExploration(explorationField.getText());
@@ -174,8 +188,8 @@ public class ConsultationController {
         }
 
         if(consultation.getMeasurement()!=null) {
-            heightField.setText(consultation.getMeasurement().getHeight() + "");
-            weightField.setText(consultation.getMeasurement().getWeight() + "");
+            heightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
+            weightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
         }
 
         explorationField.setText(consultation.getExploration());

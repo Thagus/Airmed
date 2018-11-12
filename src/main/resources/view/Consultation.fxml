@@ -73,8 +73,8 @@
          <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-         <Label text="cm" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-         <Label text="gr" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+         <Label text="m" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+         <Label text="kg" GridPane.columnIndex="5" GridPane.rowIndex="4" />
          <TextArea fx:id="explorationField" prefHeight="50.0" GridPane.columnIndex="6" GridPane.rowIndex="3" GridPane.rowSpan="2" />
          <Label text="Motivo de la consulta" GridPane.columnIndex="6" GridPane.rowIndex="5"><font>
              <Font name="System Bold" size="14.0" />
