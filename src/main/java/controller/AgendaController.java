@@ -284,7 +284,6 @@ public class AgendaController {
                 return null;
             });
 
-            patientDialog.initOwner(dialog.getOwner());
             Optional<Patient> patientResult = patientDialog.showAndWait();
 
             patientResult.ifPresent(selectedPatient -> {
@@ -345,7 +344,6 @@ public class AgendaController {
             return null;
         });
 
-        dialog.initOwner(menuController.getPrimaryStage());
         Optional<Appointment> result = dialog.showAndWait();
 
         result.ifPresent(appointment -> {

@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import model.Appointment;
 import model.Consultation;
 import model.Patient;
@@ -43,11 +42,7 @@ public class MenuController {
     private ConsultationController consultationController;
     private PrescriptionController prescriptionController;
 
-    private Stage primaryStage;
-
-    public void init(Stage primaryStage) throws IOException {
-        this.primaryStage = primaryStage;
-
+    public void init() throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("/view/Agenda.fxml"));
@@ -192,10 +187,6 @@ public class MenuController {
     public void showConfig(ActionEvent actionEvent) {
         hideAll();
         configPane.setVisible(true);
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 
     private void hideAll(){
