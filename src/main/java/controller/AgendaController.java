@@ -53,7 +53,7 @@ public class AgendaController {
 
     private DateTimeFormatter hourFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    private int consLengthMins = 60;
+    private int consLengthMins = 30;
 
     public void init(MenuController menuController){
         this.menuController = menuController;
