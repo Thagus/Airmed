@@ -1,7 +1,9 @@
 package utils;
 
+import javafx.geometry.Pos;
 import model.Appointment;
 import model.Setting;
+import org.controlsfx.control.Notifications;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
@@ -13,7 +15,6 @@ import javax.mail.util.ByteArrayDataSource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
-import java.util.UUID;
 
 public class EmailManager {
     private static EmailManager instance;
@@ -21,7 +22,7 @@ public class EmailManager {
     private Session session;
     private String email;
 
-    private DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyyMMddTHHmmssZ");
+    private DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'");
 
     private EmailManager(){
 
@@ -53,13 +54,27 @@ public class EmailManager {
         });
     }
 
-    public String sendAppointmentNotification(Appointment appointment){
+    public void sendAppointmentNotification(Appointment appointment){
+        if(email==null){
+            Notifications.create().title("Error al enviar email")
+                    .text("No se ha configurado el envío de correos electrónicos")
+                    .position(Pos.BASELINE_RIGHT)
+                    .showInformation();
+            return;
+        }
         if(appointment.getPatient().getEmail().length()==0){
-            return "No se ha definido el email del paciente";
+            Notifications.create().title("Error al enviar email")
+                    .text("No se ha definido el email del paciente")
+                    .showWarning();
+            return;
         }
 
         if(session==null){
-            return "No se ha configurado el inicio de sesión de email";
+            Notifications.create().title("Error al enviar email")
+                    .text("No se ha configurado el envío de correos electrónicos")
+                    .position(Pos.BASELINE_RIGHT)
+                    .showWarning();
+            return;
         }
 
         Message message = new MimeMessage(session);
@@ -68,14 +83,22 @@ public class EmailManager {
             message.setFrom(new InternetAddress(email));
         } catch (Exception e) {
             e.printStackTrace();
-            return "Email inválido de origen";
+            Notifications.create().title("Error al enviar email")
+                    .text("Email inválido de origen")
+                    .position(Pos.BASELINE_RIGHT)
+                    .showWarning();
+            return;
         }
 
         try {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(appointment.getPatient().getEmail()));
         } catch (Exception e) {
             e.printStackTrace();
-            return "Email inválido de paciente";
+            Notifications.create().title("Error al enviar email")
+                    .text("Email inválido de paciente")
+                    .position(Pos.BASELINE_RIGHT)
+                    .showWarning();
+            return;
         }
 
         try {
@@ -132,9 +155,10 @@ public class EmailManager {
         }
         catch (Exception e){
             e.printStackTrace();
-            return "Error";
+            Notifications.create().title("Error al enviar email")
+                    .text(e.getMessage())
+                    .position(Pos.BASELINE_RIGHT)
+                    .showError();
         }
-
-        return null;
     }
 }
