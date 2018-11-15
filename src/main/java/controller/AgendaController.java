@@ -25,6 +25,8 @@ import model.Setting;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
+import utils.EmailManager;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -375,6 +377,9 @@ public class AgendaController {
             if(appointment.getDateTime().toLocalDate().isEqual(LocalDate.now())){
                 setTodaysAppointments();
             }
+
+            //Send email notification to the patient
+            EmailManager.getInstance().sendAppointmentNotification(appointment);
         });
     }
 
