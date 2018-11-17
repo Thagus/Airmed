@@ -11,11 +11,11 @@ create table consultation (
   id                            integer auto_increment not null,
   patient_id                    integer not null,
   date_time                     timestamp not null,
-  diagnostic                    varchar(255),
-  prognosis                     varchar(255),
-  motive                        varchar(255),
+  diagnostic                    clob,
+  prognosis                     clob,
+  motive                        clob,
+  exploration                   clob,
   prescription_id               integer,
-  exploration                   varchar(255),
   constraint uq_consultation_prescription_id unique (prescription_id),
   constraint pk_consultation primary key (id)
 );

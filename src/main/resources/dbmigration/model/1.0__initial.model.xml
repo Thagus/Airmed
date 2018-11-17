@@ -11,11 +11,11 @@
             <column name="id" type="integer" primaryKey="true"/>
             <column name="patient_id" type="integer" notnull="true" references="patient.id" foreignKeyName="fk_consultation_patient_id" foreignKeyIndex="ix_consultation_patient_id"/>
             <column name="date_time" type="timestamp" notnull="true"/>
-            <column name="diagnostic" type="varchar"/>
-            <column name="prognosis" type="varchar"/>
-            <column name="motive" type="varchar"/>
+            <column name="diagnostic" type="clob"/>
+            <column name="prognosis" type="clob"/>
+            <column name="motive" type="clob"/>
+            <column name="exploration" type="clob"/>
             <column name="prescription_id" type="integer" uniqueOneToOne="uq_consultation_prescription_id" references="prescription.id" foreignKeyName="fk_consultation_prescription_id"/>
-            <column name="exploration" type="varchar"/>
         </createTable>
         <createTable name="dose" pkName="pk_dose">
             <column name="id" type="integer" primaryKey="true"/>

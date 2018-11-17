@@ -18,11 +18,17 @@ public class Consultation extends Model {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(columnDefinition = "clob")
     private String diagnostic;
 
+    @Column(columnDefinition = "clob")
     private String prognosis;
 
+    @Column(columnDefinition = "clob")
     private String motive;
+
+    @Column(columnDefinition = "clob")
+    private String exploration;
 
     @OneToOne
     private Prescription prescription;
@@ -32,8 +38,6 @@ public class Consultation extends Model {
 
     @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private VitalSign vitalSign;
-
-    private String exploration;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
 

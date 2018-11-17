@@ -28,7 +28,7 @@ public class ConsultationController {
     @FXML private TextField weightField;
     @FXML private TextField imcField;
 
-    @FXML private TextField motiveField;
+    @FXML private TextArea motiveField;
     @FXML private TextArea explorationField;
 
     @FXML private TextArea diagnosisArea;
@@ -107,18 +107,6 @@ public class ConsultationController {
         });
 
         imcField.setEditable(false);
-
-        explorationField.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= 255 ? change : null));
-
-        motiveField.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= 255 ? change : null));
-
-        diagnosisArea.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= 255 ? change : null));
-
-        prognosisArea.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= 255 ? change : null));
     }
 
     public void setPatient(Patient patient) {
