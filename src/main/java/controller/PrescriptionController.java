@@ -18,6 +18,8 @@ import utils.ActionButtonTableCell;
 import utils.AutocompleteBindings;
 import utils.TableFactory;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -156,10 +158,15 @@ public class PrescriptionController {
 
         //Show printing dialog
         VBox prescriptionPane = new VBox();
-        prescriptionPane.setSpacing(15);
 
         //Hardcoded values for the given prescription format sample
         prescriptionPane.setPadding(new Insets(45, 0, 0, 200));
+
+        prescriptionPane.getChildren().addAll(
+                new Label(LocalDate.now().format(DateTimeFormatter.ISO_DATE)),
+                new Label(prescription.getPatient().getFullName()),
+                new Label()
+        );
 
         List<Dose> doses = new ArrayList<>(prescription.getMedicines());
         for(Treatment treatment : prescription.getTreatments()){
