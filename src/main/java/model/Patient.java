@@ -5,6 +5,7 @@ import io.ebean.Model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Entity
@@ -175,5 +176,9 @@ public class Patient extends Model {
 
     public void setBillingCode(String billingCode) {
         this.billingCode = billingCode;
+    }
+
+    public int getAge(){
+        return Period.between(birthdate, LocalDate.now()).getYears();
     }
 }

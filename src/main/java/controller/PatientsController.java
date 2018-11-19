@@ -17,9 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
-
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -51,8 +49,7 @@ public class PatientsController {
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         ageColumn.setCellValueFactory(cellData -> {
             Patient patientData = cellData.getValue();
-            int years = Period.between(patientData.getBirthdate(), LocalDate.now()).getYears();
-            return new SimpleObjectProperty<>(years);
+            return new SimpleObjectProperty<>(patientData.getAge());
         });
 
         recordColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Expediente", (Patient patient) -> {
