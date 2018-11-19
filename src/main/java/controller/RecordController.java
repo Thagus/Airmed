@@ -72,16 +72,8 @@ public class RecordController {
     @FXML private TableColumn<Consultation, String> consultationDiagnosisColumn;
     @FXML private TableColumn<Consultation, String> consultationPrognosisColumn;
     @FXML private TableColumn<Consultation, Button> consultationViewColumn;
-    @FXML private TableColumn<Consultation, Button> consultationPrintColumn;    //TODO
+    @FXML private TableColumn<Consultation, Button> consultationPrintColumn;
     private ObservableList<Consultation> consultations;
-
-    //Prescriptions TODO
-    @FXML private CustomTextField prescriptionSearchField;
-    @FXML private TableView<Prescription> prescriptionsTable;
-    @FXML private TableColumn<Prescription, LocalDate> prescriptionDateColumn;
-    @FXML private TableColumn<Prescription, String> prescriptionNotesColumn;
-    @FXML private TableColumn<Prescription, Button> prescriptionViewColumn;
-    private ObservableList<Prescription> prescriptions;
 
     //Notes
     @FXML private TextArea notesArea;
