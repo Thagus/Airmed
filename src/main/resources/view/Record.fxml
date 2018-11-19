@@ -175,7 +175,7 @@
                             <columns>
                                 <TableColumn fx:id="surgeryNameColumn" text="Nombre" />
                                 <TableColumn fx:id="surgeryDateColumn" text="Fecha" />
-                                <TableColumn fx:id="surgeryDescColumn" text="Descripción" />
+                                <TableColumn fx:id="surgeryDescColumn" text="Resultado" />
                             </columns>
                         </TableView>
                     </children>
@@ -246,9 +246,9 @@
                   </HBox>
                   <TableView fx:id="consultationsTable">
                     <columns>
-                      <TableColumn fx:id="consultationDateColumn" text="Fecha" />
-                      <TableColumn fx:id="consultationDiagnosisColumn" text="Diagnóstico" />
-                        <TableColumn fx:id="consultationPrognosisColumn" text="Pronóstico" />
+                      <TableColumn fx:id="consultationDateColumn" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" text="Fecha" />
+                      <TableColumn fx:id="consultationDiagnosisColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Diagnóstico" />
+                        <TableColumn fx:id="consultationPrognosisColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Pronóstico" />
                         <TableColumn fx:id="consultationViewColumn" />
                         <TableColumn fx:id="consultationPrintColumn" />
                     </columns>
