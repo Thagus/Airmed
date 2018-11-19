@@ -74,11 +74,11 @@
          <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          <Label text="m" GridPane.columnIndex="2" GridPane.rowIndex="7" />
          <Label text="kg" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-         <TextArea fx:id="explorationField" prefHeight="75.0" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+         <TextArea fx:id="explorationArea" prefHeight="75.0" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.rowSpan="3" />
          <Label text="Motivo de la consulta" GridPane.columnIndex="5" GridPane.rowIndex="6"><font>
              <Font name="System Bold" size="14.0" />
          </font></Label>
-         <TextArea fx:id="motiveField" prefHeight="75.0" GridPane.columnIndex="5" GridPane.rowIndex="7" GridPane.rowSpan="3" />
+         <TextArea fx:id="motiveArea" prefHeight="75.0" GridPane.columnIndex="5" GridPane.rowIndex="7" GridPane.rowSpan="3" />
          <TextField fx:id="imcField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          <Label text="IMC" GridPane.rowIndex="9" />
        </children>

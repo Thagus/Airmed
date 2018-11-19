@@ -2,7 +2,10 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import model.*;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -28,8 +31,8 @@ public class ConsultationController {
     @FXML private TextField weightField;
     @FXML private TextField imcField;
 
-    @FXML private TextArea motiveField;
-    @FXML private TextArea explorationField;
+    @FXML private TextArea motiveArea;
+    @FXML private TextArea explorationArea;
 
     @FXML private TextArea diagnosisArea;
     @FXML private TextArea prognosisArea;
@@ -107,6 +110,52 @@ public class ConsultationController {
         });
 
         imcField.setEditable(false);
+
+        //Use TAB to change between text areas
+
+        explorationArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+
+            if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent = new KeyEvent(event.getSource(), event.getTarget(), event.getEventType(), event.getCharacter(), event.getText(), event.getCode(), event.isShiftDown(), true, event.isAltDown(), event.isMetaDown());
+                node.fireEvent(newEvent);
+            }
+        });
+
+        motiveArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+
+            if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent = new KeyEvent(event.getSource(), event.getTarget(), event.getEventType(), event.getCharacter(), event.getText(), event.getCode(), event.isShiftDown(), true, event.isAltDown(), event.isMetaDown());
+                node.fireEvent(newEvent);
+            }
+        });
+
+        diagnosisArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+
+            if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent = new KeyEvent(event.getSource(), event.getTarget(), event.getEventType(), event.getCharacter(), event.getText(), event.getCode(), event.isShiftDown(), true, event.isAltDown(), event.isMetaDown());
+                node.fireEvent(newEvent);
+            }
+        });
+
+        prognosisArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+
+            if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent = new KeyEvent(event.getSource(), event.getTarget(), event.getEventType(), event.getCharacter(), event.getText(), event.getCode(), event.isShiftDown(), true, event.isAltDown(), event.isMetaDown());
+                node.fireEvent(newEvent);
+            }
+        });
     }
 
     public void setPatient(Patient patient) {
@@ -182,9 +231,9 @@ public class ConsultationController {
                     height
             ));
 
-            consultation.setExploration(explorationField.getText());
+            consultation.setExploration(explorationArea.getText());
 
-            consultation.setMotive(motiveField.getText());
+            consultation.setMotive(motiveArea.getText());
             consultation.setDiagnostic(diagnosisArea.getText());
             consultation.setPrognosis(prognosisArea.getText());
 
@@ -218,8 +267,8 @@ public class ConsultationController {
             weightField.setText(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString());
         }
 
-        explorationField.setText(consultation.getExploration());
-        motiveField.setText(consultation.getMotive());
+        explorationArea.setText(consultation.getExploration());
+        motiveArea.setText(consultation.getMotive());
         diagnosisArea.setText(consultation.getDiagnostic());
         prognosisArea.setText(consultation.getPrognosis());
 
@@ -274,13 +323,13 @@ public class ConsultationController {
         weightField.setMouseTransparent(!status);
         weightField.setFocusTraversable(status);
 
-        motiveField.setEditable(status);
-        motiveField.setMouseTransparent(!status);
-        motiveField.setFocusTraversable(status);
+        motiveArea.setEditable(status);
+        motiveArea.setMouseTransparent(!status);
+        motiveArea.setFocusTraversable(status);
 
-        explorationField.setEditable(status);
-        explorationField.setMouseTransparent(!status);
-        explorationField.setFocusTraversable(status);
+        explorationArea.setEditable(status);
+        explorationArea.setMouseTransparent(!status);
+        explorationArea.setFocusTraversable(status);
 
         diagnosisArea.setEditable(status);
         diagnosisArea.setMouseTransparent(!status);
@@ -299,9 +348,9 @@ public class ConsultationController {
         heightField.setText("");
         weightField.setText("");
 
-        explorationField.setText("");
+        explorationArea.setText("");
 
-        motiveField.setText("");
+        motiveArea.setText("");
         diagnosisArea.setText("");
         prognosisArea.setText("");
     }
