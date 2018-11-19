@@ -431,10 +431,6 @@ public class RecordController {
         menuController.beginConsultation(patient);
     }
 
-    public void newPrescription(ActionEvent actionEvent) {
-        menuController.beginPrescription(patient);
-    }
-
     public void savePatient(ActionEvent actionEvent) {
         patient.setName(nameField.getText());
         patient.setLastname(lastnameField.getText());
@@ -457,9 +453,5 @@ public class RecordController {
 
         patient.update();
         patientRecord.update();
-    }
-
-    public void printRecord(ActionEvent actionEvent) {
-
     }
 }

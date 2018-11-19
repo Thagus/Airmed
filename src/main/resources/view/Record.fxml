@@ -272,7 +272,6 @@
     </TabPane>
    <HBox alignment="CENTER_RIGHT" spacing="10.0">
       <children>
-         <Button mnemonicParsing="false" onAction="#printRecord" text="Imprimir expediente" />
          <Button mnemonicParsing="false" onAction="#savePatient" text="Guardar" />
       </children>
       <VBox.margin>
