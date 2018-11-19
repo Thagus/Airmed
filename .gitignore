@@ -8,6 +8,9 @@
 out/
 *.iml
 
+# Maven
+target/
+
 # Package Files #
 *.war
 *.ear
