@@ -72,7 +72,16 @@ public class RecordController {
     @FXML private TableColumn<Consultation, String> consultationDiagnosisColumn;
     @FXML private TableColumn<Consultation, String> consultationPrognosisColumn;
     @FXML private TableColumn<Consultation, Button> consultationViewColumn;
+    @FXML private TableColumn<Consultation, Button> consultationPrintColumn;    //TODO
     private ObservableList<Consultation> consultations;
+
+    //Prescriptions TODO
+    @FXML private CustomTextField prescriptionSearchField;
+    @FXML private TableView<Prescription> prescriptionsTable;
+    @FXML private TableColumn<Prescription, LocalDate> prescriptionDateColumn;
+    @FXML private TableColumn<Prescription, String> prescriptionNotesColumn;
+    @FXML private TableColumn<Prescription, Button> prescriptionViewColumn;
+    private ObservableList<Prescription> prescriptions;
 
     //Notes
     @FXML private TextArea notesArea;
@@ -181,6 +190,11 @@ public class RecordController {
         consultationPrognosisColumn.setCellValueFactory(new PropertyValueFactory<>("prognosis"));
         consultationViewColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Ver", (Consultation consultation) -> {
             menuController.showConsultation(consultation);
+
+            return consultation;
+        }));
+        consultationPrintColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Imprimir", (Consultation consultation) -> {
+            consultation.print(menuController);
 
             return consultation;
         }));
@@ -451,5 +465,9 @@ public class RecordController {
 
         patient.update();
         patientRecord.update();
+    }
+
+    public void printRecord(ActionEvent actionEvent) {
+
     }
 }

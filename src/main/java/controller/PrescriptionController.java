@@ -161,6 +161,11 @@ public class PrescriptionController {
     }
 
     public void printPrescription(ActionEvent actionEvent) {
+        prescription.setNotes(notesArea.getText());
+        prescription.setMedicines(medicines);
+        prescription.setTreatments(treatments);
+        prescription.setStudies(studies);
+
         //Show printing dialog
         VBox prescriptionPane = new VBox();
 
@@ -186,6 +191,9 @@ public class PrescriptionController {
             prescriptionPane.getChildren().add(new Label(study.getName() + "\n" + study.getDescription()));
         }
 
+        //Add notes if they exist
+        if(prescription.getNotes()!=null && prescription.getNotes().length()>0)
+            prescriptionPane.getChildren().add(new Label(prescription.getNotes()));
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
@@ -194,6 +202,16 @@ public class PrescriptionController {
                 printerJob.endJob();
             }
         }
+    }
+
+    public void printConsultation(ActionEvent actionEvent) {
+        prescription.setNotes(notesArea.getText());
+        prescription.setMedicines(medicines);
+        prescription.setTreatments(treatments);
+        prescription.setStudies(studies);
+
+        if(consultation!=null)
+            consultation.print(menuController);
     }
 
     public void showPrescription(Consultation consultation) {

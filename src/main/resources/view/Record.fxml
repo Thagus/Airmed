@@ -50,6 +50,7 @@
                             <ColumnConstraints />
                         </columnConstraints>
                         <rowConstraints>
+                     <RowConstraints />
                             <RowConstraints />
                             <RowConstraints />
                             <RowConstraints />
@@ -62,22 +63,22 @@
                      <RowConstraints />
                         </rowConstraints>
                         <children>
-                            <Label text="Nombre" />
-                            <Label text="Apellido" GridPane.rowIndex="1" />
-                            <Label text="Género" GridPane.rowIndex="2" />
-                            <Label prefHeight="17.0" prefWidth="124.0" text="Fecha de nacimiento" GridPane.rowIndex="3" />
-                            <Label text="Grupo sanguineo" GridPane.rowIndex="4" />
-                            <TextField fx:id="nameField" GridPane.columnIndex="1" />
-                            <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <DatePicker fx:id="birthdateField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                            <TextField fx:id="bloodTypeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                            <Label text="Correo electrónico" GridPane.columnIndex="3" />
-                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                            <TextField fx:id="emailField" GridPane.columnIndex="4" />
-                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                      <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <Label text="Nombre" GridPane.rowIndex="1" />
+                            <Label text="Apellido" GridPane.rowIndex="2" />
+                            <Label text="Género" GridPane.rowIndex="3" />
+                            <Label prefHeight="17.0" prefWidth="124.0" text="Fecha de nacimiento" GridPane.rowIndex="4" />
+                            <Label text="Grupo sanguineo" GridPane.rowIndex="5" />
+                            <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <DatePicker fx:id="birthdateField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            <TextField fx:id="bloodTypeField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                            <Label text="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <Label text="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                            <Label text="Celular" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                            <TextField fx:id="emailField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                            <TextField fx:id="phoneField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                            <TextField fx:id="cellphoneField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                      <SegmentedButton GridPane.columnIndex="1" GridPane.rowIndex="3">
                           <buttons>
                               <ToggleButton fx:id="femaleToggle" text="F" userData="F">
                                <toggleGroup>
@@ -87,16 +88,24 @@
                               <ToggleButton fx:id="maleToggle" text="M" toggleGroup="$genderToggleGroup" userData="M" />
                           </buttons>
                       </SegmentedButton>
-                     <Label text="Facturación" GridPane.rowIndex="6">
+                     <Label text="Facturación" GridPane.rowIndex="7">
                         <font>
                            <Font name="System Bold" size="14.0" />
                         </font></Label>
-                     <Label text="Nombre" GridPane.rowIndex="7" />
-                     <Label text="Dirección" GridPane.rowIndex="8" />
-                     <Label text="RFC" GridPane.rowIndex="9" />
-                     <TextField fx:id="billingNameField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                     <TextField fx:id="billingAddressField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                     <TextField fx:id="billingCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+                     <Label text="Nombre" GridPane.rowIndex="8" />
+                     <Label text="Dirección" GridPane.rowIndex="9" />
+                     <Label text="RFC" GridPane.rowIndex="10" />
+                     <TextField fx:id="billingNameField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                     <TextField fx:id="billingAddressField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+                     <TextField fx:id="billingCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+                     <Label text="Personales">
+                         <font>
+                             <Font name="System Bold" size="14.0" />
+                         </font></Label>
+                     <Label text="Contacto" GridPane.columnIndex="3">
+                         <font>
+                             <Font name="System Bold" size="14.0" />
+                         </font></Label>
                         </children>
                         <padding>
                             <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
@@ -241,6 +250,7 @@
                       <TableColumn fx:id="consultationDiagnosisColumn" text="Diagnóstico" />
                         <TableColumn fx:id="consultationPrognosisColumn" text="Pronóstico" />
                         <TableColumn fx:id="consultationViewColumn" />
+                        <TableColumn fx:id="consultationPrintColumn" />
                     </columns>
                   </TableView>
                </children></VBox>
@@ -272,10 +282,11 @@
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </VBox.margin>
                     </HBox>
-                    <TableView>
+                    <TableView fx:id="prescriptionsTable">
                         <columns>
-                            <TableColumn text="Fecha" />
-                            <TableColumn text="Notas" />
+                            <TableColumn fx:id="prescriptionDateColumn" text="Fecha" />
+                            <TableColumn fx:id="prescriptionNotesColumn" text="Notas" />
+                            <TableColumn fx:id="prescriptionViewColumn" />
                         </columns>
                     </TableView>
                 </children></VBox>
@@ -295,8 +306,9 @@
           </content>
         </Tab>
     </TabPane>
-   <HBox alignment="CENTER_RIGHT">
+   <HBox alignment="CENTER_RIGHT" spacing="10.0">
       <children>
+         <Button mnemonicParsing="false" onAction="#printRecord" text="Imprimir expediente" />
          <Button mnemonicParsing="false" onAction="#savePatient" text="Guardar" />
       </children>
       <VBox.margin>

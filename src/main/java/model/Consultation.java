@@ -1,10 +1,24 @@
 package model;
 
+import controller.MenuController;
 import io.ebean.Model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.ebean.Finder;
+import javafx.geometry.Insets;
+import javafx.print.PrinterJob;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 @Entity
 public class Consultation extends Model {
@@ -124,5 +138,166 @@ public class Consultation extends Model {
 
     public void setExploration(String exploration) {
         this.exploration = exploration;
+    }
+
+    public void print(MenuController menuController) {
+        VBox consultationPane = new VBox();
+        consultationPane.setFillWidth(true);
+
+        consultationPane.setMinWidth(670);
+
+        GridPane patientDataGrid = new GridPane();
+        patientDataGrid.setHgap(25);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(50);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(50);
+        patientDataGrid.getColumnConstraints().addAll(col1, col2);
+
+        //General data
+        TextFlow name = new TextFlow();
+        Text nameTitle = new Text("Nombre: ");
+        nameTitle.setStyle("-fx-font-weight: bold");
+        Text nameText = new Text(patient.getFullName());
+        name.getChildren().addAll(nameTitle, nameText);
+        patientDataGrid.add(name, 0, 0);
+
+        TextFlow gender = new TextFlow();
+        Text genderTitle = new Text("Género: ");
+        genderTitle.setStyle("-fx-font-weight: bold");
+        Text genderText = new Text(patient.getGender() + "");
+        gender.getChildren().addAll(genderTitle, genderText);
+        patientDataGrid.add(gender, 0, 1);
+
+        TextFlow date = new TextFlow();
+        Text dateTitle = new Text("Fecha: ");
+        dateTitle.setStyle("-fx-font-weight: bold");
+        Text dateText = new Text(LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+        date.getChildren().addAll(dateTitle, dateText);
+        patientDataGrid.add(date, 1, 0);
+
+        TextFlow age = new TextFlow();
+        Text ageTitle = new Text("Edad: ");
+        ageTitle.setStyle("-fx-font-weight: bold");
+        Text ageText = new Text(patient.getAge() + "");
+        age.getChildren().addAll(ageTitle, ageText);
+        patientDataGrid.add(age, 1, 1);
+
+        //Vital signs, measurements and exploration
+        TextFlow pressure = new TextFlow();
+        Text pressureTitle = new Text("Presión: ");
+        pressureTitle.setStyle("-fx-font-weight: bold");
+        pressure.getChildren().add(pressureTitle);
+        if(vitalSign!=null) {
+            Text pressureText = new Text(vitalSign.getPressureS() + "/" + vitalSign.getPressureD());
+            pressure.getChildren().add(pressureText);
+        }
+        patientDataGrid.add(pressure, 0, 2);
+
+        TextFlow pulse = new TextFlow();
+        Text pulseTitle = new Text("Pulso: ");
+        pulseTitle.setStyle("-fx-font-weight: bold");
+        pulse.getChildren().add(pulseTitle);
+        if(vitalSign!=null) {
+            Text pulseText = new Text(vitalSign.getPulse() + "/min");
+            pulse.getChildren().add(pulseText);
+        }
+        patientDataGrid.add(pulse, 0, 3);
+
+        TextFlow breath = new TextFlow();
+        Text breathTitle = new Text("Respiración: ");
+        breathTitle.setStyle("-fx-font-weight: bold");
+        breath.getChildren().add(breathTitle);
+        if(vitalSign!=null) {
+            Text breathText = new Text(vitalSign.getBreath() + "/min");
+            breath.getChildren().add(breathText);
+        }
+        patientDataGrid.add(breath, 0, 4);
+
+        TextFlow temperature = new TextFlow();
+        Text temperatureTitle = new Text("Temperatura: ");
+        temperatureTitle.setStyle("-fx-font-weight: bold");
+        temperature.getChildren().add(temperatureTitle);
+        if(vitalSign!=null) {
+            Text temperatureText = new Text(vitalSign.getTemperature() + "°C");
+            temperature.getChildren().add(temperatureText);
+        }
+        patientDataGrid.add(temperature, 1, 2);
+
+        TextFlow height = new TextFlow();
+        Text heightTitle = new Text("Estatura: ");
+        heightTitle.setStyle("-fx-font-weight: bold");
+        height.getChildren().add(heightTitle);
+        if(measurement!=null) {
+            Text heightText = new Text(BigDecimal.valueOf(measurement.getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString() + " m");
+            height.getChildren().add(heightText);
+        }
+        patientDataGrid.add(height, 1, 3);
+
+        TextFlow width = new TextFlow();
+        Text widthTitle = new Text("Peso: ");
+        widthTitle.setStyle("-fx-font-weight: bold");
+        width.getChildren().add(widthTitle);
+        if(measurement!=null) {
+            Text widthText = new Text(BigDecimal.valueOf(measurement.getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString() + " kg");
+            width.getChildren().add(widthText);
+        }
+        patientDataGrid.add(width, 1, 4);
+
+        TextFlow exploration = new TextFlow();
+        Text explorationTitle = new Text("Exploración: ");
+        explorationTitle.setStyle("-fx-font-weight: bold");
+        Text explorationText = new Text(this.exploration);
+        exploration.getChildren().addAll(explorationTitle, explorationText);
+        patientDataGrid.add(exploration, 0, 5, 2, 1);
+
+
+        consultationPane.getChildren().add(patientDataGrid);
+
+        //Motive, diagnostic and prognostic
+        Label motiveHeader = new Label("\nMotivo de la consulta:");
+        motiveHeader.setStyle("-fx-font-weight: bold");
+        consultationPane.getChildren().addAll(motiveHeader, new Text(motive));
+
+        Label diagnosticHeader = new Label("\nDiagnóstico:");
+        diagnosticHeader.setStyle("-fx-font-weight: bold");
+        consultationPane.getChildren().addAll(diagnosticHeader, new Text(diagnostic));
+
+        Label prognosticHeader = new Label("\nPronóstico:");
+        prognosticHeader.setStyle("-fx-font-weight: bold");
+        consultationPane.getChildren().addAll(prognosticHeader, new Text(prognosis));
+
+        //Add prescription to document
+        Label prescriptionHeader = new Label("\nReceta otorgada:");
+        prescriptionHeader.setStyle("-fx-font-weight: bold");
+        consultationPane.getChildren().add(prescriptionHeader);
+
+        //Not working TODO
+
+        List<Dose> doses = new ArrayList<>(prescription.getMedicines());
+        for(Treatment treatment : prescription.getTreatments()){
+            doses.addAll(treatment.getMedicines());
+        }
+
+        for(Dose dose : doses) {
+            consultationPane.getChildren().add(new Label(dose.getMedicine().getName() + "\n- " + dose.getDose()));
+        }
+
+        for(Study study : prescription.getStudies()){
+            consultationPane.getChildren().add(new Label(study.getName() + "\n" + study.getDescription()));
+        }
+
+        //Add notes if they exist
+        if(prescription.getNotes()!=null && prescription.getNotes().length()>0)
+            consultationPane.getChildren().add(new Label(prescription.getNotes()));
+
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
+            boolean success = printerJob.printPage(consultationPane);
+            if (success) {
+                printerJob.endJob();
+            }
+        }
     }
 }

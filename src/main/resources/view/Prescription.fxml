@@ -74,12 +74,17 @@
         <VBox.margin>
             <Insets right="5.0" />
         </VBox.margin>
-        <Button mnemonicParsing="false" onAction="#savePrescription" text="Finalizar">
+      <Button mnemonicParsing="false" onAction="#printConsultation" text="Imprimir consulta">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </HBox.margin>
+      </Button>
+        <Button mnemonicParsing="false" onAction="#printPrescription" text="Imprimir receta">
             <HBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" />
             </HBox.margin>
         </Button>
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#printPrescription" text="Imprimir receta">
+        <Button mnemonicParsing="false" onAction="#savePrescription" text="Finalizar">
             <HBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" />
             </HBox.margin>
