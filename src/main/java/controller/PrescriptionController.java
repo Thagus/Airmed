@@ -55,9 +55,27 @@ public class PrescriptionController {
     private ObservableList<Study> studies;
     private ObservableList<Treatment> treatments;
 
-    public void init(MenuController menuController){
+    public void init(MenuController menuController, VBox prescriptionPane){
         this.menuController = menuController;
         this.onlyShowPrescription = false;
+
+        //Confirm prescription exit without saving
+        prescriptionPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue && prescription!=null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Guardar");
+                alert.setHeaderText(null);
+                if(consultation==null)
+                    alert.setContentText("¿Desea guardar la receta?");
+                else
+                    alert.setContentText("¿Desea guardar la consulta?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    savePrescription(null);
+                }
+            }
+        });
 
         notesArea.setFocusTraversable(false);
 
@@ -130,6 +148,10 @@ public class PrescriptionController {
                 prescription.save();
             }
 
+            prescription = null;
+            consultation = null;
+            clearFields();
+
             //Return to the agenda
             menuController.showAgenda(null);
         }
@@ -139,23 +161,6 @@ public class PrescriptionController {
     }
 
     public void printPrescription(ActionEvent actionEvent) {
-        //Save to database
-        if(!onlyShowPrescription) {
-            //Get data
-            prescription.setNotes(notesArea.getText());
-            prescription.setMedicines(medicines);
-            prescription.setTreatments(treatments);
-            prescription.setStudies(studies);
-
-            ///Save to database
-            if (consultation != null) {
-                prescription.save();
-                consultation.save();
-            } else {
-                prescription.save();
-            }
-        }
-
         //Show printing dialog
         VBox prescriptionPane = new VBox();
 
@@ -188,14 +193,6 @@ public class PrescriptionController {
             if (success) {
                 printerJob.endJob();
             }
-        }
-
-        if(!onlyShowPrescription) {
-            //Return to the agenda
-            menuController.showAgenda(null);
-        }
-        else {
-            menuController.showPatientRecord(consultation.getPatient());
         }
     }
 
@@ -382,4 +379,6 @@ public class PrescriptionController {
         studyField.clear();
         treatmentField.clear();
     }
+
+
 }

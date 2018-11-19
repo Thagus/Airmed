@@ -77,7 +77,7 @@ public class MenuController {
         loader = new FXMLLoader(getClass().getResource("/view/Prescription.fxml"));
         prescriptionPane = loader.load();
         prescriptionController = loader.getController();
-        prescriptionController.init(this);
+        prescriptionController.init(this, prescriptionPane);
 
         stackPane.getChildren().addAll(
                 agendaView,
