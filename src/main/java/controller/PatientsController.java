@@ -143,6 +143,11 @@ public class PatientsController {
         SegmentedButton genderSegment = new SegmentedButton();
         genderSegment.getButtons().addAll(female, male);
 
+        genderSegment.getToggleGroup().selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
+            if (newVal == null)
+                oldVal.setSelected(true);
+        });
+
         TextField bloodTypeField = new TextField();
         bloodTypeField.setPromptText("Grupo sanguíneo");
 
