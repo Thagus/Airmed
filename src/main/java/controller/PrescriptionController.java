@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class PrescriptionController {
-
     @FXML private TextArea notesArea;
 
     @FXML private TextField treatmentField;
@@ -44,6 +43,8 @@ public class PrescriptionController {
     @FXML private TableColumn<Dose, String> doseColumn;
     @FXML private TableColumn<Dose, Button> deleteMedicineColumn;
 
+    @FXML private Button printConsultationButton;
+
     private Consultation consultation;
     private Prescription prescription;
 
@@ -61,14 +62,11 @@ public class PrescriptionController {
 
         //Confirm prescription exit without saving
         prescriptionPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue && prescription!=null){
+            if(!newValue && consultation!=null){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Guardar");
                 alert.setHeaderText(null);
-                if(consultation==null)
-                    alert.setContentText("¿Desea guardar la receta?");
-                else
-                    alert.setContentText("¿Desea guardar la consulta?");
+                alert.setContentText("¿Desea guardar la consulta?");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
@@ -120,6 +118,7 @@ public class PrescriptionController {
     public void setPatient(Patient patient) {
         this.onlyShowPrescription = false;
         clearFields();
+        printConsultationButton.setVisible(false);
         this.consultation = null;
         this.prescription = Prescription.create(patient);
     }
@@ -127,13 +126,20 @@ public class PrescriptionController {
     public void setConsultation(Consultation consultation) {
         this.onlyShowPrescription = false;
         clearFields();
+        printConsultationButton.setVisible(true);
         this.consultation = consultation;
         this.prescription = Prescription.create(consultation.getPatient());
         this.consultation.setPrescription(prescription);
     }
 
     public void savePrescription(ActionEvent actionEvent) {
-        if(!onlyShowPrescription) {
+        if(consultation==null){
+            prescription = null;
+
+            //Return to the agenda
+            menuController.showAgenda(null);
+        }
+        else if(!onlyShowPrescription) {
             //Get data
             prescription.setNotes(notesArea.getText());
             prescription.setMedicines(medicines);
@@ -141,12 +147,8 @@ public class PrescriptionController {
             prescription.setStudies(studies);
 
             ///Save to database
-            if (consultation != null) {
-                prescription.save();
-                consultation.save();
-            } else {
-                prescription.save();
-            }
+            prescription.save();
+            consultation.save();
 
             prescription = null;
             consultation = null;
