@@ -472,6 +472,8 @@ public class AgendaController {
             if(appointment.getDateTime().toLocalDate().isEqual(LocalDate.now())){
                 setTodaysAppointments();
             }
+
+            EmailManager.getInstance().sendAppointmentNotification(appointment);
         });
 
         //Check if the appointment was today or is now today, to update the todayAppointmentsList
