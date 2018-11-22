@@ -9,11 +9,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.*;
 import org.apache.commons.lang3.StringUtils;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import utils.AutocompleteBindings;
@@ -461,5 +463,12 @@ public class RecordController {
 
         patient.update();
         patientRecord.update();
+
+        Notifications.create()
+                .text("Paciente guardado")
+                .position(Pos.BASELINE_RIGHT)
+                .showInformation();
+
+        menuController.showPatients(null);
     }
 }
