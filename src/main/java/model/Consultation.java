@@ -265,29 +265,36 @@ public class Consultation extends Model {
         prognosticHeader.setStyle("-fx-font-weight: bold");
         consultationPane.getChildren().addAll(prognosticHeader, new Text(prognosis));
 
-        //Add prescription to document
-        Label prescriptionHeader = new Label("\nReceta otorgada:");
-        prescriptionHeader.setStyle("-fx-font-weight: bold");
-        consultationPane.getChildren().add(prescriptionHeader);
-
-        //Not working TODO
-
         List<Dose> doses = new ArrayList<>(prescription.getMedicines());
         for(Treatment treatment : prescription.getTreatments()){
             doses.addAll(treatment.getMedicines());
         }
 
+        //Add prescription to document
+        if(doses.size()>0 || prescription.getStudies().size()>0 || prescription.getNotes()!=null) {
+            Label prescriptionHeader = new Label("\nReceta otorgada:");
+            prescriptionHeader.setStyle("-fx-font-weight: bold");
+            consultationPane.getChildren().add(prescriptionHeader);
+        }
+
         for(Dose dose : doses) {
-            consultationPane.getChildren().add(new Label(dose.getMedicine().getName() + "\n- " + dose.getDose()));
+            Label label = new Label(dose.getMedicine().getName() + "\n- " + dose.getDose());
+            label.setWrapText(true);
+            consultationPane.getChildren().add(label);
         }
 
         for(Study study : prescription.getStudies()){
-            consultationPane.getChildren().add(new Label(study.getName() + "\n" + study.getDescription()));
+            Label label = new Label(study.getName() + "\n" + study.getDescription());
+            label.setWrapText(true);
+            consultationPane.getChildren().add(label);
         }
 
         //Add notes if they exist
-        if(prescription.getNotes()!=null && prescription.getNotes().length()>0)
-            consultationPane.getChildren().add(new Label(prescription.getNotes()));
+        if(prescription.getNotes()!=null && prescription.getNotes().length()>0) {
+            Label label = new Label(prescription.getNotes());
+            label.setWrapText(true);
+            consultationPane.getChildren().add(label);
+        }
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
