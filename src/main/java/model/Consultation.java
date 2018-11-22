@@ -242,28 +242,32 @@ public class Consultation extends Model {
         }
         patientDataGrid.add(width, 1, 4);
 
-        TextFlow exploration = new TextFlow();
-        Text explorationTitle = new Text("Exploración: ");
-        explorationTitle.setStyle("-fx-font-weight: bold");
-        Text explorationText = new Text(this.exploration);
-        exploration.getChildren().addAll(explorationTitle, explorationText);
-        patientDataGrid.add(exploration, 0, 5, 2, 1);
-
-
         consultationPane.getChildren().add(patientDataGrid);
 
-        //Motive, diagnostic and prognostic
+        //Motive, exploration, diagnostic and prognostic
         Label motiveHeader = new Label("\nMotivo de la consulta:");
         motiveHeader.setStyle("-fx-font-weight: bold");
-        consultationPane.getChildren().addAll(motiveHeader, new Text(motive));
+        Text motiveText = new Text(motive);
+        motiveText.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
+        consultationPane.getChildren().addAll(motiveHeader, motiveText);
+
+        Label explorationHeader = new Label("\nExploración:");
+        explorationHeader.setStyle("-fx-font-weight: bold");
+        Text explorationText = new Text(exploration);
+        explorationText.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
+        consultationPane.getChildren().addAll(explorationHeader, explorationText);
 
         Label diagnosticHeader = new Label("\nDiagnóstico:");
         diagnosticHeader.setStyle("-fx-font-weight: bold");
-        consultationPane.getChildren().addAll(diagnosticHeader, new Text(diagnostic));
+        Text diagnosticText = new Text(diagnostic);
+        diagnosticText.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
+        consultationPane.getChildren().addAll(diagnosticHeader, diagnosticText);
 
         Label prognosticHeader = new Label("\nPronóstico:");
         prognosticHeader.setStyle("-fx-font-weight: bold");
-        consultationPane.getChildren().addAll(prognosticHeader, new Text(prognosis));
+        Text prognosisText = new Text(prognosis);
+        prognosisText.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
+        consultationPane.getChildren().addAll(prognosticHeader, prognosisText);
 
         List<Dose> doses = new ArrayList<>(prescription.getMedicines());
         for(Treatment treatment : prescription.getTreatments()){
@@ -271,7 +275,7 @@ public class Consultation extends Model {
         }
 
         //Add prescription to document
-        if(doses.size()>0 || prescription.getStudies().size()>0 || prescription.getNotes()!=null) {
+        if(doses.size()>0 || prescription.getStudies().size()>0 || (prescription.getNotes()!=null && prescription.getNotes().length()>0)) {
             Label prescriptionHeader = new Label("\nReceta otorgada:");
             prescriptionHeader.setStyle("-fx-font-weight: bold");
             consultationPane.getChildren().add(prescriptionHeader);
@@ -295,6 +299,7 @@ public class Consultation extends Model {
             label.setWrapText(true);
             consultationPane.getChildren().add(label);
         }
+
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
