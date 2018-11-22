@@ -1,10 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Setting;
 import utils.EmailManager;
@@ -54,6 +51,11 @@ public class SettingsController {
                 emailPortField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+
+        medicAddressField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
+        medicNameField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 255 ? change : null));
 
         Setting host = Setting.find.byId("email_host");
         Setting port = Setting.find.byId("email_port");
