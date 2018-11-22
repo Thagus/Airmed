@@ -224,6 +224,9 @@ public class RecordController {
         billingAddressField.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 255 ? change : null));
 
+        bloodTypeField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 4 ? change : null));
+
         genderToggleGroup.selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
             if (newVal == null)
                 oldVal.setSelected(true);

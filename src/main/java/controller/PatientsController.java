@@ -150,6 +150,8 @@ public class PatientsController {
 
         TextField bloodTypeField = new TextField();
         bloodTypeField.setPromptText("Grupo sanguíneo");
+        bloodTypeField.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 4 ? change : null));
 
         TextField emailField = new TextField();
         emailField.setPromptText("Correo electrónico");
