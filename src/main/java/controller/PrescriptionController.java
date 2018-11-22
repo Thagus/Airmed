@@ -113,6 +113,8 @@ public class PrescriptionController {
         TextFields.bindAutoCompletion(treatmentField, AutocompleteBindings.getInstance().getTreatmentNames());
         TextFields.bindAutoCompletion(studyField, AutocompleteBindings.getInstance().getStudyNames());
         TextFields.bindAutoCompletion(medicineField, AutocompleteBindings.getInstance().getMedicineNames());
+
+        notesArea.setWrapText(true);
     }
 
     public void setPatient(Patient patient) {

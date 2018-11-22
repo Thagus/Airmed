@@ -156,6 +156,11 @@ public class ConsultationController {
                 node.fireEvent(newEvent);
             }
         });
+
+        motiveArea.setWrapText(true);
+        explorationArea.setWrapText(true);
+        diagnosisArea.setWrapText(true);
+        prognosisArea.setWrapText(true);
     }
 
     public void setPatient(Patient patient) {
