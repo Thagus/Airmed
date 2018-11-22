@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <alterColumn columnName="blood_type" tableName="patient" type="varchar(4)" currentType="varchar(3)" notnull="false" currentNotnull="true"/>
+    </changeSet>
+</migration>
