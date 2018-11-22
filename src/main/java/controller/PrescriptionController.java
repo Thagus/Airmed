@@ -170,9 +170,7 @@ public class PrescriptionController {
 
         //Show printing dialog
         VBox prescriptionPane = new VBox();
-
-        //Hardcoded values for the given prescription format sample
-        prescriptionPane.setPadding(new Insets(45, 0, 0, 200));
+        prescriptionPane.setSpacing(10);
 
         prescriptionPane.getChildren().addAll(
                 new Label(LocalDate.now().format(DateTimeFormatter.ISO_DATE)),
@@ -186,19 +184,27 @@ public class PrescriptionController {
         }
 
         for(Dose dose : doses) {
-            prescriptionPane.getChildren().add(new Label(dose.getMedicine().getName() + "\n- " + dose.getDose()));
+            Label label = new Label(dose.getMedicine().getName() + "\n- " + dose.getDose());
+            label.setWrapText(true);
+            prescriptionPane.getChildren().add(label);
         }
 
         for(Study study : prescription.getStudies()){
-            prescriptionPane.getChildren().add(new Label(study.getName() + "\n" + study.getDescription()));
+            Label label = new Label(study.getName() + "\n" + study.getDescription());
+            label.setWrapText(true);
+            prescriptionPane.getChildren().add(label);
         }
 
         //Add notes if they exist
-        if(prescription.getNotes()!=null && prescription.getNotes().length()>0)
-            prescriptionPane.getChildren().add(new Label(prescription.getNotes()));
+        if(prescription.getNotes()!=null && prescription.getNotes().length()>0) {
+            Label label = new Label(prescription.getNotes());
+            label.setWrapText(true);
+            prescriptionPane.getChildren().add(label);
+        }
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
+            prescriptionPane.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
             boolean success = printerJob.printPage(prescriptionPane);
             if (success) {
                 printerJob.endJob();

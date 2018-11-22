@@ -142,9 +142,6 @@ public class Consultation extends Model {
 
     public void print(MenuController menuController) {
         VBox consultationPane = new VBox();
-        consultationPane.setFillWidth(true);
-
-        consultationPane.setMinWidth(670);
 
         GridPane patientDataGrid = new GridPane();
         patientDataGrid.setHgap(25);
@@ -294,6 +291,7 @@ public class Consultation extends Model {
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
+            consultationPane.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
             boolean success = printerJob.printPage(consultationPane);
             if (success) {
                 printerJob.endJob();
