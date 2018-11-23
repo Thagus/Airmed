@@ -71,7 +71,7 @@ public class EmailManager {
 
         if(session==null){
             Notifications.create().title("Error al enviar email")
-                    .text("No se ha configurado el envío de correos electrónicos")
+                    .text("No se ha podido crear la sesión de envío de correos")
                     .position(Pos.BASELINE_RIGHT)
                     .showWarning();
             return;
