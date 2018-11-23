@@ -468,7 +468,5 @@ public class RecordController {
                 .text("Paciente guardado")
                 .position(Pos.BASELINE_RIGHT)
                 .showInformation();
-
-        menuController.showPatients(null);
     }
 }
