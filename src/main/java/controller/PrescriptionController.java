@@ -46,8 +46,6 @@ public class PrescriptionController {
     @FXML private TableColumn<Dose, String> doseColumn;
     @FXML private TableColumn<Dose, Button> deleteMedicineColumn;
 
-    @FXML private Button printConsultationButton;
-
     private Consultation consultation;
     private Prescription prescription;
 
