@@ -247,6 +247,7 @@
                   <TableView fx:id="consultationsTable">
                     <columns>
                       <TableColumn fx:id="consultationDateColumn" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" text="Fecha" />
+                        <TableColumn fx:id="consultationMotiveColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Motivo" />
                       <TableColumn fx:id="consultationDiagnosisColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Diagnóstico" />
                         <TableColumn fx:id="consultationPrognosisColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Pronóstico" />
                         <TableColumn fx:id="consultationViewColumn" />

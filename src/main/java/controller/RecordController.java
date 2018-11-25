@@ -71,6 +71,7 @@ public class RecordController {
     @FXML private CustomTextField consultationSearchField;
     @FXML private TableView<Consultation> consultationsTable;
     @FXML private TableColumn<Consultation, LocalDate> consultationDateColumn;
+    @FXML private TableColumn<Consultation, String> consultationMotiveColumn;
     @FXML private TableColumn<Consultation, String> consultationDiagnosisColumn;
     @FXML private TableColumn<Consultation, String> consultationPrognosisColumn;
     @FXML private TableColumn<Consultation, Button> consultationViewColumn;
@@ -180,6 +181,7 @@ public class RecordController {
             Consultation consultation = cellData.getValue();
             return new SimpleObjectProperty<>(consultation.getDateTime().toLocalDate());
         });
+        consultationMotiveColumn.setCellValueFactory(new PropertyValueFactory<>("motive"));
         consultationDiagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("diagnostic"));
         consultationPrognosisColumn.setCellValueFactory(new PropertyValueFactory<>("prognosis"));
         consultationViewColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Ver", (Consultation consultation) -> {
