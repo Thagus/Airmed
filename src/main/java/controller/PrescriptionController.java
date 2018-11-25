@@ -18,6 +18,7 @@ import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
 import utils.AutocompleteBindings;
 import utils.TableFactory;
+import utils.Values;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -181,8 +182,6 @@ public class PrescriptionController {
         //Show printing dialog
         VBox prescriptionPane = new VBox();
 
-        prescriptionPane.setPadding(new Insets(1.5*28.346, 0, 0, 0));
-
         prescriptionPane.getChildren().addAll(
                 new Text(LocalDate.now().format(DateTimeFormatter.ISO_DATE)),
                 new Text(prescription.getPatient().getFullName() + "\n")
@@ -214,11 +213,24 @@ public class PrescriptionController {
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
+            //Set pane max with according to the page layout
             prescriptionPane.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
-            System.out.println(printerJob.getJobSettings().getPageLayout().getTopMargin() + " " + printerJob.getJobSettings().getPageLayout().getLeftMargin());
-            System.out.println(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
-            System.out.println(printerJob.getJobSettings().getPageLayout().getPaper().getName());
-            System.out.println(printerJob.getJobSettings().getPageLayout().getPaper().getWidth());
+            double top = Values.topBorder * 28.3464;
+            if(top<0) top=0;
+
+            double right = Values.rightBorder * 28.3464;
+            if(right<0) right=0;
+
+            double bottom = Values.bottomBorder * 28.3464;
+            if(bottom<0) bottom=0;
+
+            double left = Values.leftBorder * 28.3464;
+            if(left<0) left=0;
+
+            System.out.println(top + " - " + right + " - " + bottom + " - " + left);
+
+            printerJob.getJobSettings().setPageLayout(printerJob.getPrinter().createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, left, right, top, bottom));
+
             boolean success = printerJob.printPage(prescriptionPane);
             if (success) {
                 printerJob.endJob();
