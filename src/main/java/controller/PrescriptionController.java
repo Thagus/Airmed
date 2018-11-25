@@ -19,6 +19,7 @@ import utils.AutocompleteBindings;
 import utils.TableFactory;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class PrescriptionController {
 
     private MenuController menuController;
 
-    private boolean onlyShowPrescription;
+    private boolean showPrescription;
 
     private ObservableList<Dose> medicines;
     private ObservableList<Study> studies;
@@ -58,11 +59,11 @@ public class PrescriptionController {
 
     public void init(MenuController menuController, VBox prescriptionPane){
         this.menuController = menuController;
-        this.onlyShowPrescription = false;
+        this.showPrescription = false;
 
         //Confirm prescription exit without saving
         prescriptionPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue && consultation!=null){
+            if(!newValue && !showPrescription && consultation!=null){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Guardar");
                 alert.setHeaderText(null);
@@ -118,37 +119,30 @@ public class PrescriptionController {
     }
 
     public void setPatient(Patient patient) {
-        this.onlyShowPrescription = false;
+        this.showPrescription = false;
         clearFields();
-        printConsultationButton.setVisible(false);
-        this.consultation = null;
+        this.consultation = Consultation.create(patient, LocalDateTime.now());
         this.prescription = Prescription.create(patient);
+        this.consultation.setPrescription(prescription);
     }
 
     public void setConsultation(Consultation consultation) {
-        this.onlyShowPrescription = false;
+        this.showPrescription = false;
         clearFields();
-        printConsultationButton.setVisible(true);
         this.consultation = consultation;
         this.prescription = Prescription.create(consultation.getPatient());
         this.consultation.setPrescription(prescription);
     }
 
     public void savePrescription(ActionEvent actionEvent) {
-        if(consultation==null){
-            prescription = null;
+        //Get data
+        prescription.setNotes(notesArea.getText());
+        prescription.setMedicines(medicines);
+        prescription.setTreatments(treatments);
+        prescription.setStudies(studies);
 
-            //Return to the agenda
-            menuController.showAgenda(null);
-        }
-        else if(!onlyShowPrescription) {
-            //Get data
-            prescription.setNotes(notesArea.getText());
-            prescription.setMedicines(medicines);
-            prescription.setTreatments(treatments);
-            prescription.setStudies(studies);
-
-            ///Save to database
+        if(!showPrescription) {
+            //Save to database
             prescription.save();
             consultation.save();
 
@@ -160,8 +154,21 @@ public class PrescriptionController {
             menuController.showAgenda(null);
         }
         else {
-            menuController.showPatientRecord(consultation.getPatient());
+            //Save to database
+            prescription.update();
+            consultation.update();
+
+            Patient patient = consultation.getPatient();
+
+            prescription = null;
+            consultation = null;
+            clearFields();
+
+            //Return to the patient record
+            menuController.showPatientRecord(patient);
         }
+
+
     }
 
     public void printPrescription(ActionEvent actionEvent) {
@@ -225,7 +232,7 @@ public class PrescriptionController {
     }
 
     public void showPrescription(Consultation consultation) {
-        this.onlyShowPrescription = true;
+        this.showPrescription = true;
         clearFields();
 
         this.consultation = consultation;

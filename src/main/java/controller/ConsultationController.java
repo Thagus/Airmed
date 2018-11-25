@@ -40,11 +40,11 @@ public class ConsultationController {
     private Consultation consultation;
     private MenuController menuController;
 
-    private boolean onlyShowConsultation;
+    private boolean showConsultation;
 
     public void init(MenuController menuController){
         this.menuController = menuController;
-        this.onlyShowConsultation = false;
+        this.showConsultation = false;
 
         //Add filters to vital sign fields
         pressureField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -164,8 +164,7 @@ public class ConsultationController {
     }
 
     public void setPatient(Patient patient) {
-        this.onlyShowConsultation = false;
-        changeFieldStatus(true);
+        this.showConsultation = false;
         clearFields();
 
         consultationLabel.setText("Consulta de " + patient.getFullName());
@@ -182,8 +181,7 @@ public class ConsultationController {
     }
 
     public void startAppointment(Appointment appointment){
-        this.onlyShowConsultation = false;
-        changeFieldStatus(true);
+        this.showConsultation = false;
         clearFields();
 
         if(appointment!=null){
@@ -198,51 +196,51 @@ public class ConsultationController {
     }
 
     public void goToPrescription(ActionEvent actionEvent) {
-        if(!onlyShowConsultation) {
-            String[] pressures = pressureField.getText().split("/");
+        String[] pressures = pressureField.getText().split("/");
 
-            int pressureD = 0;
-            int pressureS = 0;
+        int pressureD = 0;
+        int pressureS = 0;
 
-            if (pressures.length >= 2) {
-                pressureS = NumberUtils.toInt(pressures[0], 0);
-                pressureD = NumberUtils.toInt(pressures[1], 0);
-            }
+        if (pressures.length >= 2) {
+            pressureS = NumberUtils.toInt(pressures[0], 0);
+            pressureD = NumberUtils.toInt(pressures[1], 0);
+        }
 
-            //Save data to consultation
-            consultation.setVitalSign(VitalSign.create(
-                    consultation,
-                    pressureD,
-                    pressureS,
-                    NumberUtils.toInt(pulseField.getText(), 0),
-                    NumberUtils.toInt(temperatureField.getText(), 0),
-                    NumberUtils.toInt(breathField.getText(), 0)
-            ));
+        //Save data to consultation
+        consultation.setVitalSign(VitalSign.create(
+                consultation,
+                pressureD,
+                pressureS,
+                NumberUtils.toInt(pulseField.getText(), 0),
+                NumberUtils.toInt(temperatureField.getText(), 0),
+                NumberUtils.toInt(breathField.getText(), 0)
+        ));
 
-            int weight = 0;
-            int height= 0;
+        int weight = 0;
+        int height= 0;
 
-            if(weightField.getText().length()>0){
-                weight = new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue();
-            }
+        if(weightField.getText().length()>0){
+            weight = new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue();
+        }
 
-            if(heightField.getText().length()>0){
-                height = new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
-            }
+        if(heightField.getText().length()>0){
+            height = new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
+        }
 
-            consultation.setMeasurement(Measurement.create(
-                    consultation,
-                    weight,
-                    height
-            ));
+        consultation.setMeasurement(Measurement.create(
+                consultation,
+                weight,
+                height
+        ));
 
-            consultation.setExploration(explorationArea.getText());
+        consultation.setExploration(explorationArea.getText());
 
-            consultation.setMotive(motiveArea.getText());
-            consultation.setDiagnostic(diagnosisArea.getText());
-            consultation.setPrognosis(prognosisArea.getText());
+        consultation.setMotive(motiveArea.getText());
+        consultation.setDiagnostic(diagnosisArea.getText());
+        consultation.setPrognosis(prognosisArea.getText());
 
-            //Begin the prescription stage
+        //Begin the prescription stage showing it or creating it
+        if(!showConsultation) {
             menuController.beginPrescription(consultation);
         }
         else {
@@ -251,7 +249,7 @@ public class ConsultationController {
     }
 
     public void showConsultation(Consultation consultation){
-        this.onlyShowConsultation = true;
+        this.showConsultation = true;
         this.consultation = consultation;
         clearFields();
 
@@ -276,9 +274,6 @@ public class ConsultationController {
         motiveArea.setText(consultation.getMotive());
         diagnosisArea.setText(consultation.getDiagnostic());
         prognosisArea.setText(consultation.getPrognosis());
-
-        //Disable input for fields
-        changeFieldStatus(false);
     }
 
     public void newConsultation() {
@@ -305,43 +300,6 @@ public class ConsultationController {
         Optional<Patient> patientResult = patientDialog.showAndWait();
 
         patientResult.ifPresent(menuController::beginConsultation);
-    }
-
-    private void changeFieldStatus(boolean status){
-        pressureField.setEditable(status);
-        pressureField.setMouseTransparent(!status);
-        pressureField.setFocusTraversable(status);
-        breathField.setEditable(status);
-        breathField.setMouseTransparent(!status);
-        breathField.setFocusTraversable(status);
-        pulseField.setEditable(status);
-        pulseField.setMouseTransparent(!status);
-        pulseField.setFocusTraversable(status);
-        temperatureField.setEditable(status);
-        temperatureField.setMouseTransparent(!status);
-        temperatureField.setFocusTraversable(status);
-
-        heightField.setEditable(status);
-        heightField.setMouseTransparent(!status);
-        heightField.setFocusTraversable(status);
-        weightField.setEditable(status);
-        weightField.setMouseTransparent(!status);
-        weightField.setFocusTraversable(status);
-
-        motiveArea.setEditable(status);
-        motiveArea.setMouseTransparent(!status);
-        motiveArea.setFocusTraversable(status);
-
-        explorationArea.setEditable(status);
-        explorationArea.setMouseTransparent(!status);
-        explorationArea.setFocusTraversable(status);
-
-        diagnosisArea.setEditable(status);
-        diagnosisArea.setMouseTransparent(!status);
-        diagnosisArea.setFocusTraversable(status);
-        prognosisArea.setEditable(status);
-        prognosisArea.setMouseTransparent(!status);
-        prognosisArea.setFocusTraversable(status);
     }
 
     private void clearFields(){
