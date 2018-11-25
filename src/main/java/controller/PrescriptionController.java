@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.*;
 import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
@@ -179,12 +180,12 @@ public class PrescriptionController {
 
         //Show printing dialog
         VBox prescriptionPane = new VBox();
-        prescriptionPane.setSpacing(10);
+
+        prescriptionPane.setPadding(new Insets(1.5*28.346, 0, 0, 0));
 
         prescriptionPane.getChildren().addAll(
-                new Label(LocalDate.now().format(DateTimeFormatter.ISO_DATE)),
-                new Label(prescription.getPatient().getFullName()),
-                new Label()
+                new Text(LocalDate.now().format(DateTimeFormatter.ISO_DATE)),
+                new Text(prescription.getPatient().getFullName() + "\n")
         );
 
         List<Dose> doses = new ArrayList<>(prescription.getMedicines());
@@ -193,27 +194,31 @@ public class PrescriptionController {
         }
 
         for(Dose dose : doses) {
-            Label label = new Label(dose.getMedicine().getName() + "\n- " + dose.getDose());
-            label.setWrapText(true);
+            Text label = new Text(dose.getMedicine().getName() + "\n- " + dose.getDose());
+            label.wrappingWidthProperty().bind(prescriptionPane.prefWidthProperty());
             prescriptionPane.getChildren().add(label);
         }
 
         for(Study study : prescription.getStudies()){
-            Label label = new Label(study.getName() + "\n" + study.getDescription());
-            label.setWrapText(true);
+            Text label = new Text(study.getName() + "\n" + study.getDescription());
+            label.wrappingWidthProperty().bind(prescriptionPane.prefWidthProperty());
             prescriptionPane.getChildren().add(label);
         }
 
         //Add notes if they exist
         if(prescription.getNotes()!=null && prescription.getNotes().length()>0) {
-            Label label = new Label(prescription.getNotes());
-            label.setWrapText(true);
+            Text label = new Text("\n" + prescription.getNotes());
+            label.wrappingWidthProperty().bind(prescriptionPane.prefWidthProperty());
             prescriptionPane.getChildren().add(label);
         }
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
             prescriptionPane.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
+            System.out.println(printerJob.getJobSettings().getPageLayout().getTopMargin() + " " + printerJob.getJobSettings().getPageLayout().getLeftMargin());
+            System.out.println(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
+            System.out.println(printerJob.getJobSettings().getPageLayout().getPaper().getName());
+            System.out.println(printerJob.getJobSettings().getPageLayout().getPaper().getWidth());
             boolean success = printerJob.printPage(prescriptionPane);
             if (success) {
                 printerJob.endJob();

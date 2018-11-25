@@ -282,24 +282,23 @@ public class Consultation extends Model {
         }
 
         for(Dose dose : doses) {
-            Label label = new Label(dose.getMedicine().getName() + "\n- " + dose.getDose());
-            label.setWrapText(true);
+            Text label = new Text(dose.getMedicine().getName() + "\n- " + dose.getDose());
+            label.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
             consultationPane.getChildren().add(label);
         }
 
         for(Study study : prescription.getStudies()){
-            Label label = new Label(study.getName() + "\n" + study.getDescription());
-            label.setWrapText(true);
+            Text label = new Text(study.getName() + "\n" + study.getDescription());
+            label.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
             consultationPane.getChildren().add(label);
         }
 
         //Add notes if they exist
         if(prescription.getNotes()!=null && prescription.getNotes().length()>0) {
-            Label label = new Label(prescription.getNotes());
-            label.setWrapText(true);
+            Text label = new Text("\n" + prescription.getNotes());
+            label.wrappingWidthProperty().bind(consultationPane.prefWidthProperty());
             consultationPane.getChildren().add(label);
         }
-
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(menuController.getPrimaryStage().getOwner())){
