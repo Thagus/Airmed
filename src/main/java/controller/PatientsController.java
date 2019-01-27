@@ -200,7 +200,7 @@ public class PatientsController {
                 String phone = phoneField.getText();
                 String cellphone = cellphoneField.getText();
 
-                if(name.length()==0 || lastname.length()==0 || !(gender=='F' || gender=='M') || bloodtype.length()==0 || birthdate==null){
+                if(name.length()==0 || lastname.length()==0 || !(gender=='F' || gender=='M') || birthdate==null){
                     return null;
                 }
 
