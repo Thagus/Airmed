@@ -31,6 +31,11 @@ public class ConsultationController {
     @FXML private TextField weightField;
     @FXML private TextField imcField;
 
+    @FXML private TextField glucoseField;
+    @FXML private TextField hemoglobinField;
+    @FXML private TextField cholesterolField;
+    @FXML private TextField triglyceridesField;
+
     @FXML private TextArea motiveArea;
     @FXML private TextArea explorationArea;
 
@@ -65,6 +70,26 @@ public class ConsultationController {
         temperatureField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 temperatureField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        glucoseField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                glucoseField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        hemoglobinField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                hemoglobinField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        cholesterolField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                cholesterolField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        triglyceridesField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                triglyceridesField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
@@ -213,7 +238,11 @@ public class ConsultationController {
                 pressureS,
                 NumberUtils.toInt(pulseField.getText(), 0),
                 NumberUtils.toInt(temperatureField.getText(), 0),
-                NumberUtils.toInt(breathField.getText(), 0)
+                NumberUtils.toInt(breathField.getText(), 0),
+                NumberUtils.toInt(glucoseField.getText(), 0),
+                NumberUtils.toInt(hemoglobinField.getText(), 0),
+                NumberUtils.toInt(cholesterolField.getText(), 0),
+                NumberUtils.toInt(triglyceridesField.getText(), 0)
         ));
 
         int weight = 0;
@@ -263,6 +292,10 @@ public class ConsultationController {
             breathField.setText(consultation.getVitalSign().getBreath() + "");
             pulseField.setText(consultation.getVitalSign().getPulse() + "");
             temperatureField.setText(consultation.getVitalSign().getTemperature() + "");
+            glucoseField.setText(consultation.getVitalSign().getGlucose() + "");
+            hemoglobinField.setText(consultation.getVitalSign().getHemoglobin() + "");
+            cholesterolField.setText(consultation.getVitalSign().getCholesterol() + "");
+            triglyceridesField.setText(consultation.getVitalSign().getTriglycerides() + "");
         }
 
         if(consultation.getMeasurement()!=null) {
@@ -310,6 +343,11 @@ public class ConsultationController {
 
         heightField.setText("");
         weightField.setText("");
+
+        glucoseField.setText("");
+        hemoglobinField.setText("");
+        cholesterolField.setText("");
+        triglyceridesField.setText("");
 
         explorationArea.setText("");
 

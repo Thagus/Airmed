@@ -2,6 +2,7 @@ package model;
 
 import io.ebean.Finder;
 import io.ebean.Model;
+import io.ebean.annotation.DbDefault;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,15 +16,29 @@ public class VitalSign extends Model {
     @OneToOne
     private Consultation consultation;
 
+    @DbDefault("0")
     private int pressureD;
+    @DbDefault("0")
     private int pressureS;
+    @DbDefault("0")
     private int pulse;
+    @DbDefault("0")
     private int temperature;
+    @DbDefault("0")
     private int breath;
+
+    @DbDefault("0")
+    private int glucose;
+    @DbDefault("0")
+    private int hemoglobin;
+    @DbDefault("0")
+    private int cholesterol;
+    @DbDefault("0")
+    private int triglycerides;
 
     public static Finder<Integer, VitalSign> find = new Finder<>(VitalSign.class);
 
-    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath){
+    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath, int glucose, int hemoglobin, int cholesterol, int triglycerides){
         if(pressureD==0 && pressureS==0 && pulse==0 && temperature==0 && breath==0){
             return null;
         }
@@ -36,6 +51,11 @@ public class VitalSign extends Model {
         vitalSign.pulse = pulse;
         vitalSign.temperature = temperature;
         vitalSign.breath = breath;
+
+        vitalSign.glucose = glucose;
+        vitalSign.hemoglobin = hemoglobin;
+        vitalSign.cholesterol = cholesterol;
+        vitalSign.triglycerides = triglycerides;
 
         return vitalSign;
     }
@@ -82,5 +102,37 @@ public class VitalSign extends Model {
 
     public void setBreath(int breath) {
         this.breath = breath;
+    }
+
+    public int getGlucose() {
+        return glucose;
+    }
+
+    public void setGlucose(int glucose) {
+        this.glucose = glucose;
+    }
+
+    public int getHemoglobin() {
+        return hemoglobin;
+    }
+
+    public void setHemoglobin(int hemoglobin) {
+        this.hemoglobin = hemoglobin;
+    }
+
+    public int getCholesterol() {
+        return cholesterol;
+    }
+
+    public void setCholesterol(int cholesterol) {
+        this.cholesterol = cholesterol;
+    }
+
+    public int getTriglycerides() {
+        return triglycerides;
+    }
+
+    public void setTriglycerides(int triglycerides) {
+        this.triglycerides = triglycerides;
     }
 }

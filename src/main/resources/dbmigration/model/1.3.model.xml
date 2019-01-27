@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <alterColumn columnName="pressure_d" tableName="vital_sign" defaultValue="0"/>
+        <alterColumn columnName="pressure_s" tableName="vital_sign" defaultValue="0"/>
+        <alterColumn columnName="pulse" tableName="vital_sign" defaultValue="0"/>
+        <alterColumn columnName="temperature" tableName="vital_sign" defaultValue="0"/>
+        <alterColumn columnName="breath" tableName="vital_sign" defaultValue="0"/>
+        <addColumn tableName="vital_sign">
+            <column name="glucose" type="integer" defaultValue="0" notnull="true"/>
+            <column name="hemoglobin" type="integer" defaultValue="0" notnull="true"/>
+            <column name="cholesterol" type="integer" defaultValue="0" notnull="true"/>
+            <column name="triglycerides" type="integer" defaultValue="0" notnull="true"/>
+        </addColumn>
+    </changeSet>
+</migration>

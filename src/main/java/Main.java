@@ -102,6 +102,7 @@ public class Main extends Application {
                             catch (Exception ignored){  //If the login fails, shake the dialog and ask for the password again
                                 ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
                                 anim.playFromStart();
+                                ignored.printStackTrace();
                             }
                         }
                     }
