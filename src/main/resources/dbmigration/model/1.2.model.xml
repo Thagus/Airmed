@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <alterColumn columnName="notes" tableName="prescription" type="clob" currentType="varchar" currentNotnull="false"/>
+        <alterColumn columnName="description" tableName="study" type="clob" currentType="varchar" currentNotnull="false"/>
+        <alterColumn columnName="description" tableName="surgery" type="clob" currentType="varchar" currentNotnull="false"/>
+        <alterColumn columnName="description" tableName="treatment" type="clob" currentType="varchar" currentNotnull="false"/>
+    </changeSet>
+</migration>

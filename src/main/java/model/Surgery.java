@@ -20,6 +20,7 @@ public class Surgery extends Model {
 
     private LocalDate date;
 
+    @Column(columnDefinition = "clob")
     private String description;
 
     public static Finder<Integer, Surgery> find = new Finder<>(Surgery.class);

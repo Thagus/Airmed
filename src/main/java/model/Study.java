@@ -15,6 +15,7 @@ public class Study extends Model {
     @Column(nullable = false)
     private String name;
 
+    @Column(columnDefinition = "clob")
     private String description;
 
     @ManyToMany(mappedBy = "studies")

@@ -19,6 +19,7 @@ public class Prescription extends Model {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(columnDefinition = "clob")
     private String notes;
 
     @OneToOne(mappedBy = "prescription")
