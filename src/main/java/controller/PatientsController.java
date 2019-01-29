@@ -9,15 +9,33 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import model.Consultation;
 import model.Patient;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
+import utils.IMCUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -227,6 +245,138 @@ public class PatientsController {
 
             if(showRecordAfterwards.get()) {
                 menuController.showPatientRecord(patient);
+            }
+        });
+    }
+
+    public void exportConsultations(ActionEvent actionEvent) {
+        //Create dialog to define the date range to export
+        Dialog<Workbook> dialog = new Dialog<>();
+        dialog.setTitle("Exportar consultas a excel");
+        dialog.setHeaderText(null);
+
+        ButtonType generateButton = new ButtonType("Generar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, generateButton);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        DatePicker startDateField = new DatePicker();
+        DatePicker endDateField = new DatePicker();
+
+        grid.add(new Label("Fecha de inicio"), 0, 0);
+        grid.add(startDateField, 0, 1);
+        grid.add(new Label("Fecha de fin"), 1 ,0);
+        grid.add(endDateField, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == generateButton){
+                LocalDate startDate = startDateField.getValue();
+                LocalDate endDate = endDateField.getValue();
+
+                //Fetch consultations and patient basic data
+                List<Consultation> consultationList = Consultation.find.query()
+                        .fetch("patient", "name,lastname,gender,birthdate")
+                        .fetch("vitalSign")
+                        .where()
+                        .ge("dateTime", startDate)
+                        .le("dateTime", endDate)
+                        .findList();
+
+                //Create excel file with the information, calculating imc and interpretation
+                Workbook workbook = new XSSFWorkbook();
+                Sheet sheet = workbook.createSheet("Consultas");
+
+                Font headerFont = workbook.createFont();
+                headerFont.setBold(true);
+                headerFont.setFontHeightInPoints((short) 12);
+
+                CellStyle headerCellStyle = workbook.createCellStyle();
+                headerCellStyle.setFont(headerFont);
+
+                // Create header row
+                String[] columns = {"Fecha", "Hora", "Nombre Completo", "Género", "Edad", "Diagnóstico", "Altura (m)", "Peso (kg)", "IMC", "Interpretación IMC", "Presión (S/D)", "Respiración (/min)", "Pulso (/min)", "Temperatura (°C)", "Glucosa (mg)", "Hemoglobina (%)", "Colesterol (%)", "Triglicéridos (%)"};
+                Row headerRow = sheet.createRow(0);
+
+                for (int i = 0; i < columns.length; i++) {
+                    Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(columns[i]);
+                    cell.setCellStyle(headerCellStyle);
+                }
+
+                //Autosize diagnostic column, so it doesn't autosize on the actual diagnostics size
+                sheet.autoSizeColumn(5);
+
+                int rowNum = 1;
+
+                for(Consultation consultation : consultationList){
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue(consultation.getDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE));
+                    row.createCell(1).setCellValue(consultation.getDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
+                    row.createCell(2).setCellValue(consultation.getPatient().getFullName());
+                    row.createCell(3).setCellValue(consultation.getPatient().getGender());
+                    row.createCell(4).setCellValue(consultation.getPatient().getAge());
+                    row.createCell(5).setCellValue(consultation.getDiagnostic());
+                    if(consultation.getMeasurement()!=null) {
+                        row.createCell(6).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
+                        row.createCell(7).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString());
+                        row.createCell(8).setCellValue(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()).toPlainString());
+                        row.createCell(9).setCellValue(IMCUtils.interpretIMC(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()), consultation.getPatient().getBirthdate()));
+                    }
+                    if(consultation.getVitalSign()!=null) {
+                        row.createCell(10).setCellValue(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());
+                        row.createCell(11).setCellValue(consultation.getVitalSign().getBreath());
+                        row.createCell(12).setCellValue(consultation.getVitalSign().getPulse());
+                        row.createCell(13).setCellValue(consultation.getVitalSign().getTemperature());
+                        row.createCell(14).setCellValue(consultation.getVitalSign().getGlucose());
+                        row.createCell(15).setCellValue(consultation.getVitalSign().getHemoglobin());
+                        row.createCell(16).setCellValue(consultation.getVitalSign().getCholesterol());
+                        row.createCell(17).setCellValue(consultation.getVitalSign().getTriglycerides());
+                    }
+                }
+
+                for(int i=0; i<columns.length; i++){
+                    if(i==5){   //Skip diagnostic column
+                        continue;
+                    }
+                    sheet.autoSizeColumn(i);
+                }
+
+                return workbook;
+            }
+
+            return null;
+        });
+
+        Optional<Workbook> result = dialog.showAndWait();
+
+        result.ifPresent(workbook -> {
+            //Choose file destination
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Guardar archivo");
+            fileChooser.setInitialFileName("consultas-" + startDateField.getValue().format(DateTimeFormatter.BASIC_ISO_DATE) +  "-" + endDateField.getValue().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx");
+            File file = fileChooser.showSaveDialog(menuController.getPrimaryStage());
+            if (file != null) {
+                try {
+                    FileOutputStream out = new FileOutputStream(file);
+                    workbook.write(out);
+                    out.close();
+
+                    Notifications.create().title("Archivo guardado")
+                            .text("Archivo de consultas guardado con éxito")
+                            .position(Pos.BASELINE_RIGHT)
+                            .showInformation();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    Notifications.create().title("Error al guardar archivo")
+                            .text(ex.getCause().getMessage())
+                            .position(Pos.BASELINE_RIGHT)
+                            .showInformation();
+                }
             }
         });
     }

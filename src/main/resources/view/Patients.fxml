@@ -14,19 +14,23 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientsController">
     <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </VBox.margin>
         <Button mnemonicParsing="false" onAction="#newPatient" text="Agregar">
             <HBox.margin>
-                <Insets left="5.0"/>
+                <Insets left="5.0" />
             </HBox.margin>
         </Button>
-        <Region HBox.hgrow="ALWAYS"/>
+      <Button mnemonicParsing="false" onAction="#exportConsultations" text="Exportar consultas">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin></Button>
+        <Region HBox.hgrow="ALWAYS" />
         <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
             <left>
                 <Label style="-fx-padding: 0 2 0 7;">
                     <graphic>
-                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
+                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
                     </graphic>
                 </Label>
             </left>
@@ -34,12 +38,12 @@
     </HBox>
     <TableView fx:id="patientsTable">
         <columns>
-            <TableColumn fx:id="nameColumn" text="Nombre" minWidth="200"/>
-            <TableColumn fx:id="lastnameColumn" text="Apellido" minWidth="250"/>
-            <TableColumn fx:id="genderColumn" text="Sexo"/>
-            <TableColumn fx:id="ageColumn" text="Edad"/>
-            <TableColumn fx:id="recordColumn"/>
-            <TableColumn fx:id="deleteColumn"/>
+            <TableColumn fx:id="nameColumn" minWidth="200" text="Nombre" />
+            <TableColumn fx:id="lastnameColumn" minWidth="250" text="Apellido" />
+            <TableColumn fx:id="genderColumn" text="Sexo" />
+            <TableColumn fx:id="ageColumn" text="Edad" />
+            <TableColumn fx:id="recordColumn" />
+            <TableColumn fx:id="deleteColumn" />
         </columns>
     </TableView>
 </VBox>
