@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import model.*;
 import org.apache.commons.lang3.math.NumberUtils;
+import utils.IMCUtils;
 import utils.TableFactory;
 
 import java.math.BigDecimal;
@@ -106,7 +107,7 @@ public class ConsultationController {
                 height.set(new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue());
 
                 if(weight.get()!=0){
-                    imcField.setText(BigDecimal.valueOf((weight.get()/((double)height.get()*(double)height.get()))*10).setScale(2, RoundingMode.CEILING).toPlainString());
+                    imcField.setText(IMCUtils.calculateIMC(weight.get(), height.get()).toPlainString());
                 }
             }
             if(newValue.length()==0){
@@ -122,7 +123,7 @@ public class ConsultationController {
                 weight.set(new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue());
 
                 if(height.get()!=0){
-                    imcField.setText(BigDecimal.valueOf((weight.get()/((double)height.get()*(double)height.get()))*10).setScale(2, RoundingMode.CEILING).toPlainString());
+                    imcField.setText(IMCUtils.calculateIMC(weight.get(), height.get()).toPlainString());
                 }
                 else {
                     imcField.setText("");
