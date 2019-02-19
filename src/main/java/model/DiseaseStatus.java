@@ -14,7 +14,7 @@ public class DiseaseStatus extends Model {
     private int id;
 
     @Column(nullable = false)
-    private boolean status;
+    private boolean controlled;
 
     @ManyToOne
     private Disease disease;
@@ -23,4 +23,30 @@ public class DiseaseStatus extends Model {
     private Consultation consultation;
 
     public static Finder<Integer, DiseaseStatus> find = new Finder<>(DiseaseStatus.class);
+
+    public static DiseaseStatus create(Disease disease, boolean controlled){
+        DiseaseStatus diseaseStatus = new DiseaseStatus();
+
+        diseaseStatus.disease = disease;
+        diseaseStatus.controlled = controlled;
+
+        diseaseStatus.save();
+        return diseaseStatus;
+    }
+
+    public boolean isControlled() {
+        return controlled;
+    }
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setControlled(boolean controlled) {
+        this.controlled = controlled;
+    }
 }

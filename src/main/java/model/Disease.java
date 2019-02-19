@@ -19,4 +19,17 @@ public class Disease extends Model {
     private List<DiseaseStatus> statuses;
 
     public static Finder<Integer, Disease> find = new Finder<>(Disease.class);
+
+    public static Disease create(String name){
+        Disease disease = new Disease();
+
+        disease.name = name;
+
+        disease.save();
+        return disease;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
