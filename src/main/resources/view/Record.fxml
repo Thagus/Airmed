@@ -171,7 +171,7 @@
                                 </left>
                             </CustomTextField>
                         </HBox>
-                        <TableView fx:id="surgeriesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="surgeriesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="surgeryNameColumn" text="Nombre" />
                                 <TableColumn fx:id="surgeryDateColumn" text="Fecha" />
@@ -206,7 +206,7 @@
                               </left>
                           </CustomTextField>
                       </HBox>
-                      <TableView fx:id="studiesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <TableView fx:id="studiesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="studyNameColumn" text="Nombre" />
                               <TableColumn fx:id="studyDateColumn" text="Fecha" />
@@ -244,7 +244,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView fx:id="consultationsTable">
+                  <TableView fx:id="consultationsTable" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="consultationDateColumn" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" text="Fecha" />
                         <TableColumn fx:id="consultationMotiveColumn" maxWidth="-1.0" minWidth="175.0" prefWidth="-1.0" text="Motivo" />

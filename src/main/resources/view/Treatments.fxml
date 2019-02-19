@@ -14,30 +14,30 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TreatmentsController">
     <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </VBox.margin>
         <Button mnemonicParsing="false" onAction="#newTreatment" text="Agregar">
             <HBox.margin>
-                <Insets left="5.0"/>
+                <Insets left="5.0" />
             </HBox.margin>
         </Button>
-        <Region HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="ALWAYS" />
         <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
             <left>
                 <Label style="-fx-padding: 0 2 0 7;">
                     <graphic>
-                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
+                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13" />
                     </graphic>
                 </Label>
             </left>
         </CustomTextField>
     </HBox>
-    <TableView fx:id="treatmentsTable">
+    <TableView fx:id="treatmentsTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="nameColumn" text="Nombre" minWidth="120"/>
-            <TableColumn fx:id="descriptionColumn" text="Descripción" minWidth="200"/>
-            <TableColumn fx:id="editColumn"/>
-            <TableColumn fx:id="deleteColumn"/>
+            <TableColumn fx:id="nameColumn" minWidth="120" text="Nombre" />
+            <TableColumn fx:id="descriptionColumn" minWidth="200" text="Descripción" />
+            <TableColumn fx:id="editColumn" />
+            <TableColumn fx:id="deleteColumn" />
         </columns>
     </TableView>
 </VBox>

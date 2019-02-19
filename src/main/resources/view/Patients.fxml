@@ -36,7 +36,7 @@
             </left>
         </CustomTextField>
     </HBox>
-    <TableView fx:id="patientsTable">
+    <TableView fx:id="patientsTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="nameColumn" minWidth="200" text="Nombre" />
             <TableColumn fx:id="lastnameColumn" minWidth="250" text="Apellido" />
