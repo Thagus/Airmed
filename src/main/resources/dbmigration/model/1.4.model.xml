@@ -6,11 +6,11 @@
             <column name="name" type="varchar" notnull="true"/>
             <uniqueConstraint name="uq_disease_name" columnNames="name" oneToOne="false" nullableColumns=""/>
         </createTable>
-        <createTable name="disease_controlled" pkName="pk_disease_controlled">
+        <createTable name="disease_status" pkName="pk_disease_status">
             <column name="id" type="integer" primaryKey="true"/>
             <column name="controlled" type="boolean" defaultValue="false" notnull="true"/>
-            <column name="disease_id" type="integer" references="disease.id" foreignKeyName="fk_disease_controlled_disease_id" foreignKeyIndex="ix_disease_controlled_disease_id"/>
-            <column name="consultation_id" type="integer" references="consultation.id" foreignKeyName="fk_disease_controlled_consultation_id" foreignKeyIndex="ix_disease_controlled_consultation_id"/>
+            <column name="disease_id" type="integer" references="disease.id" foreignKeyName="fk_disease_status_disease_id" foreignKeyIndex="ix_disease_status_disease_id"/>
+            <column name="consultation_id" type="integer" references="consultation.id" foreignKeyName="fk_disease_status_consultation_id" foreignKeyIndex="ix_disease_status_consultation_id"/>
         </createTable>
     </changeSet>
 </migration>
