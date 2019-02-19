@@ -52,6 +52,9 @@ public class Consultation extends Model {
 
     @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private VitalSign vitalSign;
+
+    @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL)
+    private List<DiseaseStatus> diseases;
     
     public static Finder<Integer, Consultation> find = new Finder<>(Consultation.class);
 
@@ -138,6 +141,14 @@ public class Consultation extends Model {
 
     public void setExploration(String exploration) {
         this.exploration = exploration;
+    }
+
+    public List<DiseaseStatus> getDiseaseStatuses() {
+        return diseases;
+    }
+
+    public void setDiseases(List<DiseaseStatus> diseases) {
+        this.diseases = diseases;
     }
 
     public void print(MenuController menuController) {
