@@ -116,6 +116,10 @@ public class PrescriptionController {
         TextFields.bindAutoCompletion(medicineField, AutocompleteBindings.getInstance().getMedicineNames());
 
         notesArea.setWrapText(true);
+
+        treatmentsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        studiesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        medicinesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void setPatient(Patient patient) {

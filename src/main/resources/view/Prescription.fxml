@@ -52,20 +52,20 @@
             <TableView fx:id="treatmentsTable" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1">
               <columns>
                   <TableColumn fx:id="treatmentNameColumn" text="Nombre" />
-                  <TableColumn fx:id="deleteTreatmentColumn" />
+                  <TableColumn fx:id="deleteTreatmentColumn" minWidth="25.0" maxWidth="25.0"/>
               </columns>
             </TableView>
             <TableView fx:id="studiesTable" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="1">
               <columns>
                   <TableColumn fx:id="studyNameColumn" text="Nombre" />
-                  <TableColumn fx:id="deleteStudyColumn" />
+                  <TableColumn fx:id="deleteStudyColumn" minWidth="25.0" maxWidth="25.0"/>
               </columns>
             </TableView>
             <TableView fx:id="medicinesTable" GridPane.columnSpan="3" GridPane.rowIndex="5">
               <columns>
                   <TableColumn fx:id="medicineNameColumn" text="Nombre" />
                   <TableColumn fx:id="doseColumn" text="Dósis" />
-                  <TableColumn fx:id="deleteMedicineColumn" />
+                  <TableColumn fx:id="deleteMedicineColumn" minWidth="25.0" maxWidth="25.0"/>
               </columns>
             </TableView>
         </GridPane>
