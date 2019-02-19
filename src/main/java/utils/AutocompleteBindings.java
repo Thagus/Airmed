@@ -1,9 +1,6 @@
 package utils;
 
-import model.Dose;
-import model.Medicine;
-import model.Study;
-import model.Treatment;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +12,20 @@ public class AutocompleteBindings {
     private List<String> treatmentNames;
     private List<String> studyNames;
     private List<String> medicineNames;
+    private List<String> diseaseNames;
 
     private AutocompleteBindings() {
         this.treatmentNames = Treatment.find.query().select("name").findList().stream().map(Treatment::getName).collect(Collectors.toList());
         this.studyNames = Study.find.query().select("name").findList().stream().map(Study::getName).collect(Collectors.toList());
         this.medicineNames = Medicine.find.query().select("name").findList().stream().map(Medicine::getName).collect(Collectors.toList());
+        this.diseaseNames = Disease.find.query().select("name").findList().stream().map(Disease::getName).collect(Collectors.toList());
     }
 
     public static  AutocompleteBindings getInstance(){
         return instance;
     }
+
+    //Getters
 
     public List<String> getTreatmentNames() {
         return treatmentNames;
@@ -38,6 +39,10 @@ public class AutocompleteBindings {
         return medicineNames;
     }
 
+    public List<String> getDiseaseNames() {
+        return diseaseNames;
+    }
+
     public List<String> getDosesForMedicine(String medicine){
         List<String> doses = new ArrayList<>();
         Medicine medicineObj = Medicine.find.query().where().eq("name", medicine).findOne();
@@ -48,6 +53,8 @@ public class AutocompleteBindings {
 
         return doses;
     }
+
+    //Adders
 
     public void addTreatmentName(String treatmentName) {
         this.treatmentNames.add(treatmentName);
@@ -61,6 +68,12 @@ public class AutocompleteBindings {
         this.medicineNames.add(medicineName);
     }
 
+    public void addDiseaseName(String diseaseName) {
+        this.diseaseNames.add(diseaseName);
+    }
+
+    //Removers
+
     public void removeTreatmentName(String treatmentName) {
         this.treatmentNames.remove(treatmentName);
     }
@@ -71,5 +84,9 @@ public class AutocompleteBindings {
 
     public void removeMedicineName(String medicineName) {
         this.medicineNames.remove(medicineName);
+    }
+
+    public void removeDiseaseName(String diseaseName) {
+        this.diseaseNames.remove(diseaseName);
     }
 }
