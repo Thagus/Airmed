@@ -1,14 +1,26 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.*;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.controlsfx.control.textfield.TextFields;
+import utils.ActionButtonTableCell;
+import utils.AutocompleteBindings;
 import utils.IMCUtils;
 import utils.TableFactory;
 
@@ -36,6 +48,12 @@ public class ConsultationController {
     @FXML private TextField hemoglobinField;
     @FXML private TextField cholesterolField;
     @FXML private TextField triglyceridesField;
+
+    @FXML private TableView<DiseaseStatus> diseasesTable;
+    @FXML private TableColumn<DiseaseStatus, String> diseaseColumn;
+    @FXML private TableColumn<DiseaseStatus, Boolean> diseaseControlColumn;
+    @FXML private TableColumn<DiseaseStatus, Button> deleteDiseaseColumn;
+    private ObservableList<DiseaseStatus> diseases;
 
     @FXML private TextArea motiveArea;
     @FXML private TextArea explorationArea;
@@ -187,6 +205,21 @@ public class ConsultationController {
         explorationArea.setWrapText(true);
         diagnosisArea.setWrapText(true);
         prognosisArea.setWrapText(true);
+
+        diseases = FXCollections.observableArrayList();
+        diseaseColumn.setCellValueFactory(cellData -> {
+            DiseaseStatus diseaseStatus = cellData.getValue();
+            return new SimpleObjectProperty<>(diseaseStatus.getDisease().getName());
+        });
+        diseaseControlColumn.setCellValueFactory(d -> new SimpleBooleanProperty(d.getValue().isControlled()));
+        diseaseControlColumn.setCellFactory( tc -> new CheckBoxTableCell<>());
+        deleteDiseaseColumn.setCellFactory(ActionButtonTableCell.forTableColumn("X", (DiseaseStatus diseaseStatus) -> {
+            diseases.remove(diseaseStatus);
+            return diseaseStatus;
+        }));
+        diseasesTable.setItems(diseases);
+
+        diseasesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void setPatient(Patient patient) {
@@ -269,6 +302,8 @@ public class ConsultationController {
         consultation.setDiagnostic(diagnosisArea.getText());
         consultation.setPrognosis(prognosisArea.getText());
 
+        consultation.setDiseases(diseases);
+
         //Begin the prescription stage showing it or creating it
         if(!showConsultation) {
             menuController.beginPrescription(consultation);
@@ -308,6 +343,9 @@ public class ConsultationController {
         motiveArea.setText(consultation.getMotive());
         diagnosisArea.setText(consultation.getDiagnostic());
         prognosisArea.setText(consultation.getPrognosis());
+
+        diseases.setAll(consultation.getDiseaseStatuses());
+        diseasesTable.refresh();
     }
 
     public void newConsultation() {
@@ -355,5 +393,77 @@ public class ConsultationController {
         motiveArea.setText("");
         diagnosisArea.setText("");
         prognosisArea.setText("");
+
+        diseases.clear();
+    }
+
+    public void newDisease(ActionEvent actionEvent) {
+        Dialog<DiseaseStatus> dialog = new Dialog<>();
+        dialog.setTitle("Agregar enfermedad");
+        dialog.setHeaderText(null);
+
+        // Add buttons
+        ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addButton);
+
+        //Form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nameField = new TextField();
+        nameField.setPromptText("Nombre de la enfermedad");
+
+        CheckBox statusBox = new CheckBox();
+
+        grid.add(new Label("Nombre"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Controlada"), 0, 1);
+        grid.add(statusBox, 1, 1);
+
+        TextFields.bindAutoCompletion(nameField, AutocompleteBindings.getInstance().getDiseaseNames());
+
+        dialog.getDialogPane().setContent(grid);
+
+        //Focus the name field whe starting the dialog
+        Platform.runLater(nameField::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if(dialogButton == addButton){
+
+                ///Check that all fields are correct
+                String name = nameField.getText();
+                boolean status = statusBox.isSelected();
+
+                if(name.length()==0){
+                    return null;
+                }
+
+                //Try to find if the disease already exists
+                Disease disease = Disease.find.query().where().eq("name", name).findOne();
+
+                //If the disease doesn't exist, create it
+                if(disease==null) {
+                    disease = Disease.create(name);
+                    AutocompleteBindings.getInstance().addDiseaseName(name);
+                }
+
+                return DiseaseStatus.createWithoutSave(
+                        disease,
+                        consultation,
+                        status
+                );
+            }
+
+            return null;
+        });
+
+        Optional<DiseaseStatus> result = dialog.showAndWait();
+
+        result.ifPresent(diseaseStatus -> {
+            diseases.add(diseaseStatus);
+            diseasesTable.refresh();
+        });
     }
 }
