@@ -24,13 +24,13 @@ public class DiseaseStatus extends Model {
 
     public static Finder<Integer, DiseaseStatus> find = new Finder<>(DiseaseStatus.class);
 
-    public static DiseaseStatus create(Disease disease, boolean controlled){
+    public static DiseaseStatus createWithoutSave(Disease disease, Consultation consultation, boolean controlled){
         DiseaseStatus diseaseStatus = new DiseaseStatus();
 
         diseaseStatus.disease = disease;
+        diseaseStatus.consultation = consultation;
         diseaseStatus.controlled = controlled;
 
-        diseaseStatus.save();
         return diseaseStatus;
     }
 
