@@ -113,44 +113,38 @@ public class MenuController {
     }
 
     public void startAppointment(Appointment appointment){
-        consultationController.startAppointment(appointment);
-
         hideAll();
+        consultationController.startAppointment(appointment);
         consultationPane.setVisible(true);
     }
 
     public void beginConsultation(Patient patient){
-        consultationController.setPatient(patient);
-
         hideAll();
+        consultationController.setPatient(patient);
         consultationPane.setVisible(true);
     }
 
     public void showConsultation(Consultation consultation) {
-        consultationController.showConsultation(consultation);
-
         hideAll();
+        consultationController.showConsultation(consultation);
         consultationPane.setVisible(true);
     }
 
     public void beginPrescription(Consultation consultation){
-        prescriptionController.setConsultation(consultation);
-
         hideAll();
+        prescriptionController.setConsultation(consultation);
         prescriptionPane.setVisible(true);
     }
 
     public void beginPrescription(Patient patient){
-        prescriptionController.setPatient(patient);
-
         hideAll();
+        prescriptionController.setPatient(patient);
         prescriptionPane.setVisible(true);
     }
 
     public void showPrescription(Consultation consultation) {
-        prescriptionController.showPrescription(consultation);
-
         hideAll();
+        prescriptionController.showPrescription(consultation);
         prescriptionPane.setVisible(true);
     }
 
