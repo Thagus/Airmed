@@ -97,6 +97,8 @@ public class TreatmentsController {
         sortedTreatments.comparatorProperty().bind(treatmentsTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
 
         treatmentsTable.setItems(sortedTreatments);
+
+        treatmentsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void newTreatment(ActionEvent actionEvent) {

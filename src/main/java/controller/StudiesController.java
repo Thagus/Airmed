@@ -94,6 +94,8 @@ public class StudiesController {
         sortedStudies.comparatorProperty().bind(studiesTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
 
         studiesTable.setItems(sortedStudies);
+
+        studiesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void newStudy(ActionEvent actionEvent) {

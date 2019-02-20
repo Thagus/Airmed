@@ -122,6 +122,8 @@ public class PatientsController {
         sortedPatients.comparatorProperty().bind(patientsTable.comparatorProperty());   //Bind the sorted list comparator to the table comparator
 
         patientsTable.setItems(sortedPatients);
+
+        patientsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void newPatient(ActionEvent actionEvent) {
