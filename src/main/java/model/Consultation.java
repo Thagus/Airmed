@@ -151,6 +151,7 @@ public class Consultation extends Model {
         this.diseases = diseases;
     }
 
+    //TODO: Add new consultation parameters and diseases
     public void print(MenuController menuController) {
         VBox consultationPane = new VBox();
 

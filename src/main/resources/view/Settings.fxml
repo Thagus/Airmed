@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -15,141 +16,150 @@
 <?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
-   <children>
-      <TabPane tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="General">
-            <content>
-              <AnchorPane>
-                     <children>
-                        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="NEVER" />
-                            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="70.0" />
-                              <ColumnConstraints hgrow="NEVER" maxWidth="230.0" minWidth="10.0" prefWidth="230.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="Duración de consulta   " GridPane.rowIndex="2" />
-                              <Spinner fx:id="consLengthSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="medicNameField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                              <Label text="Nombre del médico" />
-                              <Label alignment="TOP_LEFT" text="minutos" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                                 <padding>
-                                    <Insets left="7.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="medicAddressField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                              <Label text="Dirección del consultorio" GridPane.rowIndex="1" />
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </GridPane>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Correo">
-            <content>
-              <AnchorPane>
-                     <children>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints vgrow="SOMETIMES" />
-                            <RowConstraints vgrow="SOMETIMES" />
-                            <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="Host" />
-                              <Label text="Puerto" GridPane.rowIndex="1" />
-                              <Label text="Usuario" GridPane.rowIndex="2" />
-                              <Label text="Email" GridPane.rowIndex="3" />
-                              <TextField fx:id="emailHostField" GridPane.columnIndex="1" />
-                              <TextField fx:id="emailPortField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="emailUserField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <PasswordField fx:id="emailPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                               <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="Contraseña" GridPane.rowIndex="4" />
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </GridPane>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Impresión">
-                <content>
-                    <AnchorPane>
-                        <children>
-                            <GridPane>
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="NEVER" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
-                                    <ColumnConstraints hgrow="NEVER" maxWidth="75.0" minWidth="10.0" prefWidth="77.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="355.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                <children>
-                                    <Label text="Superior" GridPane.rowIndex="1" />
-                                    <Label text="Derecho" GridPane.rowIndex="2" />
-                                    <Label text="Inferior" GridPane.rowIndex="3" />
-                                    <Label text="Izquierdo" GridPane.rowIndex="4" />
-                                    <TextField fx:id="topBorderField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField fx:id="rightBorderField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextField fx:id="bottomBorderField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField fx:id="leftBorderField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label text="Bordes de impresión de receta" GridPane.columnSpan="3">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                                </children>
-                                <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                </padding>
-                            </GridPane>
-                        </children></AnchorPane>
-                </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+    <children>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="General">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER"/>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="70.0"/>
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="230.0" minWidth="10.0" prefWidth="230.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Duración de consulta   " GridPane.rowIndex="2"/>
+                                        <Spinner fx:id="consLengthSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <TextField fx:id="medicNameField" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+                                        <Label text="Nombre del médico"/>
+                                        <Label alignment="TOP_LEFT" text="minutos" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                            <padding>
+                                                <Insets left="7.0"/>
+                                            </padding>
+                                        </Label>
+                                        <TextField fx:id="medicAddressField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+                                        <Label text="Dirección del consultorio" GridPane.rowIndex="1">
+                                            <padding>
+                                                <Insets right="5.0"/>
+                                            </padding>
+                                        </Label>
+                                        <Separator prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                    </padding>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Correo">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Host"/>
+                                        <Label text="Puerto" GridPane.rowIndex="1"/>
+                                        <Label text="Usuario" GridPane.rowIndex="2"/>
+                                        <Label text="Email" GridPane.rowIndex="3"/>
+                                        <TextField fx:id="emailHostField" GridPane.columnIndex="1"/>
+                                        <TextField fx:id="emailPortField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <TextField fx:id="emailUserField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <PasswordField fx:id="emailPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        <Label text="Contraseña" GridPane.rowIndex="4"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                    </padding>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Impresión">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="70.0" minWidth="10.0" prefWidth="70.0"/>
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="75.0" minWidth="10.0" prefWidth="77.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="355.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Superior" GridPane.rowIndex="1"/>
+                                        <Label text="Derecho" GridPane.rowIndex="2"/>
+                                        <Label text="Inferior" GridPane.rowIndex="3"/>
+                                        <Label text="Izquierdo" GridPane.rowIndex="4"/>
+                                        <TextField fx:id="topBorderField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <TextField fx:id="rightBorderField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <TextField fx:id="bottomBorderField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        <TextField fx:id="leftBorderField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                        <Label text="Bordes de impresión de receta" GridPane.columnSpan="3">
+                                            <font>
+                                                <Font name="System Bold" size="14.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <padding>
+                                                <Insets left="5.0"/>
+                                            </padding>
+                                        </Label>
+                                        <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label text="cm" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                    </padding>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
 </VBox>

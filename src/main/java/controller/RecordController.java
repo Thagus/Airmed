@@ -235,6 +235,10 @@ public class RecordController {
             if (newVal == null)
                 oldVal.setSelected(true);
         });
+
+        surgeriesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        consultationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        studiesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void setPatient(Patient patient){

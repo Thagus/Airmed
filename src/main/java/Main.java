@@ -14,18 +14,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro8.JMetro;
 import utils.ShakeTransition;
 import java.io.IOException;
 import java.util.Locale;
 
 public class Main extends Application {
-
     private Stage primaryStage;
+    private JMetro jMetro;
 
     @Override
     public void start(Stage primaryStage) {
         Locale.setDefault(new Locale("es", "mx"));
         this.primaryStage = primaryStage;
+
+        this.jMetro = new JMetro(JMetro.Style.LIGHT); //Setting to change style to dark
 
         databaseLogin();
     }
@@ -49,6 +52,8 @@ public class Main extends Application {
         dialog.setTitle("Airmed");
         dialog.setHeaderText("Acceso al sistema");
         dialog.initModality(Modality.NONE);
+
+        this.jMetro.applyTheme(dialog.getDialogPane().getScene());
 
         //Create buttons
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
@@ -121,16 +126,14 @@ public class Main extends Application {
 
         scene.setRoot(loader.load());
         MenuController controller = loader.getController();
-        controller.init(primaryStage);
+        controller.init(primaryStage, jMetro);
+
+        this.jMetro.applyTheme(scene);
 
         controller.showAgenda(null);
 
         this.primaryStage.setScene(scene);
         this.primaryStage.show();
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 
     public static void main(String[] args) {

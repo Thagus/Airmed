@@ -31,8 +31,11 @@ public class StudiesController {
     @FXML private TableColumn<Study, Button> deleteColumn;
 
     private ObservableList<Study> studies;
+    private MenuController menuController;
 
-    public void init() {
+    public void init(MenuController menuController) {
+        this.menuController = menuController;
+
         studiesTable.setPlaceholder(new Label("Sin resultados"));
 
         studies = FXCollections.observableList(Study.find.all());
@@ -50,6 +53,7 @@ public class StudiesController {
             alert.setTitle("Borrar estudio");
             alert.setHeaderText(null);
             alert.setContentText("¿Estás seguro que deseas borrar el estudio " + study.getName() + " ?");
+            menuController.getjMetro().applyTheme(alert.getDialogPane());
 
             Optional<ButtonType> result = alert.showAndWait();
 
@@ -102,6 +106,7 @@ public class StudiesController {
         Dialog<Study> dialog = new Dialog<>();
         dialog.setTitle("Nuevo estudio");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
@@ -166,6 +171,7 @@ public class StudiesController {
         Dialog<Study> dialog = new Dialog<>();
         dialog.setTitle("Nuevo estudio");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addPatientButton = new ButtonType("Editar", ButtonBar.ButtonData.OK_DONE);

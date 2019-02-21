@@ -273,6 +273,7 @@ public class PrescriptionController {
         Dialog<Dose> dialog = new Dialog<>();
         dialog.setTitle("Agregar medicamento");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
@@ -368,6 +369,7 @@ public class PrescriptionController {
             alert.setTitle("Estudio inválido");
             alert.setHeaderText(null);
             alert.setContentText("Cree primero el estudio para poder recetarlo");
+            menuController.getjMetro().applyTheme(alert.getDialogPane());
         }
         else {
             studies.add(study);
@@ -400,6 +402,7 @@ public class PrescriptionController {
         Dialog<Patient> patientDialog = new Dialog<>();
         patientDialog.setTitle("Nueva receta");
         patientDialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(patientDialog.getDialogPane());
 
         //Add buttons
         ButtonType selectPatient = new ButtonType("Crear", ButtonBar.ButtonData.OK_DONE);

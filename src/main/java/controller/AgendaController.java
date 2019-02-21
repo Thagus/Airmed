@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 import utils.EmailManager;
+import utils.TableFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,6 +65,7 @@ public class AgendaController {
 
         AgendaWeekSkin agendaWeekSkin = new AgendaWeekSkin(agendaView);
         agendaView.setSkin(agendaWeekSkin);
+
 
         agendaView.setDisplayedLocalDateTime(LocalDateTime.now());
 
@@ -131,6 +133,8 @@ public class AgendaController {
             }
         });
         todayAppointmentsList.setItems(todaysAppointments);
+
+        menuController.getjMetro().applyTheme(agendaView);
     }
 
     private void setTodaysAppointments() {
@@ -183,6 +187,7 @@ public class AgendaController {
         Dialog<Appointment> dialog = new Dialog<>();
         dialog.setTitle("Nueva cita");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         AtomicReference<Patient> patient = new AtomicReference<>();
 
@@ -205,6 +210,7 @@ public class AgendaController {
             Dialog<Patient> patientDialog = new Dialog<>();
             patientDialog.setTitle("Seleccionar paciente");
             patientDialog.setHeaderText(null);
+            menuController.getjMetro().applyTheme(patientDialog.getDialogPane());
 
             // Add buttons
             ButtonType selectPatient = new ButtonType("Seleccionar", ButtonBar.ButtonData.OK_DONE);
@@ -212,70 +218,7 @@ public class AgendaController {
 
             //Show the patients list
             VBox vBox = new VBox();
-
-            CustomTextField searchField = new CustomTextField();
-            Label searchLabel = new Label();
-            searchLabel.setStyle("-fx-padding: 0 2 0 7;");
-            FontAwesomeIconView searchIcon = new FontAwesomeIconView();
-            searchIcon.setGlyphName("SEARCH");
-            searchIcon.setGlyphSize(13);
-            searchLabel.setGraphic(searchIcon);
-            searchField.setLeft(searchLabel);
-            searchField.setPromptText("Buscar");
-            searchField.setStyle("-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;");
-
-            HBox hBox = new HBox();
-            hBox.getChildren().addAll(new Region(), searchField);
-
-            TableView<Patient> patientTableView = new TableView<>();
-
-            TableColumn<Patient, String> nameColumn = new TableColumn<>("Nombre");
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            TableColumn<Patient, String> lastnameColumn = new TableColumn<>("Apellido");
-            lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-            TableColumn<Patient, Character> genderColumn = new TableColumn<>("Género");
-            genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-            TableColumn<Patient, Integer> ageColumn = new TableColumn<>("Edad");
-            ageColumn.setCellValueFactory(cellData -> {
-                Patient patientData = cellData.getValue();
-                int years = Period.between(patientData.getBirthdate(), LocalDate.now()).getYears();
-                return new SimpleObjectProperty<>(years);
-            });
-
-            patientTableView.getColumns().addAll(nameColumn, lastnameColumn, genderColumn, ageColumn);
-
-            ObservableList<Patient> patients = FXCollections.observableList(Patient.find.all());
-            FilteredList<Patient> filteredPatients = new FilteredList<>(patients, p -> true);   //Wrap the observable list into a filtered list
-
-            searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
-                filteredPatients.setPredicate(patient1 -> {
-                    //If filter text is empty, display all.
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-
-                    //Simplify the search string by striping accents and making it lowercase
-                    String lcSearch = StringUtils.stripAccents(newValue).toLowerCase();
-
-                    //Return true if all the search terms are contained in the name or the lastname
-                    boolean match = true;
-                    for(String term : lcSearch.split("\\s+")){
-                        match = match && (
-                                StringUtils.stripAccents(patient1.getName()).toLowerCase().contains(term) ||
-                                        StringUtils.stripAccents(patient1.getLastname()).toLowerCase().contains(term)
-                        );
-                    }
-
-                    return match;
-                });
-            }));
-
-            SortedList<Patient> sortedPatients = new SortedList<>(filteredPatients);        //Wrap the filtered list in a sorted list
-            sortedPatients.comparatorProperty().bind(patientTableView.comparatorProperty());   //Bind the sorted list comparator to the table comparator
-            patientTableView.setItems(sortedPatients);
-
-            vBox.getChildren().addAll(hBox, patientTableView);
-
+            TableView<Patient> patientTableView = TableFactory.createPatientTable(vBox);
             patientDialog.getDialogPane().setContent(vBox);
 
             patientDialog.setResultConverter(patientDialogButton -> {
@@ -388,6 +331,7 @@ public class AgendaController {
         Dialog<Appointment> dialog = new Dialog<>();
         dialog.setTitle("Editar cita");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addAppointmentButton = new ButtonType("Editar", ButtonBar.ButtonData.OK_DONE);

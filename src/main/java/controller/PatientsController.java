@@ -80,6 +80,7 @@ public class PatientsController {
             alert.setTitle("Borrar paciente");
             alert.setHeaderText(null);
             alert.setContentText("¿Estás seguro que deseas borrar a " + patient.getFullName() + " ?");
+            menuController.getjMetro().applyTheme(alert.getDialogPane());
 
             Optional<ButtonType> result = alert.showAndWait();
 
@@ -132,6 +133,7 @@ public class PatientsController {
         Dialog<Patient> dialog = new Dialog<>();
         dialog.setTitle("Nuevo paciente");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addPatientButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
@@ -256,6 +258,7 @@ public class PatientsController {
         Dialog<Workbook> dialog = new Dialog<>();
         dialog.setTitle("Exportar consultas a excel");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         ButtonType generateButton = new ButtonType("Generar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, generateButton);

@@ -1,5 +1,6 @@
 package utils;
 
+import controller.MenuController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -26,6 +27,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class TableFactory {
+    private static MenuController menuController;
+
+    public static void init(MenuController menuController){
+        TableFactory.menuController = menuController;
+    }
+
     public static TableView<Patient> createPatientTable (VBox vBox){
         CustomTextField searchField = new CustomTextField();
         Label searchLabel = new Label();
@@ -36,7 +43,6 @@ public class TableFactory {
         searchLabel.setGraphic(searchIcon);
         searchField.setLeft(searchLabel);
         searchField.setPromptText("Buscar");
-        searchField.setStyle("-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;");
 
         HBox hBox = new HBox();
         hBox.getChildren().addAll(new Region(), searchField);
@@ -47,7 +53,7 @@ public class TableFactory {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Patient, String> lastnameColumn = new TableColumn<>("Apellido");
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-        TableColumn<Patient, Character> genderColumn = new TableColumn<>("Género");
+        TableColumn<Patient, Character> genderColumn = new TableColumn<>("Sexo");
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         TableColumn<Patient, Integer> ageColumn = new TableColumn<>("Edad");
         ageColumn.setCellValueFactory(cellData -> {
@@ -55,6 +61,16 @@ public class TableFactory {
             int years = Period.between(patientData.getBirthdate(), LocalDate.now()).getYears();
             return new SimpleObjectProperty<>(years);
         });
+
+        nameColumn.setMinWidth(175);
+
+        lastnameColumn.setMinWidth(175);
+
+        genderColumn.setMinWidth(86);
+        genderColumn.setMaxWidth(86);
+
+        ageColumn.setMinWidth(86);
+        ageColumn.setMinWidth(86);
 
         patientTableView.getColumns().addAll(nameColumn, lastnameColumn, genderColumn, ageColumn);
 
@@ -89,6 +105,9 @@ public class TableFactory {
         patientTableView.setItems(sortedPatients);
 
         vBox.getChildren().addAll(hBox, patientTableView);
+        //patientTableView.setStyle("-fx-selection-bar: blue;");
+
+        patientTableView.getSelectionModel().setCellSelectionEnabled(true);
 
         return patientTableView;
     }
@@ -127,22 +146,13 @@ public class TableFactory {
             return new SimpleObjectProperty<>(dose.getMedicine().getName());
         });
         doseColumn.setCellValueFactory(new PropertyValueFactory<>("dose"));
-        deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Borrar", (Dose dose) -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Borrar medicamento");
-            alert.setHeaderText(null);
-            alert.setContentText("¿Estás seguro que deseas borrar el medicamento " + dose.getMedicine().getName() + " ?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-
-            result.ifPresent(buttonType -> {
-                if(buttonType == ButtonType.OK){
-                    doseObservableList.remove(dose);
-                }
-            });
-
+        deleteColumn.setCellFactory(ActionButtonTableCell.forTableColumn("X", (Dose dose) -> {
+            doseObservableList.remove(dose);
             return dose;
         }));
+
+        deleteColumn.setMinWidth(86);
+        deleteColumn.setMaxWidth(86);
 
         //Add button action
         addMedicineButton.setOnAction((event -> {
@@ -151,6 +161,7 @@ public class TableFactory {
             Dialog<Dose> dialog = new Dialog<>();
             dialog.setTitle("Agregar medicamento");
             dialog.setHeaderText(null);
+            menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
             // Add buttons
             ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
@@ -233,6 +244,8 @@ public class TableFactory {
         medicineTable.getColumns().addAll(medicineColumn, doseColumn, deleteColumn);
 
         vBox.getChildren().addAll(hBox, medicineTable);
+
+        medicineTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return medicineTable;
     }

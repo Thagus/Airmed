@@ -153,8 +153,6 @@ public class ConsultationController {
             }
         });
 
-        imcField.setEditable(false);
-
         //Use TAB to change between text areas
 
         explorationArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -352,6 +350,7 @@ public class ConsultationController {
         Dialog<Patient> patientDialog = new Dialog<>();
         patientDialog.setTitle("Nueva consulta");
         patientDialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(patientDialog.getDialogPane());
 
         //Add buttons
         ButtonType selectPatient = new ButtonType("Iniciar", ButtonBar.ButtonData.OK_DONE);
@@ -401,6 +400,7 @@ public class ConsultationController {
         Dialog<DiseaseStatus> dialog = new Dialog<>();
         dialog.setTitle("Agregar enfermedad");
         dialog.setHeaderText(null);
+        menuController.getjMetro().applyTheme(dialog.getDialogPane());
 
         // Add buttons
         ButtonType addButton = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);

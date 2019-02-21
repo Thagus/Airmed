@@ -137,7 +137,6 @@
             <groupId>org.jfxtras</groupId>
             <artifactId>jmetro</artifactId>
             <version>5.2</version>
-            <type>pom</type>
         </dependency>
     </dependencies>
 

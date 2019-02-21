@@ -18,75 +18,75 @@
     <AnchorPane>
         <GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-                <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="110.0" percentWidth="30.0" />
-                <ColumnConstraints maxWidth="25.0" minWidth="25.0" percentWidth="12.0" prefWidth="25.0" />
-             <ColumnConstraints maxWidth="16.0" minWidth="16.0" prefWidth="16.0" />
-                <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="110.0" percentWidth="30.0" />
-             <ColumnConstraints maxWidth="25.0" minWidth="25.0" percentWidth="12.0" prefWidth="25.0" />
+                <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="110.0" percentWidth="30.0"/>
+                <ColumnConstraints maxWidth="25.0" minWidth="25.0" percentWidth="12.0" prefWidth="25.0"/>
+                <ColumnConstraints maxWidth="16.0" minWidth="16.0" prefWidth="16.0"/>
+                <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="110.0" percentWidth="30.0"/>
+                <ColumnConstraints maxWidth="25.0" minWidth="25.0" percentWidth="12.0" prefWidth="25.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
             </rowConstraints>
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
-            <Label text="Tratamiento" GridPane.columnIndex="0" GridPane.halignment="CENTER" />
-            <Label text="Estudio" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-            <Label text="Medicamento" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <Label text="Notas" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <TextArea fx:id="notesArea" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-            <TextField fx:id="treatmentField" GridPane.columnIndex="1" />
-            <TextField fx:id="studyField" GridPane.columnIndex="5" />
-            <TextField fx:id="medicineField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addMedicine" text="+" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addStudy" text="+" GridPane.columnIndex="6" />
-            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addTreatment" text="+" GridPane.columnIndex="2" />
+            <Label text="Tratamiento" GridPane.columnIndex="0" GridPane.halignment="CENTER"/>
+            <Label text="Estudio" GridPane.columnIndex="4" GridPane.halignment="CENTER"/>
+            <Label text="Medicamento" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <Label text="Notas" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+            <TextArea fx:id="notesArea" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5"/>
+            <TextField fx:id="treatmentField" GridPane.columnIndex="1"/>
+            <TextField fx:id="studyField" GridPane.columnIndex="5"/>
+            <TextField fx:id="medicineField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addMedicine" text="+" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addStudy" text="+" GridPane.columnIndex="6"/>
+            <Button minWidth="25.0" mnemonicParsing="false" onAction="#addTreatment" text="+" GridPane.columnIndex="2"/>
             <TableView fx:id="treatmentsTable" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1">
-              <columns>
-                  <TableColumn fx:id="treatmentNameColumn" text="Nombre" />
-                  <TableColumn fx:id="deleteTreatmentColumn" minWidth="25.0" maxWidth="25.0"/>
-              </columns>
+                <columns>
+                    <TableColumn fx:id="treatmentNameColumn" text="Nombre"/>
+                    <TableColumn fx:id="deleteTreatmentColumn" minWidth="86.0" maxWidth="86"/>
+                </columns>
             </TableView>
             <TableView fx:id="studiesTable" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="1">
-              <columns>
-                  <TableColumn fx:id="studyNameColumn" text="Nombre" />
-                  <TableColumn fx:id="deleteStudyColumn" minWidth="25.0" maxWidth="25.0"/>
-              </columns>
+                <columns>
+                    <TableColumn fx:id="studyNameColumn" text="Nombre"/>
+                    <TableColumn fx:id="deleteStudyColumn" minWidth="86.0" maxWidth="86"/>
+                </columns>
             </TableView>
             <TableView fx:id="medicinesTable" GridPane.columnSpan="3" GridPane.rowIndex="5">
-              <columns>
-                  <TableColumn fx:id="medicineNameColumn" text="Nombre" />
-                  <TableColumn fx:id="doseColumn" text="Dósis" />
-                  <TableColumn fx:id="deleteMedicineColumn" minWidth="25.0" maxWidth="25.0"/>
-              </columns>
+                <columns>
+                    <TableColumn fx:id="medicineNameColumn" text="Nombre"/>
+                    <TableColumn fx:id="doseColumn" text="Dósis"/>
+                    <TableColumn fx:id="deleteMedicineColumn" minWidth="86.0" maxWidth="86"/>
+                </columns>
             </TableView>
         </GridPane>
     </AnchorPane>
     <HBox alignment="CENTER_RIGHT">
         <VBox.margin>
-            <Insets right="5.0" />
+            <Insets right="5.0"/>
         </VBox.margin>
-      <Button mnemonicParsing="false" onAction="#printConsultation" text="Imprimir consulta">
-         <HBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" />
-         </HBox.margin>
-      </Button>
+        <Button mnemonicParsing="false" onAction="#printConsultation" text="Imprimir consulta">
+            <HBox.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0"/>
+            </HBox.margin>
+        </Button>
         <Button mnemonicParsing="false" onAction="#printPrescription" text="Imprimir receta">
             <HBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0"/>
             </HBox.margin>
         </Button>
         <Button mnemonicParsing="false" onAction="#savePrescription" text="Finalizar">
             <HBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0"/>
             </HBox.margin>
         </Button>
     </HBox>

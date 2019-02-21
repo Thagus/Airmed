@@ -11,37 +11,38 @@
 <HBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgendaController">
     <VBox prefWidth="250.0">
         <HBox alignment="CENTER">
-         <children>
-             <Button fx:id="prevWeekButton">
-                 <graphic>
-                     <FontAwesomeIconView fill="gray" glyphName="CARET_LEFT" size="16" />
-                 </graphic>
-             </Button>
-            <Button fx:id="todayButton" mnemonicParsing="false" prefWidth="75.0" text="Hoy" />
-            <Button fx:id="nextWeekButton">
-                <graphic>
-                    <FontAwesomeIconView fill="gray" glyphName="CARET_RIGHT" size="16" />
-                </graphic>
-            </Button>
-         </children>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding></HBox>
-      <ListView fx:id="todayAppointmentsList" VBox.vgrow="ALWAYS" />
-      <HBox.margin>
-         <Insets right="5.0" />
-      </HBox.margin>
-      <padding>
-         <Insets left="5.0" />
-      </padding>
+            <children>
+                <Button fx:id="prevWeekButton">
+                    <graphic>
+                        <FontAwesomeIconView fill="gray" glyphName="CARET_LEFT" size="16"/>
+                    </graphic>
+                </Button>
+                <Button fx:id="todayButton" mnemonicParsing="false" prefWidth="75.0" text="Hoy"/>
+                <Button fx:id="nextWeekButton">
+                    <graphic>
+                        <FontAwesomeIconView fill="gray" glyphName="CARET_RIGHT" size="16"/>
+                    </graphic>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="5.0"/>
+            </padding>
+        </HBox>
+        <ListView fx:id="todayAppointmentsList" VBox.vgrow="ALWAYS"/>
+        <HBox.margin>
+            <Insets right="5.0"/>
+        </HBox.margin>
+        <padding>
+            <Insets left="5.0"/>
+        </padding>
     </VBox>
     <VBox HBox.hgrow="ALWAYS">
-      <Agenda fx:id="agendaView" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-      <HBox.margin>
-         <Insets left="5.0" />
-      </HBox.margin>
+        <Agenda fx:id="agendaView" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+        <HBox.margin>
+            <Insets left="5.0"/>
+        </HBox.margin>
     </VBox>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
 </HBox>

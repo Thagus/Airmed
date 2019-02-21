@@ -5,9 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro8.JMetro;
 import model.Appointment;
 import model.Consultation;
 import model.Patient;
+import utils.TableFactory;
 
 import java.io.IOException;
 
@@ -34,10 +36,14 @@ public class MenuController {
     private PrescriptionController prescriptionController;
 
     private Stage primaryStage;
+    private JMetro jMetro;
 
-    public void init(Stage primaryStage) throws IOException {
+    public void init(Stage primaryStage, JMetro jMetro) throws IOException {
         this.primaryStage = primaryStage;
+        this.jMetro = jMetro;
         FXMLLoader loader;
+
+        TableFactory.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));
         settingsPane = loader.load();
@@ -57,12 +63,12 @@ public class MenuController {
         loader = new FXMLLoader(getClass().getResource("/view/Treatments.fxml"));
         treatmentsPane = loader.load();
         treatmentsController = loader.getController();
-        treatmentsController.init();
+        treatmentsController.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Studies.fxml"));
         studiesPane = loader.load();
         studiesController = loader.getController();
-        studiesController.init();
+        studiesController.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Record.fxml"));
         patientRecordPane = loader.load();
@@ -98,9 +104,8 @@ public class MenuController {
     }
 
     public void showPatientRecord(Patient patient){
-        recordController.setPatient(patient);
-
         hideAll();
+        recordController.setPatient(patient);
         patientRecordPane.setVisible(true);
     }
 
@@ -191,5 +196,9 @@ public class MenuController {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public JMetro getjMetro() {
+        return jMetro;
     }
 }
