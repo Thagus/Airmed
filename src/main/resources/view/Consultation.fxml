@@ -17,148 +17,146 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultationController">
     <GridPane hgap="5.0" vgap="5.0" VBox.vgrow="NEVER">
         <columnConstraints>
-            <ColumnConstraints/>
-            <ColumnConstraints maxWidth="150.0"/>
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints/>
-            <ColumnConstraints maxWidth="150.0"/>
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="ALWAYS"/>
-            <ColumnConstraints/>
+            <ColumnConstraints />
+            <ColumnConstraints maxWidth="150.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
+            <ColumnConstraints maxWidth="150.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
+            <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
         <children>
             <Label fx:id="consultationLabel" text="Consulta de " GridPane.columnSpan="2147483647">
                 <font>
-                    <Font name="System Bold" size="18.0"/>
+                    <Font name="System Bold" size="18.0" />
                 </font>
             </Label>
             <Label text="Signos vitales" GridPane.columnSpan="2" GridPane.rowIndex="1">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <Label text="Presión" GridPane.rowIndex="2"/>
-            <TextField fx:id="pressureField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <Label text="Respiración" GridPane.rowIndex="3"/>
-            <Label text="Pulso" GridPane.rowIndex="4"/>
-            <Label text="Temperatura" GridPane.rowIndex="5"/>
-            <TextField fx:id="breathField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-            <TextField fx:id="pulseField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-            <TextField fx:id="temperatureField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <Label text="Presión" GridPane.rowIndex="2" />
+            <Label text="Respiración" GridPane.rowIndex="3" />
+            <Label text="Pulso" GridPane.rowIndex="4" />
+            <Label text="Temperatura" GridPane.rowIndex="5" />
             <Label text="Medidas" GridPane.columnSpan="2" GridPane.rowIndex="6">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <Label text="Estatura" GridPane.rowIndex="7"/>
-            <TextField fx:id="heightField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-            <TextField fx:id="weightField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-            <Label text="Peso" GridPane.rowIndex="8"/>
-
-            <Label text="S/D" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-            <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-            <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
-            <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
-            <Label text="m" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
-            <Label text="kg" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+            <Label text="Estatura" GridPane.rowIndex="7" />
+            <Label text="Peso" GridPane.rowIndex="8" />
+            <Label text="S/D" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="/min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="m" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label text="kg" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <Label text="Motivo de la consulta" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="1">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <TextArea fx:id="motiveArea" prefHeight="75.0" GridPane.columnIndex="6" GridPane.rowIndex="2" GridPane.rowSpan="3"/>
             <Label text="Enfermedades" GridPane.columnIndex="6" GridPane.rowIndex="6">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#newDisease" text="+" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="6"/>
-            <TableView fx:id="diseasesTable" maxHeight="115.0" GridPane.columnIndex="6" GridPane.rowIndex="7" GridPane.rowSpan="4">
-                <columns>
-                    <TableColumn fx:id="diseaseColumn" text="Enfermedad"/>
-                    <TableColumn fx:id="diseaseControlColumn" text="C" minWidth="70.0" maxWidth="70"/>
-                    <TableColumn fx:id="deleteDiseaseColumn" minWidth="86.0" maxWidth="86"/>
-                </columns>
-            </TableView>
-            <TextField fx:id="imcField" GridPane.columnIndex="1" GridPane.rowIndex="9" editable="false"/>
-            <Label text="IMC" GridPane.rowIndex="9"/>
-            <Label text="Glucosa" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-            <Label text="Hbg glic" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
-            <Label text="Colesterol" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
-            <Label text="Triglicéridos" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
-            <TextField fx:id="glucoseField" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
-            <TextField fx:id="hemoglobinField" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
-            <TextField fx:id="cholesterolField" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
-            <TextField fx:id="triglyceridesField" GridPane.columnIndex="4" GridPane.rowIndex="5"/>
-            <Label text="mg" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
-            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
-            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="4"/>
-            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="5"/>
-            <Label text="Interpr." GridPane.rowIndex="10"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="10" editable="false"/>
-
+            <Label text="IMC" GridPane.rowIndex="9" />
+            <Label text="Glucosa" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Hbg glic" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label text="Colesterol" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="Triglicéridos" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label text="mg" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Label text="Interpr." GridPane.rowIndex="10" />
             <Label text="Exploración física" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <TextArea fx:id="explorationArea" prefHeight="75.0" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.rowSpan="4" GridPane.columnSpan="2"/>
+            <TextField fx:id="pressureField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="breathField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="pulseField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="temperatureField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="heightField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="weightField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="imcField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="interpretationField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="glucoseField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="hemoglobinField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <TextField fx:id="cholesterolField" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <TextField fx:id="triglyceridesField" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <TextArea fx:id="explorationArea" prefHeight="75.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.rowSpan="4" />
+            <TextArea fx:id="motiveArea" prefHeight="75.0" GridPane.columnIndex="6" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#newDisease" text="+" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+            <TableView fx:id="diseasesTable" maxHeight="115.0" GridPane.columnIndex="6" GridPane.rowIndex="7" GridPane.rowSpan="4">
+                <columns>
+                    <TableColumn fx:id="diseaseColumn" text="Enfermedad" />
+                    <TableColumn fx:id="diseaseControlColumn" maxWidth="70" minWidth="70.0" text="C" />
+                    <TableColumn fx:id="deleteDiseaseColumn" maxWidth="86" minWidth="86.0" />
+                </columns>
+            </TableView>
         </children>
         <padding>
-            <Insets left="5.0" right="5.0" top="5.0"/>
+            <Insets left="5.0" right="5.0" top="5.0" />
         </padding>
     </GridPane>
     <GridPane>
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="16.0" minWidth="10.0" prefWidth="10.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="16.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
             <Label text="Diagnóstico">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
             <Label text="Pronóstico" GridPane.columnIndex="2">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <TextArea fx:id="diagnosisArea" prefHeight="100.0" GridPane.rowIndex="1"/>
-            <TextArea fx:id="prognosisArea" prefHeight="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <TextArea fx:id="diagnosisArea" prefHeight="100.0" GridPane.rowIndex="1" />
+            <TextArea fx:id="prognosisArea" prefHeight="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         </children>
         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0"/>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
         </padding>
     </GridPane>
     <HBox alignment="CENTER_RIGHT">
         <children>
-            <Button mnemonicParsing="false" onAction="#goToPrescription" text="Siguiente"/>
+            <Button mnemonicParsing="false" onAction="#goToPrescription" text="Siguiente" />
         </children>
         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </VBox.margin>
     </HBox>
 </VBox>
