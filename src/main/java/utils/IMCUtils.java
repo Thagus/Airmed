@@ -9,7 +9,7 @@ public class IMCUtils {
         return BigDecimal.valueOf(((double)weight/((double)height*(double)height))*10).setScale(2, RoundingMode.CEILING);
     }
 
-    public static String interpretIMC(BigDecimal imc, LocalDate birthdate){
+    public static String interpretIMC(BigDecimal imc, LocalDate birthdate, char gender){
         return "";
     }
 }

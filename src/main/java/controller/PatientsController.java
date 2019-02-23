@@ -330,7 +330,7 @@ public class PatientsController {
                         row.createCell(6).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
                         row.createCell(7).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString());
                         row.createCell(8).setCellValue(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()).toPlainString());
-                        row.createCell(9).setCellValue(IMCUtils.interpretIMC(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()), consultation.getPatient().getBirthdate()));
+                        row.createCell(9).setCellValue(IMCUtils.interpretIMC(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
                     }
                     if(consultation.getVitalSign()!=null) {
                         row.createCell(10).setCellValue(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());

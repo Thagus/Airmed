@@ -43,6 +43,7 @@ public class ConsultationController {
     @FXML private TextField heightField;
     @FXML private TextField weightField;
     @FXML private TextField imcField;
+    @FXML private TextField interpretationField;
 
     @FXML private TextField glucoseField;
     @FXML private TextField hemoglobinField;
@@ -150,6 +151,12 @@ public class ConsultationController {
             if(newValue.length()==0){
                 imcField.setText("");
                 weight.set(0);
+            }
+        });
+
+        imcField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(consultation!=null){
+                interpretationField.setText(IMCUtils.interpretIMC(new BigDecimal(imcField.getText()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
             }
         });
 
