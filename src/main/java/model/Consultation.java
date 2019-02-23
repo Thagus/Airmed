@@ -151,18 +151,18 @@ public class Consultation extends Model {
         this.diseases = diseases;
     }
 
-    //TODO: Add new consultation parameters and diseases
     public void print(MenuController menuController) {
         VBox consultationPane = new VBox();
 
         GridPane patientDataGrid = new GridPane();
-        patientDataGrid.setHgap(25);
 
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(50);
+        col1.setPercentWidth(34);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(50);
-        patientDataGrid.getColumnConstraints().addAll(col1, col2);
+        col2.setPercentWidth(33);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(33);
+        patientDataGrid.getColumnConstraints().addAll(col1, col2, col3);
 
         //General data
         TextFlow name = new TextFlow();
@@ -172,57 +172,54 @@ public class Consultation extends Model {
         name.getChildren().addAll(nameTitle, nameText);
         patientDataGrid.add(name, 0, 0);
 
-        TextFlow gender = new TextFlow();
-        Text genderTitle = new Text("Género: ");
-        genderTitle.setStyle("-fx-font-weight: bold");
-        Text genderText = new Text(patient.getGender() + "");
-        gender.getChildren().addAll(genderTitle, genderText);
-        patientDataGrid.add(gender, 0, 1);
-
         TextFlow date = new TextFlow();
         Text dateTitle = new Text("Fecha: ");
         dateTitle.setStyle("-fx-font-weight: bold");
-        Text dateText = new Text(LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+        Text dateText = new Text(dateTime.format(DateTimeFormatter.ISO_DATE));
         date.getChildren().addAll(dateTitle, dateText);
-        patientDataGrid.add(date, 1, 0);
+        patientDataGrid.add(date, 0, 1);
 
         TextFlow age = new TextFlow();
         Text ageTitle = new Text("Edad: ");
         ageTitle.setStyle("-fx-font-weight: bold");
         Text ageText = new Text(patient.getAge() + "");
         age.getChildren().addAll(ageTitle, ageText);
-        patientDataGrid.add(age, 1, 1);
+        patientDataGrid.add(age, 0, 2);
 
-        //Vital signs, measurements and exploration
-        TextFlow pressure = new TextFlow();
-        Text pressureTitle = new Text("Presión: ");
-        pressureTitle.setStyle("-fx-font-weight: bold");
-        pressure.getChildren().add(pressureTitle);
-        if(vitalSign!=null) {
-            Text pressureText = new Text(vitalSign.getPressureS() + "/" + vitalSign.getPressureD());
-            pressure.getChildren().add(pressureText);
-        }
-        patientDataGrid.add(pressure, 0, 2);
+        TextFlow gender = new TextFlow();
+        Text genderTitle = new Text("Género: ");
+        genderTitle.setStyle("-fx-font-weight: bold");
+        Text genderText = new Text(patient.getGender() + "");
+        gender.getChildren().addAll(genderTitle, genderText);
+        patientDataGrid.add(gender, 0, 3);
 
-        TextFlow pulse = new TextFlow();
-        Text pulseTitle = new Text("Pulso: ");
-        pulseTitle.setStyle("-fx-font-weight: bold");
-        pulse.getChildren().add(pulseTitle);
-        if(vitalSign!=null) {
-            Text pulseText = new Text(vitalSign.getPulse() + "/min");
-            pulse.getChildren().add(pulseText);
-        }
-        patientDataGrid.add(pulse, 0, 3);
+        TextFlow blood = new TextFlow();
+        Text bloodTitle = new Text("Tipo sangre: ");
+        bloodTitle.setStyle("-fx-font-weight: bold");
+        Text bloodText = new Text(patient.getBloodType());
+        blood.getChildren().addAll(bloodTitle, bloodText);
+        patientDataGrid.add(blood, 0, 4);
 
-        TextFlow breath = new TextFlow();
-        Text breathTitle = new Text("Respiración: ");
-        breathTitle.setStyle("-fx-font-weight: bold");
-        breath.getChildren().add(breathTitle);
-        if(vitalSign!=null) {
-            Text breathText = new Text(vitalSign.getBreath() + "/min");
-            breath.getChildren().add(breathText);
+
+        TextFlow height = new TextFlow();
+        Text heightTitle = new Text("Estatura: ");
+        heightTitle.setStyle("-fx-font-weight: bold");
+        height.getChildren().add(heightTitle);
+        if(measurement!=null) {
+            Text heightText = new Text(BigDecimal.valueOf(measurement.getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString() + " m");
+            height.getChildren().add(heightText);
         }
-        patientDataGrid.add(breath, 0, 4);
+        patientDataGrid.add(height, 1, 0);
+
+        TextFlow width = new TextFlow();
+        Text widthTitle = new Text("Peso: ");
+        widthTitle.setStyle("-fx-font-weight: bold");
+        width.getChildren().add(widthTitle);
+        if(measurement!=null) {
+            Text widthText = new Text(BigDecimal.valueOf(measurement.getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString() + " kg");
+            width.getChildren().add(widthText);
+        }
+        patientDataGrid.add(width, 1, 1);
 
         TextFlow temperature = new TextFlow();
         Text temperatureTitle = new Text("Temperatura: ");
@@ -234,25 +231,75 @@ public class Consultation extends Model {
         }
         patientDataGrid.add(temperature, 1, 2);
 
-        TextFlow height = new TextFlow();
-        Text heightTitle = new Text("Estatura: ");
-        heightTitle.setStyle("-fx-font-weight: bold");
-        height.getChildren().add(heightTitle);
-        if(measurement!=null) {
-            Text heightText = new Text(BigDecimal.valueOf(measurement.getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString() + " m");
-            height.getChildren().add(heightText);
+        TextFlow pressure = new TextFlow();
+        Text pressureTitle = new Text("Presión: ");
+        pressureTitle.setStyle("-fx-font-weight: bold");
+        pressure.getChildren().add(pressureTitle);
+        if(vitalSign!=null) {
+            Text pressureText = new Text(vitalSign.getPressureS() + "/" + vitalSign.getPressureD());
+            pressure.getChildren().add(pressureText);
         }
-        patientDataGrid.add(height, 1, 3);
+        patientDataGrid.add(pressure, 1, 3);
 
-        TextFlow width = new TextFlow();
-        Text widthTitle = new Text("Peso: ");
-        widthTitle.setStyle("-fx-font-weight: bold");
-        width.getChildren().add(widthTitle);
-        if(measurement!=null) {
-            Text widthText = new Text(BigDecimal.valueOf(measurement.getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString() + " kg");
-            width.getChildren().add(widthText);
+        TextFlow pulse = new TextFlow();
+        Text pulseTitle = new Text("Pulso: ");
+        pulseTitle.setStyle("-fx-font-weight: bold");
+        pulse.getChildren().add(pulseTitle);
+        if(vitalSign!=null) {
+            Text pulseText = new Text(vitalSign.getPulse() + "/min");
+            pulse.getChildren().add(pulseText);
         }
-        patientDataGrid.add(width, 1, 4);
+        patientDataGrid.add(pulse, 1, 4);
+
+        TextFlow glucose = new TextFlow();
+        Text glucoseTitle = new Text("Glucosa: ");
+        glucoseTitle.setStyle("-fx-font-weight: bold");
+        glucose.getChildren().add(glucoseTitle);
+        if(vitalSign!=null) {
+            Text glucoseText = new Text(vitalSign.getGlucose() + " mg");
+            glucose.getChildren().add(glucoseText);
+        }
+        patientDataGrid.add(glucose, 2, 0);
+
+        TextFlow breath = new TextFlow();
+        Text breathTitle = new Text("Respiración: ");
+        breathTitle.setStyle("-fx-font-weight: bold");
+        breath.getChildren().add(breathTitle);
+        if(vitalSign!=null) {
+            Text breathText = new Text(vitalSign.getBreath() + "/min");
+            breath.getChildren().add(breathText);
+        }
+        patientDataGrid.add(breath, 2, 1);
+
+        TextFlow hemoglobin = new TextFlow();
+        Text hemoglobinTitle = new Text("Hemoglobina: ");
+        hemoglobinTitle.setStyle("-fx-font-weight: bold");
+        hemoglobin.getChildren().add(hemoglobinTitle);
+        if(vitalSign!=null) {
+            Text hemoglobinText = new Text(vitalSign.getHemoglobin() + "%");
+            hemoglobin.getChildren().add(hemoglobinText);
+        }
+        patientDataGrid.add(hemoglobin, 2, 2);
+
+        TextFlow cholesterol = new TextFlow();
+        Text cholesterolTitle = new Text("Colesterol: ");
+        cholesterolTitle.setStyle("-fx-font-weight: bold");
+        cholesterol.getChildren().add(cholesterolTitle);
+        if(vitalSign!=null) {
+            Text cholesterolText = new Text(vitalSign.getCholesterol() + "%");
+            cholesterol.getChildren().add(cholesterolText);
+        }
+        patientDataGrid.add(cholesterol, 2, 3);
+
+        TextFlow triglycerides = new TextFlow();
+        Text triglyceridesTitle = new Text("Triglicéridos: ");
+        triglyceridesTitle.setStyle("-fx-font-weight: bold");
+        triglycerides.getChildren().add(triglyceridesTitle);
+        if(vitalSign!=null) {
+            Text triglyceridesText = new Text(vitalSign.getTriglycerides() + "%");
+            triglycerides.getChildren().add(triglyceridesText);
+        }
+        patientDataGrid.add(triglycerides, 2, 4);
 
         consultationPane.getChildren().add(patientDataGrid);
 
