@@ -4,115 +4,171 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
     <items>
         <AnchorPane maxHeight="130.0" minHeight="130.0" prefHeight="130.0">
             <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" wrapText="true" mnemonicParsing="false" onAction="#newPatient" text="Nuevo Paciente">
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#newPatient" textAlignment="CENTER" wrapText="true">
                         <HBox.margin>
-                            <Insets bottom="5.0" left="5.0" right="2.5" top="5.0"/>
+                            <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
                         </HBox.margin>
                         <tooltip>
-                            <Tooltip text="Nuevo Paciente"/>
+                            <Tooltip text="Nuevo Paciente" />
                         </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" wrapText="true" mnemonicParsing="false" onAction="#newAppointment" text="Nueva Cita">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Nueva Cita"/>
-                        </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" wrapText="true" mnemonicParsing="false" onAction="#newConsultation" text="Nueva Consulta">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Nueva COnsulta"/>
-                        </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" wrapText="true" mnemonicParsing="false" onAction="#newPrescription" text="Nueva Receta">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Nueva Receta"/>
-                        </tooltip>
-                    </Button>
-                    <Separator orientation="VERTICAL">
-                        <padding>
-                            <Insets bottom="5.0" left="5.0" right="3.0" top="5.0"/>
-                        </padding>
-                        <HBox.margin>
-                            <Insets/>
-                        </HBox.margin>
-                    </Separator>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" mnemonicParsing="false" onAction="#showAgenda" text="Agenda">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Agenda"/>
-                        </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" mnemonicParsing="false" onAction="#showPatients" text="Pacientes">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Pacientes"/>
-                        </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" mnemonicParsing="false" onAction="#showTreatments" text="Tratamientos">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Tratamientos"/>
-                        </tooltip>
-                    </Button>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" mnemonicParsing="false" onAction="#showStudies" text="Estudios">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Estudios"/>
-                        </tooltip>
-                    </Button>
-                    <Separator orientation="VERTICAL">
-                        <padding>
-                            <Insets bottom="5.0" left="5.0" right="3.0" top="5.0"/>
-                        </padding>
-                    </Separator>
-                    <Button alignment="CENTER" maxWidth="120" minWidth="120.0" minHeight="120.0" textAlignment="CENTER" mnemonicParsing="false" onAction="#showConfig" text="Config">
-                        <HBox.margin>
-                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0"/>
-                        </HBox.margin>
-                        <tooltip>
-                            <Tooltip text="Configuración"/>
-                        </tooltip>
-                        <!--graphic>
+                        <graphic>
                             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url=""/>
+                                    <Image url="@/images/patient.png" />
                                 </image>
                             </ImageView>
-                        </graphic-->
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#newAppointment" textAlignment="CENTER" wrapText="true">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Nueva Cita" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/appointment.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#newConsultation" textAlignment="CENTER" wrapText="true">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Nueva Consulta" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/consultation.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#newPrescription" textAlignment="CENTER" wrapText="true">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Nueva Receta" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/prescription.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Separator orientation="VERTICAL">
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="3.0" top="5.0" />
+                        </padding>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Separator>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#showAgenda" textAlignment="CENTER">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Agenda" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/agenda.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#showPatients" textAlignment="CENTER">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Pacientes" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/patients.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#showTreatments" textAlignment="CENTER">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Tratamientos" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/treatments.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button alignment="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#showStudies" textAlignment="CENTER">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Estudios" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/studies.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Separator orientation="VERTICAL">
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="3.0" top="5.0" />
+                        </padding>
+                    </Separator>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="120" minHeight="120.0" minWidth="120.0" mnemonicParsing="false" onAction="#showConfig" textAlignment="CENTER">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                        </HBox.margin>
+                        <tooltip>
+                            <Tooltip text="Configuración" />
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@/images/settings.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
                     </Button>
                 </children>
             </HBox>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-            <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         </AnchorPane>
     </items>
 </SplitPane>
