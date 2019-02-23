@@ -155,8 +155,11 @@ public class ConsultationController {
         });
 
         imcField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(consultation!=null){
+            if(consultation!=null && imcField.getText().length()>0){
                 interpretationField.setText(IMCUtils.interpretIMC(new BigDecimal(imcField.getText()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
+            }
+            else {
+                interpretationField.setText("");
             }
         });
 
