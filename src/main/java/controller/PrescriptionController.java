@@ -68,6 +68,7 @@ public class PrescriptionController {
                 alert.setTitle("Guardar");
                 alert.setHeaderText(null);
                 alert.setContentText("¿Desea guardar la consulta?");
+                menuController.getjMetro().applyTheme(alert.getDialogPane());
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
