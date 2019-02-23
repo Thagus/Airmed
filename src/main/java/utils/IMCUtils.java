@@ -18,7 +18,7 @@ public class IMCUtils {
                 return "Bajo peso";
             }
             else if (imc.compareTo(BigDecimal.valueOf(249, 1)) < 0){
-                return "Peso normal";
+                return "Peso saludable";
             }
             else if (imc.compareTo(BigDecimal.valueOf(299, 1)) < 0) {
                 return "Sobrepeso";
