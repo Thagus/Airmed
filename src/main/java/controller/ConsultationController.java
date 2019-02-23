@@ -138,7 +138,7 @@ public class ConsultationController {
             if (!newValue.matches("^([0-9]+\\.?[0-9]*|[0-9]*\\.[0-9]+)")) {
                 weightField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
-            else {
+            else if (consultation.getPatient().getAge()>=2) {
                 weight.set(new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue());
 
                 if(height.get()!=0){
