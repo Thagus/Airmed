@@ -286,7 +286,7 @@ public class Consultation extends Model {
         cholesterolTitle.setStyle("-fx-font-weight: bold");
         cholesterol.getChildren().add(cholesterolTitle);
         if(vitalSign!=null) {
-            Text cholesterolText = new Text(vitalSign.getCholesterol() + "%");
+            Text cholesterolText = new Text(vitalSign.getCholesterol() + " mg/dL");
             cholesterol.getChildren().add(cholesterolText);
         }
         patientDataGrid.add(cholesterol, 2, 3);
@@ -296,7 +296,7 @@ public class Consultation extends Model {
         triglyceridesTitle.setStyle("-fx-font-weight: bold");
         triglycerides.getChildren().add(triglyceridesTitle);
         if(vitalSign!=null) {
-            Text triglyceridesText = new Text(vitalSign.getTriglycerides() + "%");
+            Text triglyceridesText = new Text(vitalSign.getTriglycerides() + " mg/dL");
             triglycerides.getChildren().add(triglyceridesText);
         }
         patientDataGrid.add(triglycerides, 2, 4);

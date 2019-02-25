@@ -88,8 +88,8 @@
             <Label text="Triglicéridos" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <Label text="mg" GridPane.columnIndex="5" GridPane.rowIndex="2" />
             <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-            <Label text="\%" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Label text="mg/dL" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Label text="mg/dL" GridPane.columnIndex="5" GridPane.rowIndex="5" />
             <Label text="Interpr." GridPane.rowIndex="10" />
             <Label text="Exploración física" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
                 <font>
