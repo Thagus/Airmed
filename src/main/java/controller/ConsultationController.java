@@ -273,19 +273,34 @@ public class ConsultationController {
             pressureD = NumberUtils.toInt(pressures[1], 0);
         }
 
-        //Save data to consultation
-        consultation.setVitalSign(VitalSign.create(
-                consultation,
-                pressureD,
-                pressureS,
-                NumberUtils.toInt(pulseField.getText(), 0),
-                NumberUtils.toInt(temperatureField.getText(), 0),
-                NumberUtils.toInt(breathField.getText(), 0),
-                NumberUtils.toInt(glucoseField.getText(), 0),
-                new BigDecimal(hemoglobinField.getText()),
-                NumberUtils.toInt(cholesterolField.getText(), 0),
-                NumberUtils.toInt(triglyceridesField.getText(), 0)
-        ));
+        //Create vital sign if it doesn't exist
+        if(consultation.getVitalSign()==null) {
+            consultation.setVitalSign(VitalSign.create(
+                    consultation,
+                    pressureD,
+                    pressureS,
+                    NumberUtils.toInt(pulseField.getText(), 0),
+                    NumberUtils.toInt(temperatureField.getText(), 0),
+                    NumberUtils.toInt(breathField.getText(), 0),
+                    NumberUtils.toInt(glucoseField.getText(), 0),
+                    new BigDecimal(hemoglobinField.getText()),
+                    NumberUtils.toInt(cholesterolField.getText(), 0),
+                    NumberUtils.toInt(triglyceridesField.getText(), 0)
+            ));
+        }
+        else {
+            consultation.getVitalSign().setPressureD(pressureD);
+            consultation.getVitalSign().setPressureS(pressureS);
+            consultation.getVitalSign().setPulse(NumberUtils.toInt(pulseField.getText(), 0));
+            consultation.getVitalSign().setTemperature(NumberUtils.toInt(temperatureField.getText(), 0));
+            consultation.getVitalSign().setBreath(NumberUtils.toInt(breathField.getText(), 0));
+            consultation.getVitalSign().setGlucose(NumberUtils.toInt(glucoseField.getText(), 0));
+            consultation.getVitalSign().setHemoglobin(new BigDecimal(hemoglobinField.getText()));
+            consultation.getVitalSign().setCholesterol(NumberUtils.toInt(cholesterolField.getText(), 0));
+            consultation.getVitalSign().setTriglycerides(NumberUtils.toInt(triglyceridesField.getText(), 0));
+
+            consultation.getVitalSign().update();
+        }
 
         int weight = 0;
         int height= 0;
@@ -298,11 +313,20 @@ public class ConsultationController {
             height = new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue();
         }
 
-        consultation.setMeasurement(Measurement.create(
-                consultation,
-                weight,
-                height
-        ));
+        //Create measurement if they don't exist
+        if(consultation.getMeasurement()==null) {
+            consultation.setMeasurement(Measurement.create(
+                    consultation,
+                    weight,
+                    height
+            ));
+        }
+        else {
+            consultation.getMeasurement().setWeight(weight);
+            consultation.getMeasurement().setHeight(height);
+
+            consultation.getMeasurement().update();
+        }
 
         consultation.setExploration(explorationArea.getText());
 
