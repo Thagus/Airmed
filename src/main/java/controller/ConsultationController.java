@@ -98,8 +98,8 @@ public class ConsultationController {
             }
         });
         hemoglobinField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                hemoglobinField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("^([0-9]+\\.?[0-9]*|[0-9]*\\.[0-9]+)")) {
+                hemoglobinField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
         cholesterolField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -282,7 +282,7 @@ public class ConsultationController {
                 NumberUtils.toInt(temperatureField.getText(), 0),
                 NumberUtils.toInt(breathField.getText(), 0),
                 NumberUtils.toInt(glucoseField.getText(), 0),
-                NumberUtils.toInt(hemoglobinField.getText(), 0),
+                new BigDecimal(hemoglobinField.getText()),
                 NumberUtils.toInt(cholesterolField.getText(), 0),
                 NumberUtils.toInt(triglyceridesField.getText(), 0)
         ));

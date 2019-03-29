@@ -4,9 +4,11 @@ import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.DbDefault;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 @Entity
 public class VitalSign extends Model {
@@ -30,7 +32,8 @@ public class VitalSign extends Model {
     @DbDefault("0")
     private int glucose;
     @DbDefault("0")
-    private int hemoglobin;
+    @Column(columnDefinition = "DECIMAL(5,2)")
+    private BigDecimal hemoglobin;
     @DbDefault("0")
     private int cholesterol;
     @DbDefault("0")
@@ -38,7 +41,7 @@ public class VitalSign extends Model {
 
     public static Finder<Integer, VitalSign> find = new Finder<>(VitalSign.class);
 
-    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath, int glucose, int hemoglobin, int cholesterol, int triglycerides){
+    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath, int glucose, BigDecimal hemoglobin, int cholesterol, int triglycerides){
         if(pressureD==0 && pressureS==0 && pulse==0 && temperature==0 && breath==0){
             return null;
         }
@@ -112,11 +115,11 @@ public class VitalSign extends Model {
         this.glucose = glucose;
     }
 
-    public int getHemoglobin() {
+    public BigDecimal getHemoglobin() {
         return hemoglobin;
     }
 
-    public void setHemoglobin(int hemoglobin) {
+    public void setHemoglobin(BigDecimal hemoglobin) {
         this.hemoglobin = hemoglobin;
     }
 

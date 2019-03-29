@@ -338,7 +338,7 @@ public class PatientsController {
                         row.createCell(12).setCellValue(consultation.getVitalSign().getPulse());
                         row.createCell(13).setCellValue(consultation.getVitalSign().getTemperature());
                         row.createCell(14).setCellValue(consultation.getVitalSign().getGlucose());
-                        row.createCell(15).setCellValue(consultation.getVitalSign().getHemoglobin());
+                        row.createCell(15).setCellValue(consultation.getVitalSign().getHemoglobin().toPlainString());
                         row.createCell(16).setCellValue(consultation.getVitalSign().getCholesterol());
                         row.createCell(17).setCellValue(consultation.getVitalSign().getTriglycerides());
                     }
