@@ -295,7 +295,7 @@ public class RecordController {
         //Fill tables data
         studies.setAll(StudyResult.find.query().where().eq("record", patientRecord).findList());
         surgeries.setAll(Surgery.find.query().where().eq("record", patientRecord).findList());
-        consultations.setAll(Consultation.find.query().where().eq("patient", patient).findList());
+        consultations.setAll(Consultation.find.query().where().eq("patient", patient).order("date_time desc").findList());
 
         studiesTable.refresh();
         surgeriesTable.refresh();
