@@ -41,8 +41,8 @@ public class VitalSign extends Model {
 
     public static Finder<Integer, VitalSign> find = new Finder<>(VitalSign.class);
 
-    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath, int glucose, BigDecimal hemoglobin, int cholesterol, int triglycerides){
-        if(pressureD==0 && pressureS==0 && pulse==0 && temperature==0 && breath==0){
+    public static VitalSign create(Consultation consultation, int pressureD, int pressureS, int pulse, int temperature, int breath, int glucose, String hemoglobin, int cholesterol, int triglycerides){
+        if(pressureD==0 && pressureS==0 && pulse==0 && temperature==0 && breath==0 && glucose==0 && hemoglobin.length()==0 && cholesterol==0 && triglycerides==0){
             return null;
         }
 
@@ -56,7 +56,8 @@ public class VitalSign extends Model {
         vitalSign.breath = breath;
 
         vitalSign.glucose = glucose;
-        vitalSign.hemoglobin = hemoglobin;
+        if(hemoglobin.length()>0)
+            vitalSign.hemoglobin = new BigDecimal(hemoglobin);
         vitalSign.cholesterol = cholesterol;
         vitalSign.triglycerides = triglycerides;
 
