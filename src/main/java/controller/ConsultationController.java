@@ -283,7 +283,7 @@ public class ConsultationController {
                     NumberUtils.toInt(temperatureField.getText(), 0),
                     NumberUtils.toInt(breathField.getText(), 0),
                     NumberUtils.toInt(glucoseField.getText(), 0),
-                    new BigDecimal(hemoglobinField.getText()),
+                    hemoglobinField.getText(),
                     NumberUtils.toInt(cholesterolField.getText(), 0),
                     NumberUtils.toInt(triglyceridesField.getText(), 0)
             ));
@@ -361,7 +361,7 @@ public class ConsultationController {
             pulseField.setText(consultation.getVitalSign().getPulse() + "");
             temperatureField.setText(consultation.getVitalSign().getTemperature() + "");
             glucoseField.setText(consultation.getVitalSign().getGlucose() + "");
-            hemoglobinField.setText(consultation.getVitalSign().getHemoglobin() + "");
+            hemoglobinField.setText(consultation.getVitalSign().getHemoglobin().toPlainString());
             cholesterolField.setText(consultation.getVitalSign().getCholesterol() + "");
             triglyceridesField.setText(consultation.getVitalSign().getTriglycerides() + "");
         }

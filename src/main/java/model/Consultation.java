@@ -276,7 +276,7 @@ public class Consultation extends Model {
         hemoglobinTitle.setStyle("-fx-font-weight: bold");
         hemoglobin.getChildren().add(hemoglobinTitle);
         if(vitalSign!=null) {
-            Text hemoglobinText = new Text(vitalSign.getHemoglobin() + "%");
+            Text hemoglobinText = new Text(vitalSign.getHemoglobin().toPlainString() + "%");
             hemoglobin.getChildren().add(hemoglobinText);
         }
         patientDataGrid.add(hemoglobin, 2, 2);
