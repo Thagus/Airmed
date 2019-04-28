@@ -23,8 +23,17 @@ public class IMCUtils {
             else if (imc.compareTo(BigDecimal.valueOf(299, 1)) < 0) {
                 return "Sobrepeso";
             }
+            else if (imc.compareTo(BigDecimal.valueOf(349, 1)) < 0) {
+                return "Obesidad I";
+            }
+            else if (imc.compareTo(BigDecimal.valueOf(399, 1)) < 0) {
+                return "Obesidad II";
+            }
+            else if (imc.compareTo(BigDecimal.valueOf(499, 1)) < 0) {
+                return "Obesidad III";
+            }
             else {
-                return "Obeso";
+                return "Obesidad IV";
             }
         }
         return "";
