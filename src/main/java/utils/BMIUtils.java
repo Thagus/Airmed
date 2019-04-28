@@ -23,15 +23,7 @@ public class BMIUtils {
 
         InputStream inputStream = null;
         try  {
-            URL fileURL = BMIUtils.class.getClassLoader().getResource("data/bmiagerev.csv");
-
-            if(fileURL==null){
-                System.out.println("Cannot load bmiagrerev file");
-                return;
-            }
-
-            File file = new File(fileURL.getFile());
-            inputStream = new FileInputStream(file);
+            inputStream = BMIUtils.class.getResourceAsStream("/data/bmiagerev.csv");
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
@@ -128,7 +120,7 @@ public class BMIUtils {
                 status = "Obeso";
             }
 
-            return status + " p" + x;
+            return status + " (p" + x + ")";
         }
         return "";
     }
