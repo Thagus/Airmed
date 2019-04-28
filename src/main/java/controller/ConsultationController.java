@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -21,7 +20,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
 import utils.AutocompleteBindings;
-import utils.IMCUtils;
+import utils.BMIUtils;
 import utils.TableFactory;
 
 import java.math.BigDecimal;
@@ -42,7 +41,7 @@ public class ConsultationController {
 
     @FXML private TextField heightField;
     @FXML private TextField weightField;
-    @FXML private TextField imcField;
+    @FXML private TextField bmiField;
     @FXML private TextField interpretationField;
 
     @FXML private TextField glucoseField;
@@ -126,11 +125,11 @@ public class ConsultationController {
                 height.set(new BigDecimal(heightField.getText()).multiply(BigDecimal.valueOf(100)).intValue());
 
                 if(weight.get()!=0){
-                    imcField.setText(IMCUtils.calculateIMC(weight.get(), height.get()).toPlainString());
+                    bmiField.setText(BMIUtils.calculateBMI(weight.get(), height.get()).toPlainString());
                 }
             }
             if(newValue.length()==0){
-                imcField.setText("");
+                bmiField.setText("");
                 height.set(0);
             }
         });
@@ -142,21 +141,21 @@ public class ConsultationController {
                 weight.set(new BigDecimal(weightField.getText()).multiply(BigDecimal.valueOf(1000)).intValue());
 
                 if(height.get()!=0){
-                    imcField.setText(IMCUtils.calculateIMC(weight.get(), height.get()).toPlainString());
+                    bmiField.setText(BMIUtils.calculateBMI(weight.get(), height.get()).toPlainString());
                 }
                 else {
-                    imcField.setText("");
+                    bmiField.setText("");
                 }
             }
             if(newValue.length()==0){
-                imcField.setText("");
+                bmiField.setText("");
                 weight.set(0);
             }
         });
 
-        imcField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(consultation!=null && imcField.getText().length()>0){
-                interpretationField.setText(IMCUtils.interpretIMC(new BigDecimal(imcField.getText()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
+        bmiField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(consultation!=null && bmiField.getText().length()>0){
+                interpretationField.setText(BMIUtils.interpretBMI(new BigDecimal(bmiField.getText()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
             }
             else {
                 interpretationField.setText("");

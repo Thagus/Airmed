@@ -24,7 +24,7 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
-import utils.IMCUtils;
+import utils.BMIUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,9 +32,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -329,8 +327,8 @@ public class PatientsController {
                     if(consultation.getMeasurement()!=null) {
                         row.createCell(6).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getHeight()).setScale(2, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(100)).toPlainString());
                         row.createCell(7).setCellValue(BigDecimal.valueOf(consultation.getMeasurement().getWeight()).setScale(1, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(1000)).toPlainString());
-                        row.createCell(8).setCellValue(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()).toPlainString());
-                        row.createCell(9).setCellValue(IMCUtils.interpretIMC(IMCUtils.calculateIMC(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
+                        row.createCell(8).setCellValue(BMIUtils.calculateBMI(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()).toPlainString());
+                        row.createCell(9).setCellValue(BMIUtils.interpretBMI(BMIUtils.calculateBMI(consultation.getMeasurement().getWeight(), consultation.getMeasurement().getHeight()), consultation.getPatient().getBirthdate(), consultation.getPatient().getGender()));
                     }
                     if(consultation.getVitalSign()!=null) {
                         row.createCell(10).setCellValue(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());

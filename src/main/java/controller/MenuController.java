@@ -9,6 +9,7 @@ import jfxtras.styles.jmetro8.JMetro;
 import model.Appointment;
 import model.Consultation;
 import model.Patient;
+import utils.BMIUtils;
 import utils.TableFactory;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class MenuController {
         this.jMetro = jMetro;
         FXMLLoader loader;
 
+        BMIUtils.init();
         TableFactory.init(this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));

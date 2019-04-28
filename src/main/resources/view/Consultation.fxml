@@ -102,7 +102,7 @@
             <TextField fx:id="temperatureField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="heightField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="weightField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="imcField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="bmiField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <TextField fx:id="interpretationField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <TextField fx:id="glucoseField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <TextField fx:id="hemoglobinField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
