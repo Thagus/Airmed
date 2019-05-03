@@ -133,6 +133,7 @@ public class Main extends Application {
         controller.showAgenda(null);
 
         this.primaryStage.setScene(scene);
+        this.primaryStage.setMaximized(true);
         this.primaryStage.show();
     }
 
