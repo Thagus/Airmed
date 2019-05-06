@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import model.entities.Dose;
 import model.entities.Treatment;
 import org.apache.commons.lang3.StringUtils;
-import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import model.AutocompleteBindings;
 import utils.TableFactory;
@@ -26,7 +25,7 @@ import java.util.Optional;
 public class TreatmentsController {
 
     @FXML private TableView<Treatment> treatmentsTable;
-    @FXML private CustomTextField searchField;
+    @FXML private TextField searchField;
 
     @FXML private TableColumn<Treatment, String> descriptionColumn;
     @FXML private TableColumn<Treatment, String>  nameColumn;

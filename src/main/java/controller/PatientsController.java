@@ -22,10 +22,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.SegmentedButton;
-import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import utils.BMIUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class PatientsController {
 
     private MenuController menuController;
 
-    @FXML private CustomTextField searchField;
+    @FXML private TextField searchField;
     @FXML private TableView<Patient> patientsTable;
 
     @FXML private TableColumn<Patient,String> nameColumn;

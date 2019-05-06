@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.textfield.CustomTextField?>
 
+<?import javafx.scene.control.TextField?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TreatmentsController">
     <HBox alignment="CENTER_RIGHT" prefHeight="25.0">
         <VBox.margin>
@@ -22,15 +20,7 @@
             </HBox.margin>
         </Button>
         <Region HBox.hgrow="ALWAYS"/>
-        <CustomTextField fx:id="searchField" promptText="Buscar" style="-fx-border-radius: 50 50 50 50; -fx-background-radius: 50 50 50 50;">
-            <left>
-                <Label style="-fx-padding: 0 2 0 7;">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="SEARCH" glyphSize="13"/>
-                    </graphic>
-                </Label>
-            </left>
-        </CustomTextField>
+        <TextField fx:id="searchField" promptText="Buscar" />
     </HBox>
     <TableView fx:id="treatmentsTable" VBox.vgrow="ALWAYS">
         <columns>

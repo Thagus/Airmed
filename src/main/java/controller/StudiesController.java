@@ -13,15 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.entities.Study;
 import org.apache.commons.lang3.StringUtils;
-import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import model.AutocompleteBindings;
-
 import java.util.Optional;
 
 public class StudiesController {
 
-    @FXML private CustomTextField searchField;
+    @FXML private TextField searchField;
 
     @FXML private TableView<Study> studiesTable;
 
