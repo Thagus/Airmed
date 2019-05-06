@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
+import model.AutocompleteBindings;
+import model.EmailManager;
 import model.entities.Appointment;
 import model.entities.Consultation;
 import model.entities.Patient;
@@ -43,6 +45,9 @@ public class MenuController {
         this.primaryStage = primaryStage;
         this.jMetro = jMetro;
         FXMLLoader loader;
+
+        EmailManager.getInstance();
+        AutocompleteBindings.getInstance();
 
         BMIUtils.init();
         TableFactory.init(this);
