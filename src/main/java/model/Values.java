@@ -1,4 +1,4 @@
-package utils;
+package model;
 
 public class Values {
     public static double topBorder = 0.0;

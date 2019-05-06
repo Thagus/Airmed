@@ -1,11 +1,10 @@
-package model;
+package model.entities;
 
 import io.ebean.Model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import io.ebean.Finder;
 
 @Entity

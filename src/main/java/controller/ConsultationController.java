@@ -15,11 +15,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import model.*;
+import model.entities.*;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
-import utils.AutocompleteBindings;
+import model.AutocompleteBindings;
 import utils.BMIUtils;
 import utils.TableFactory;
 

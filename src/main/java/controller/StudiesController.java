@@ -11,11 +11,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import model.Study;
+import model.entities.Study;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
-import utils.AutocompleteBindings;
+import model.AutocompleteBindings;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import io.ebean.Finder;
 import io.ebean.Model;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @UniqueConstraint(columnNames = "name")
-public class Treatment extends Model {
+public class Study extends Model {
     @Id
     private int id;
 
@@ -18,24 +18,20 @@ public class Treatment extends Model {
     @Column(columnDefinition = "clob")
     private String description;
 
-    @ManyToMany
-    private List<Dose> medicines;
-
-    @ManyToMany(mappedBy = "treatments")
+    @ManyToMany(mappedBy = "studies")
     private List<Prescription> prescriptions;
 
-    public static Finder<Integer, Treatment> find = new Finder<>(Treatment.class);
+    public static Finder<Integer, Study> find = new Finder<>(Study.class);
 
-    public static Treatment create(String name, String description, List<Dose> medicines){
-        Treatment treatment = new Treatment();
+    public static Study create(String name, String description) {
+        Study study = new Study();
 
-        treatment.name = name;
-        treatment.description = description;
-        treatment.medicines = medicines;
+        study.name = name;
+        study.description = description;
 
         try {
-            treatment.save();
-            return treatment;
+            study.save();
+            return study;
         }
         catch (Exception ignored){
             return null;
@@ -54,10 +50,6 @@ public class Treatment extends Model {
         return description;
     }
 
-    public List<Dose> getMedicines() {
-        return medicines;
-    }
-
     public List<Prescription> getPrescriptions() {
         return prescriptions;
     }
@@ -68,9 +60,5 @@ public class Treatment extends Model {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setMedicines(List<Dose> medicines) {
-        this.medicines = medicines;
     }
 }

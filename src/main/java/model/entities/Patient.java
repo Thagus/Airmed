@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import io.ebean.Finder;
 import io.ebean.Model;

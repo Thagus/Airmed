@@ -1,6 +1,6 @@
-package utils;
+package model;
 
-import model.*;
+import model.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;

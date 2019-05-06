@@ -13,12 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import model.*;
+import model.entities.*;
 import org.controlsfx.control.textfield.TextFields;
 import utils.ActionButtonTableCell;
-import utils.AutocompleteBindings;
+import model.AutocompleteBindings;
 import utils.TableFactory;
-import utils.Values;
+import model.Values;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

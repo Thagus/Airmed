@@ -1,8 +1,8 @@
-package utils;
+package model;
 
 import javafx.geometry.Pos;
-import model.Appointment;
-import model.Setting;
+import model.entities.Appointment;
+import model.entities.Setting;
 import org.controlsfx.control.Notifications;
 
 import javax.activation.DataHandler;

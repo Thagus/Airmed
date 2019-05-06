@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import controller.MenuController;
 import io.ebean.Model;
@@ -6,14 +6,12 @@ import io.ebean.Model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.ebean.Finder;
-import javafx.geometry.Insets;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;

@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
-import model.Appointment;
-import model.Consultation;
-import model.Patient;
+import model.entities.Appointment;
+import model.entities.Consultation;
+import model.entities.Patient;
 import utils.BMIUtils;
 import utils.TableFactory;
 
