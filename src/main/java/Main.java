@@ -90,6 +90,9 @@ public class Main extends Application {
                         //Get password and verify is not empty
                         String password = passwordField.getText();
                         if (password.length()>0) {
+                            //Disable login button to prevent issues
+                            loginButton.setDisable(true);
+
                             //Set the DB password
                             dsConfig.setPassword(password + " " + password);
 
@@ -105,6 +108,7 @@ public class Main extends Application {
                                 createPrimaryStage();
                             }
                             catch (Exception ignored){  //If the login fails, shake the dialog and ask for the password again
+                                loginButton.setDisable(false);
                                 ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
                                 anim.playFromStart();
                             }
