@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AutocompleteBindings {
-    private static AutocompleteBindings instance = new AutocompleteBindings();
+    private static AutocompleteBindings instance;
 
     private List<String> treatmentNames;
     private List<String> studyNames;
@@ -21,7 +21,11 @@ public class AutocompleteBindings {
         this.diseaseNames = Disease.find.query().select("name").findList().stream().map(Disease::getName).collect(Collectors.toList());
     }
 
-    public static  AutocompleteBindings getInstance(){
+    public static synchronized  AutocompleteBindings getInstance(){
+        if(instance==null){
+            instance = new AutocompleteBindings();
+        }
+
         return instance;
     }
 
