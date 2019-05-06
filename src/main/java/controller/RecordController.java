@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import model.entities.*;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.textfield.CustomTextField;
 import utils.ActionButtonTableCell;
 import model.AutocompleteBindings;
 
@@ -51,7 +50,7 @@ public class RecordController {
     @FXML private TextArea systemsArea;
 
     //Studies
-    @FXML private CustomTextField studySearchField;
+    @FXML private TextField studySearchField;
     @FXML private TableView<StudyResult> studiesTable;
     @FXML private TableColumn<StudyResult, String> studyNameColumn;
     @FXML private TableColumn<StudyResult, LocalDate> studyDateColumn;
@@ -60,7 +59,7 @@ public class RecordController {
     private ObservableList<StudyResult> studies;
 
     //Surgeries
-    @FXML private CustomTextField surgerySearchField;
+    @FXML private TextField surgerySearchField;
     @FXML private TableView<Surgery> surgeriesTable;
     @FXML private TableColumn<Surgery, String> surgeryNameColumn;
     @FXML private TableColumn<Surgery, LocalDate> surgeryDateColumn;
@@ -68,7 +67,7 @@ public class RecordController {
     private ObservableList<Surgery> surgeries;
 
     //Consultations
-    @FXML private CustomTextField consultationSearchField;
+    @FXML private TextField consultationSearchField;
     @FXML private TableView<Consultation> consultationsTable;
     @FXML private TableColumn<Consultation, LocalDate> consultationDateColumn;
     @FXML private TableColumn<Consultation, String> consultationMotiveColumn;
