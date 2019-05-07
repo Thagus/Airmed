@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import model.DatabaseManager;
 import model.entities.Setting;
@@ -14,6 +15,7 @@ import model.EmailManager;
 import model.Values;
 import utils.ShakeTransition;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -329,5 +331,14 @@ public class SettingsController {
                         }
                     }
                 });
+    }
+
+    public void createBackup(ActionEvent actionEvent) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(menuController.getPrimaryStage().getOwner());
+
+        if(selectedDirectory != null){
+            DatabaseManager.getInstance().backupDatabase(selectedDirectory.getAbsolutePath());
+        }
     }
 }

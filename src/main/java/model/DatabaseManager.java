@@ -5,6 +5,7 @@ import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
 import io.ebean.datasource.DataSourceConfig;
+import org.h2.engine.SysProperties;
 import org.h2.tools.ChangeFileEncryption;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -89,4 +90,18 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Create backup of the database in the desired directory
+     * @param directory The directory where to put the database
+     * @return The result of the operation
+     */
+    public boolean backupDatabase(String directory){
+        try {
+            Ebean.createSqlUpdate("BACKUP TO '" + directory + SysProperties.FILE_SEPARATOR + "airmed.bk'").execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
