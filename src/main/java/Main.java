@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
-import model.ConnectionManager;
+import model.DatabaseManager;
 import utils.ShakeTransition;
 import java.io.IOException;
 import java.util.Locale;
@@ -83,7 +83,7 @@ public class Main extends Application {
 
                             //Try to initiate db connection
                             try {
-                                ConnectionManager.getInstance().createConnection(password);
+                                DatabaseManager.getInstance().createConnection(password);
 
                                 //Close the dialog and initiate primary stage
                                 dialog.close();

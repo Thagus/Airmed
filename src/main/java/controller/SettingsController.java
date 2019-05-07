@@ -6,10 +6,9 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import model.ConnectionManager;
+import model.DatabaseManager;
 import model.entities.Setting;
 import model.EmailManager;
 import model.Values;
@@ -320,7 +319,7 @@ public class SettingsController {
                             anim.playFromStart();
                         }
 
-                        if(ConnectionManager.getInstance().changeDBPassword(oldPassword, newPassword)){
+                        if(DatabaseManager.getInstance().changeDBPassword(oldPassword, newPassword)){
                             dialog.close();
                         }
                         else {

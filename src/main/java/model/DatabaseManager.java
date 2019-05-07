@@ -8,21 +8,21 @@ import io.ebean.datasource.DataSourceConfig;
 import org.h2.tools.ChangeFileEncryption;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class ConnectionManager {
+public class DatabaseManager {
     private final String dbLocation;
     private final String dbName;
 
     private String hashedPassword;
     private EbeanServer ebeanServer;
 
-    private static ConnectionManager instance;
-    private ConnectionManager(){
+    private static DatabaseManager instance;
+    private DatabaseManager(){
         dbLocation = System.getProperty("user.home") + "/.db/";
         dbName = "airmed";
     }
-    public static synchronized ConnectionManager getInstance(){
+    public static synchronized DatabaseManager getInstance(){
         if(instance==null){
-            instance = new ConnectionManager();
+            instance = new DatabaseManager();
         }
 
         return instance;
@@ -88,4 +88,5 @@ public class ConnectionManager {
             return false;
         }
     }
+
 }
