@@ -1,11 +1,19 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import model.ConnectionManager;
 import model.entities.Setting;
 import model.EmailManager;
 import model.Values;
+import utils.ShakeTransition;
 
 import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicReference;
@@ -28,7 +36,10 @@ public class SettingsController {
 
     private int consLengthMins = 30;
 
-    public void init(VBox settingsPane) {
+    private MenuController menuController;
+
+    public void init(VBox settingsPane, MenuController menuController) {
+        this.menuController = menuController;
         AtomicReference<Setting> medicName = new AtomicReference<>(Setting.find.byId("medic_name"));
         if(medicName.get() !=null)
             medicNameField.setText(medicName.get().getValue());
@@ -258,5 +269,66 @@ public class SettingsController {
                 Values.leftBorder = new BigDecimal(leftPrintBorder.get().getValue()).doubleValue();
             }
         });
+    }
+
+    public void changeDBPassword(ActionEvent actionEvent) {
+        //Create prompt dialog
+        Dialog dialog = new Dialog();
+        dialog.setTitle("Cambiar contraseña");
+        dialog.setHeaderText(null);
+        dialog.initModality(Modality.NONE);
+
+        menuController.getjMetro().applyTheme(dialog.getDialogPane().getScene());
+
+        //Create buttons
+        ButtonType changePwdButtonType = new ButtonType("Cambiar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(changePwdButtonType, ButtonType.CANCEL);
+        Node changePwdButton = dialog.getDialogPane().lookupButton(changePwdButtonType);
+
+        //Create pane
+        VBox box = new VBox();
+        box.setSpacing(10);
+
+        //Add password label and field to the layout
+        PasswordField oldPasswordField = new PasswordField();
+        box.getChildren().addAll(new Label("Contraseña actual :"), oldPasswordField);
+
+        PasswordField newPasswordField = new PasswordField();
+        box.getChildren().addAll(new Label("Contraseña nueva :"), newPasswordField);
+
+        dialog.getDialogPane().setContent(box);
+
+        // Request focus on the player name field by default.
+        Platform.runLater(oldPasswordField::requestFocus);
+
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.show();
+
+        //Add listener for when the button is pressed
+        changePwdButton.addEventFilter(EventType.ROOT,
+                e->{
+                    if(e.getEventType().equals(ActionEvent.ACTION)){
+                        e.consume();
+
+                        //Get password and verify is not empty
+                        String oldPassword = oldPasswordField.getText();
+                        String newPassword = newPasswordField.getText();
+
+                        if(oldPassword.length()==0 || newPassword.length()==0){
+                            changePwdButton.setDisable(true);
+                            ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> oldPasswordField.requestFocus());
+                            anim.playFromStart();
+                        }
+
+                        if(ConnectionManager.getInstance().changeDBPassword(oldPassword, newPassword)){
+                            dialog.close();
+                        }
+                        else {
+                            changePwdButton.setDisable(false);
+                            ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> oldPasswordField.requestFocus());
+                            anim.playFromStart();
+                        }
+                    }
+                });
     }
 }

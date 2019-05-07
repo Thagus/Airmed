@@ -55,7 +55,7 @@ public class MenuController {
         loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));
         settingsPane = loader.load();
         settingsController = loader.getController();
-        settingsController.init(settingsPane);
+        settingsController.init(settingsPane, this);
 
         loader = new FXMLLoader(getClass().getResource("/view/Agenda.fxml"));
         agendaView = loader.load();
