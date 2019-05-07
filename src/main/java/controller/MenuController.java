@@ -104,6 +104,7 @@ public class MenuController {
         );
 
         hideAll();
+        showAgenda(null);
     }
 
     public void newPatient(ActionEvent actionEvent) {
@@ -190,7 +191,7 @@ public class MenuController {
         settingsPane.setVisible(true);
     }
 
-    private void hideAll(){
+    public void hideAll(){
         agendaView.setVisible(false);
         patientsPane.setVisible(false);
         treatmentsPane.setVisible(false);

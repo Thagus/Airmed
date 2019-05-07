@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import model.DatabaseManager;
 import model.entities.Setting;
@@ -16,7 +17,9 @@ import model.Values;
 import utils.ShakeTransition;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SettingsController {
@@ -316,18 +319,17 @@ public class SettingsController {
                         String newPassword = newPasswordField.getText();
 
                         if(oldPassword.length()==0 || newPassword.length()==0){
-                            changePwdButton.setDisable(true);
                             ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> oldPasswordField.requestFocus());
                             anim.playFromStart();
-                        }
-
-                        if(DatabaseManager.getInstance().changeDBPassword(oldPassword, newPassword)){
-                            dialog.close();
                         }
                         else {
-                            changePwdButton.setDisable(false);
-                            ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> oldPasswordField.requestFocus());
-                            anim.playFromStart();
+
+                            if (DatabaseManager.getInstance().changeDBPassword(oldPassword, newPassword)) {
+                                dialog.close();
+                            } else {
+                                ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> oldPasswordField.requestFocus());
+                                anim.playFromStart();
+                            }
                         }
                     }
                 });
@@ -340,5 +342,83 @@ public class SettingsController {
         if(selectedDirectory != null){
             DatabaseManager.getInstance().backupDatabase(selectedDirectory.getAbsolutePath());
         }
+    }
+
+    public void restoreFromBackup(ActionEvent actionEvent) {
+        //Create prompt dialog
+        Dialog dialog = new Dialog();
+        dialog.setTitle("Restaurar base de datos");
+        dialog.setHeaderText(null);
+        dialog.initModality(Modality.NONE);
+
+        menuController.getjMetro().applyTheme(dialog.getDialogPane().getScene());
+
+        //Create buttons
+        ButtonType restoreButtonType = new ButtonType("Restaurar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(restoreButtonType, ButtonType.CANCEL);
+        Node restoreButton = dialog.getDialogPane().lookupButton(restoreButtonType);
+
+        //Create pane
+        VBox box = new VBox();
+        box.setSpacing(10);
+
+        //Add password label and field to the layout
+        PasswordField passwordField = new PasswordField();
+        box.getChildren().addAll(new Label("Contraseña actual :"), passwordField);
+
+        PasswordField bkPasswordField = new PasswordField();
+        box.getChildren().addAll(new Label("Contraseña del respaldo :"), bkPasswordField);
+
+        dialog.getDialogPane().setContent(box);
+
+        // Request focus on the player name field by default.
+        Platform.runLater(passwordField::requestFocus);
+
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.show();
+
+        //Add listener for when the button is pressed
+        restoreButton.addEventFilter(EventType.ROOT,
+                e->{
+                    if(e.getEventType().equals(ActionEvent.ACTION)){
+                        e.consume();
+
+                        //Get password and verify is not empty
+                        String password = passwordField.getText();
+                        String bkPassword = bkPasswordField.getText();
+
+                        if(password.length()==0 || bkPassword.length()==0){
+                            ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
+                            anim.playFromStart();
+                        }
+                        else {
+                            FileChooser fileChooser = new FileChooser();
+                            File selectedFile = fileChooser.showOpenDialog(menuController.getPrimaryStage().getOwner());
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Restaurar");
+                            alert.setHeaderText("¿Esta seguro que desea restaurar del archivo seleccionado?");
+                            alert.setContentText("Esta acción no se puede deshacer\n" +
+                                    "Se recomienda haber creado un respaldo antes de continuar");
+                            menuController.getjMetro().applyTheme(alert.getDialogPane());
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK){
+                                if (DatabaseManager.getInstance().restoreDatabase(selectedFile.getAbsolutePath(), password, bkPassword)) {
+                                    dialog.close();
+                                    try {
+                                        menuController.hideAll();
+                                        menuController.init(menuController.getPrimaryStage(), menuController.getjMetro());
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                } else {
+                                    ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
+                                    anim.playFromStart();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 }

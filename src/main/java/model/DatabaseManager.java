@@ -7,6 +7,7 @@ import io.ebean.config.ServerConfig;
 import io.ebean.datasource.DataSourceConfig;
 import org.h2.engine.SysProperties;
 import org.h2.tools.ChangeFileEncryption;
+import org.h2.tools.Restore;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class DatabaseManager {
@@ -100,6 +101,33 @@ public class DatabaseManager {
             Ebean.createSqlUpdate("BACKUP TO '" + directory + SysProperties.FILE_SEPARATOR + "airmed.bk'").execute();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Restore the database from a backup
+     * @param file The backup file location
+     * @param password The current password, as this action is destructive
+     * @param bkPassword The password of the backup
+     * @return The result of the operation
+     */
+    public boolean restoreDatabase(String file, String password, String bkPassword){
+        //Verify that the password is correct
+        if(!BCrypt.checkpw(password, hashedPassword)){
+            return false;
+        }
+        try {
+            //Close the connection to the database
+            closeConnection();
+            //Perform restore
+            Restore.execute(file, dbLocation, null);
+            //Reopen connection
+            createConnection(bkPassword);
+            return true;
+        }
+        catch (Exception e){
             e.printStackTrace();
             return false;
         }
