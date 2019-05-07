@@ -1,7 +1,4 @@
 import controller.MenuController;
-import io.ebean.EbeanServerFactory;
-import io.ebean.config.ServerConfig;
-import io.ebean.datasource.DataSourceConfig;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
+import model.ConnectionManager;
 import utils.ShakeTransition;
 import java.io.IOException;
 import java.util.Locale;
@@ -37,16 +35,6 @@ public class Main extends Application {
      * Login to the database based on the password provided by the user
      */
     private void databaseLogin(){
-        DataSourceConfig dsConfig = new DataSourceConfig();
-        dsConfig.setUsername("airmed");
-        dsConfig.setUrl("jdbc:h2:" + System.getProperty("user.home") + "/.db/airmed;TRACE_LEVEL_FILE=0;CIPHER=AES");
-        dsConfig.setDriver("org.h2.Driver");
-
-        ServerConfig config = new ServerConfig();
-        config.setName("airmed");
-        config.setDefaultServer(true);
-        config.setRunMigration(true);
-
         //Create prompt dialog
         Dialog dialog = new Dialog();
         dialog.setTitle("Airmed");
@@ -93,15 +81,9 @@ public class Main extends Application {
                             //Disable login button to prevent issues
                             loginButton.setDisable(true);
 
-                            //Set the DB password
-                            dsConfig.setPassword(password + " " + password);
-
-                            //Initialize server config
-                            config.setDataSourceConfig(dsConfig);
-
                             //Try to initiate db connection
                             try {
-                                EbeanServerFactory.create(config);
+                                ConnectionManager.getInstance().createConnection(password);
 
                                 //Close the dialog and initiate primary stage
                                 dialog.close();
