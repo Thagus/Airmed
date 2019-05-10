@@ -284,13 +284,13 @@ public class PrescriptionController {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre del medicamento");
         nameField.setText(medicineField.getText());
 
         TextField doseField = new TextField();
+        doseField.setMinWidth(400);
         doseField.setPromptText("Dósis del medicamento");
         //Limit the amount of characters in the text field
         doseField.setTextFormatter(new TextFormatter<String>(change ->
