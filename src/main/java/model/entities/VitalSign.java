@@ -31,7 +31,6 @@ public class VitalSign extends Model {
 
     @DbDefault("0")
     private int glucose;
-    @DbDefault("0")
     @Column(columnDefinition = "DECIMAL(5,2)")
     private BigDecimal hemoglobin;
     @DbDefault("0")
@@ -58,6 +57,8 @@ public class VitalSign extends Model {
         vitalSign.glucose = glucose;
         if(hemoglobin.length()>0)
             vitalSign.hemoglobin = new BigDecimal(hemoglobin);
+        else
+            vitalSign.hemoglobin = BigDecimal.ZERO;
         vitalSign.cholesterol = cholesterol;
         vitalSign.triglycerides = triglycerides;
 
