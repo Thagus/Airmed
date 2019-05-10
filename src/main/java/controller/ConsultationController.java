@@ -351,18 +351,22 @@ public class ConsultationController {
 
         consultationLabel.setText("Consulta de " + consultation.getPatient().getFullName());
 
-        //Fill textfields
+        //Fill text fields
         if(consultation.getVitalSign()!=null) {
             VitalSign vitalSign = consultation.getVitalSign();
-            System.out.println(vitalSign);
-            pressureField.setText(consultation.getVitalSign().getPressureS() + "/" + consultation.getVitalSign().getPressureD());
-            breathField.setText(consultation.getVitalSign().getBreath() + "");
-            pulseField.setText(consultation.getVitalSign().getPulse() + "");
-            temperatureField.setText(consultation.getVitalSign().getTemperature() + "");
-            glucoseField.setText(consultation.getVitalSign().getGlucose() + "");
-            hemoglobinField.setText(consultation.getVitalSign().getHemoglobin().toPlainString());
-            cholesterolField.setText(consultation.getVitalSign().getCholesterol() + "");
-            triglyceridesField.setText(consultation.getVitalSign().getTriglycerides() + "");
+            pressureField.setText(vitalSign.getPressureS() + "/" + consultation.getVitalSign().getPressureD());
+            breathField.setText(vitalSign.getBreath() + "");
+            pulseField.setText(vitalSign.getPulse() + "");
+            temperatureField.setText(vitalSign.getTemperature() + "");
+            glucoseField.setText(vitalSign.getGlucose() + "");
+            if(vitalSign.getHemoglobin()!=null)
+                hemoglobinField.setText(vitalSign.getHemoglobin().toPlainString());
+            else {
+                hemoglobinField.setText("0");
+                vitalSign.setHemoglobin(BigDecimal.ZERO);
+            }
+            cholesterolField.setText(vitalSign.getCholesterol() + "");
+            triglyceridesField.setText(vitalSign.getTriglycerides() + "");
         }
 
         if(consultation.getMeasurement()!=null) {
