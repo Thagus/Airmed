@@ -1,7 +1,6 @@
 package utils;
 
 import controller.MenuController;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -40,10 +39,6 @@ public class TableFactory {
         CustomTextField searchField = new CustomTextField();
         Label searchLabel = new Label();
         searchLabel.setStyle("-fx-padding: 0 2 0 7;");
-        FontAwesomeIconView searchIcon = new FontAwesomeIconView();
-        searchIcon.setGlyphName("SEARCH");
-        searchIcon.setGlyphSize(13);
-        searchLabel.setGraphic(searchIcon);
         searchField.setLeft(searchLabel);
         searchField.setPromptText("Buscar");
 
