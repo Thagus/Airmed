@@ -84,15 +84,21 @@ public class Main extends Application {
                             //Try to initiate db connection
                             try {
                                 DatabaseManager.getInstance().createConnection(password);
-
                                 //Close the dialog and initiate primary stage
                                 dialog.close();
                                 createPrimaryStage();
                             }
-                            catch (Exception ignored){  //If the login fails, shake the dialog and ask for the password again
-                                loginButton.setDisable(false);
-                                ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
-                                anim.playFromStart();
+                            catch (Exception ex){  //If the login fails, shake the dialog and ask for the password again
+                                //If the dialog still showing, shake it
+                                if(dialog.isShowing()) {
+                                    loginButton.setDisable(false);
+                                    ShakeTransition anim = new ShakeTransition(dialog.getDialogPane(), t -> passwordField.requestFocus());
+                                    anim.playFromStart();
+                                }
+                                //If the dialog doesn't exists, the exception was fired after successful login
+                                else {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
                     }
