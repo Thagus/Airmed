@@ -166,7 +166,7 @@
                         </HBox>
                         <TableView fx:id="surgeriesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="surgeryDateColumn" text="Fecha" minWidth="124.0" maxWidth="124"/>
+                                <TableColumn fx:id="surgeryDateColumn" text="Fecha" minWidth="124.0" prefWidth="124"/>
                                 <TableColumn fx:id="surgeryNameColumn" text="Nombre"/>
                                 <TableColumn fx:id="surgeryDescColumn" text="Resultado"/>
                             </columns>
@@ -193,7 +193,7 @@
                         </HBox>
                         <TableView fx:id="studiesTable" layoutX="100.0" layoutY="99.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="studyDateColumn" text="Fecha" minWidth="124.0" maxWidth="124"/>
+                                <TableColumn fx:id="studyDateColumn" text="Fecha" minWidth="124.0" prefWidth="124"/>
                                 <TableColumn fx:id="studyNameColumn" text="Nombre"/>
                                 <TableColumn fx:id="studyDescColumn" text="Descripción"/>
                                 <TableColumn fx:id="studyResultColumn" text="Resultado"/>
@@ -223,11 +223,11 @@
                         </HBox>
                         <TableView fx:id="consultationsTable" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="consultationDateColumn" minWidth="124.0" maxWidth="124" text="Fecha"/>
+                                <TableColumn fx:id="consultationDateColumn" minWidth="124.0" prefWidth="124" text="Fecha"/>
                                 <TableColumn fx:id="consultationMotiveColumn" minWidth="175.0" text="Motivo"/>
                                 <TableColumn fx:id="consultationDiagnosisColumn" minWidth="175.0" text="Diagnóstico"/>
                                 <TableColumn fx:id="consultationPrognosisColumn" minWidth="175.0" text="Pronóstico"/>
-                                <TableColumn fx:id="consultationViewColumn" maxWidth="122" minWidth="122"/>
+                                <TableColumn fx:id="consultationViewColumn" maxWidth="124" minWidth="124"/>
                                 <TableColumn fx:id="consultationPrintColumn" maxWidth="170" minWidth="170"/>
                             </columns>
                         </TableView>
